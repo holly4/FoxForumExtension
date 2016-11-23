@@ -1,0 +1,13 @@
+/* style sheet for popup */
+body {
+  background-color: #f8f8f8;
+  margin: 0px;
+}
+
+#wrapper {
+  margin: 0px 0px;
+  width: 275px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  max-height: 600px;
+}
