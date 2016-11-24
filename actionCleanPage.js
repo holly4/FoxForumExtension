@@ -1,30 +1,30 @@
-// the code to remove non-comment area items from the page
+// the code to hide non-comment area items from the page
 
 function actionCleanPage() {
     
     if (!window.jQuery) {
         alert('jQuery is not loaded!!! Try refreshing the page.');
     } else {
-        // remove non-comment material
-        $('header').remove();
-        $('.alert').remove();
-        $('#sub').remove();
-        $('.article-info').remove();
-        $('.social-count').remove();
-        $('[data-widget-id]').remove();
-        $('#rail').remove();
-        $('.ad-container').remove();
-        $('#powered_by_livefyre_new').remove();
-        $('[itemprop|=articleBody]').remove();
-        $('.ob_strip_container').remove();
-        $('#network').remove();
-        $('#top').remove();
-        $('.video-ct').remove();
-        $('.mod-14').remove();
-        $('[itemprop|=headline]').remove();
-        $('#bottom').remove();
-        $('.fyre-stream-sort').remove();
-        $('.freeform').remove();
+        // hide non-comment material
+        $('.masthead').remove();
+        $('.alert').hide();
+        $('#sub').hide();
+        $('.article-info').hide();
+        $('.social-count').hide();
+        $('[data-widget-id]').hide();
+        $('#rail').hide();
+        $('.ad-container').hide();
+        $('#powered_by_livefyre_new').hide();
+        $('[itemprop|=articleBody]').hide();
+        $('.ob_strip_container').hide();
+        $('#network').hide();
+        $('#top').hide();
+        $('.video-ct').hide();
+        $('.mod-14').hide();
+        $('[itemprop|=headline]').hide();
+        $('#bottom').hide();
+        $('.fyre-stream-sort').hide();
+        $('.freeform').hide();
 
         // enable the hidden comment count
         $('.fyre-stream-stats').attr('class', 'fyre-stream-stats1');

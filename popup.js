@@ -1,6 +1,8 @@
 // this is the application code that runs when the popup U/I is shown
 
 $(function () {
+
+    $('#version').text('0.1.1');
     // load the state of the options from persistent stoage
     load_options();
 
@@ -13,29 +15,49 @@ $(function () {
         // TODO: These four could be combined by sending the options
         if (options.cleanPage) {
             // the cleanPage option is set so tell the listener to do that
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "cleanPage" });
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "cleanPage"
+                });
             });
         }
 
         if (options.showFilteredComments) {
             // the showFilteredComments option is set so tell the listener to do that
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "showFilteredComments" });
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "showFilteredComments"
+                });
             });
         }
 
         if (options.showLikerAvatars) {
             // the showLikerAvatars option is set so tell the listener to do that
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "showLikerAvatars" });
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "showLikerAvatars"
+                });
             });
         }
 
         if (options.disableScrolling) {
             // the disableScrolling option is set so tell the listener to do that
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "disableScrolling" });
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "disableScrolling"
+                });
             });
         }
     });
@@ -48,13 +70,12 @@ $(function () {
 });
 
 // get the state of the options from the U/I and return them
-function getOptions()
-{
+function getOptions() {
     var options = {
         cleanPage: $('#cbCleanPage').is(':checked'),
         showFilteredComments: $('#cbShowFilteredComments').is(':checked'),
         showLikerAvatars: $('#cbShowLikerAvatars').is(':checked'),
-        disableScrolling: $('#cbDisableScrolling').is(':checked'),        
+        disableScrolling: $('#cbDisableScrolling').is(':checked'),
     };
 
     return options;
@@ -80,10 +101,10 @@ function load_options() {
     var defaultSettings = {
         cleanPage: false,
         showFilteredComments: false,
-        showLikerAvatars: false,    
-        disableScrolling : false    
+        showLikerAvatars: false,
+        disableScrolling: false
     };
-   
+
     // read the options from local storage
     chrome.storage.sync.get(defaultSettings, function (items) {
         // this is called once settings have been read
