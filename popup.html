@@ -4,17 +4,27 @@
 <head>
     <title>Fox Forum Helper</title>
     <!-- load the style sheet -->
+    <link rel="stylesheet" href="style/jquery.dataTables-1.10.12.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">    
     <link rel="stylesheet" href="popup.css" />
 </head>
 
 <body>
     <header>Fox Forum Helper v<span id=version>#.#.#</span></header>
 
-    <div class="settings">
+    <div class="settings ">
         <input type="checkbox" id="cbCleanPage"> Clean Page<br>
         <input type="checkbox" id="cbShowFilteredComments"> Show Filtered Posts<br>
         <input type="checkbox" id="cbShowLikerAvatars"> Show Liker Avatars<br>
         <input type="checkbox" id="cbDisableScrolling"> Disable Scrolling<br>
+        <fieldset>
+            <input type="checkbox" id="cbFilterUsers"> Filter Users<br>
+            <div class="usertable">
+                <table id="example" width="100%" class="display compact table table-striped table-bordered" cellspacing="0" width="100%"></table>
+            </div>
+            <input type="text" id="nameToAdd">
+            <button id=btnAddUser>Add User</button>
+        </fieldset>
     </div>
 
     <div class=buttons>
@@ -23,7 +33,8 @@
     </div>
 
     <!-- load jQuery -->
-    <script src="jquery-3.1.1.slim.min.js"></script>
+    <script src="jquery-1.12.3.slim.min.js"></script>
+    <script src="jquery.dataTables-1.10.12.min.js"></script>
 
     <!-- load the popup code -->
     <script src="popup.js"></script>

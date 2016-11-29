@@ -1,32 +1,46 @@
 // this code runs in the Chrome web page context and is sent messageges
 // from the U/I to do something
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+var modules = undefined;
 
-    // log the request 
-    console.log("Listener: " + request.action);
+/*
+var Observer = {
+created: false,
+observing: false,
+listeners: []
+}
+*/
 
-    if (request.action == "cleanPage") {
-        // perform the cleanPage action
-        actionCleanPage();
+chrome.runtime.onMessage.addListener(function(options, sender, sendResponse) {
+    
+  if (modules === undefined) {
+    modules = {
+      cleanPage: Module_CleanPage(),
+      disableScrolling: Module_DisableScrolling(),
+      filterUsers: Module_FilterUsers(),
+      showFilterComments: Module_ShowFilteredComments(),
+      showLikerAvatars: Module_ShowLikerAvatars(),
     }
-    else if (request.action == "showFilteredComments") {
-        // perform the showFilteredComments action
-        actionShowFilteredComments();
-    }
-    else if (request.action == "showLikerAvatars") {
-        // perform the showLikerAvatars action        
-        actionShowLikerAvatars();
-    }
-    else if (request.action == "disableScrolling") {
-        // perform the disableScrolling action        
-        actionDisableScrolling();
-    }
-    else {
-        // an unkown action was requested
-        console.log("Listener: unknown action: " +  request.action);
-    }
+  };
+
+  // log the request 
+  console.log("Listener: " + options);
+
+  // copy only users enabled for filtering to send onward
+  filteredUsers = [];
+  options.filteredUsers.forEach(function(item){
+    if (item[0])
+      filteredUsers.push(item[1]);
+  });
+
+  modules.cleanPage.perform(options.cleanPage);
+  modules.disableScrolling.perform(options.disableScrolling);
+  modules.filterUsers.perform(options.filterUsers, filteredUsers);
+  modules.showFilterComments.perform(options.showFilteredComments);
+  modules.showLikerAvatars.perform(options.showLikerAvatars);
 });
 
 // tell chrome to show the extension avatar as active
-chrome.runtime.sendMessage({ action: "show" });
+chrome.runtime.sendMessage({
+  action: "show"
+});

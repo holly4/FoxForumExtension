@@ -4,9 +4,12 @@ body {
     background-color: #f8f8f8;
     margin: 5px;
     max-height: 600px;
-    width: 250px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    width: 300px;
+}
+
+body {
+        font-family: 'Roboto', serif;
+        font-size: 12px;
 }
 
 header {
@@ -27,4 +30,30 @@ header {
 
 button {
     margin: 0px 10px;
+    font-size: 10px;
+}
+
+.deleteBtn {
+    margin: 0px;
+    font-size: 10px;  
+}
+
+.usertable {
+    margin-bottom: 5px;
+}
+
+/* remove underline on links, the delete buttons */
+.usertable a {
+    text-decoration: none;
+}
+
+fieldset {
+    margin: 8px;
+    border: 1px solid silver;
+    padding: 8px;    
+    border-radius: 4px;
+}
+
+legend {
+    padding: 2px;    
 }
