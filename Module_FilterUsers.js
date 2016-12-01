@@ -29,7 +29,6 @@ function Module_FilterUsers() {
   function updateUsers(_users) {
     // add filtered users table if not present on page
     if ($('#filteredByUser').length === 0) {
-      console.log("add adding filteredByUser table");
       $('.fyre-stream-header').append(
         "<table id='filteredByUser'><thead></thead><tbody></tbody</table>");
       var tr = "<tr><td>Total Filtered Posts</td><td id='totalFilteredPosts'>0</td></lr>";
@@ -122,7 +121,6 @@ function Module_FilterUsers() {
           var author = wrapper.find('.fyre-comment-username').text().trim();
           if (users.includes(author)) {
             wrapper.remove();
-            console.log("removed comment from " + author);
             updateUserCount(author, 1);
           }
         }
