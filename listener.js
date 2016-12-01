@@ -3,32 +3,26 @@
 
 var modules = undefined;
 
-/*
-var Observer = {
-created: false,
-observing: false,
-listeners: []
-}
-*/
-
-chrome.runtime.onMessage.addListener(function(options, sender, sendResponse) {
-    
-  if (modules === undefined) {
-    modules = {
-      cleanPage: Module_CleanPage(),
-      disableScrolling: Module_DisableScrolling(),
-      filterUsers: Module_FilterUsers(),
-      showFilterComments: Module_ShowFilteredComments(),
-      showLikerAvatars: Module_ShowLikerAvatars(),
-    }
-  };
+chrome.runtime.onMessage.addListener(function (options, sender, sendResponse) {
 
   // log the request 
   console.log("Listener: " + options);
 
+  if (modules === undefined) {
+    console.log("create modules");
+    modules = {
+      cleanPage: Module_CleanPage(),
+      commentObserver : Module_CommentObserver(),     
+      disableScrolling : Module_DisableScrolling(),
+      filterUsers : Module_FilterUsers(),
+      showFilterComments : Module_ShowFilteredComments(),
+      showLikerAvatars : Module_ShowLikerAvatars(),
+    }
+  };
+
   // copy only users enabled for filtering to send onward
   filteredUsers = [];
-  options.filteredUsers.forEach(function(item){
+  options.filteredUsers.forEach(function (item) {
     if (item[0])
       filteredUsers.push(item[1]);
   });

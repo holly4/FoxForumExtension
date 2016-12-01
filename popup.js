@@ -1,7 +1,7 @@
 // this is the application code that runs when the popup U/I is shown
 
 var table;
-const currentVersion = '0.2.0';
+const currentVersion = '0.2.1';
 
 $(function() {
 
@@ -73,6 +73,7 @@ $(function() {
     var user = $('#nameToAdd').val();
     console.log("adding user: " + user)
     table.row.add([true, user]).draw();
+    $('#nameToAdd').val("");
   });
 });
 
@@ -138,7 +139,7 @@ function load_options() {
       [true, "BillsCigar"],
       [true, "HillbillyRodhamClinton"],
       [true, "FoodStampDemocrat"],
-      [false, "HappyDaysAreHereAgain"]
+      [true, "InnocentLittleGirl"]
     ],
     version: currentVersion,
   };

@@ -3,7 +3,7 @@
 
 function Module_ShowFilteredComments() {
 
-  var observer = undefined;
+  var observerId = undefined;
 
   function log(line) {
     console.log("ShowFilteredComments: " + line);
@@ -14,9 +14,11 @@ function Module_ShowFilteredComments() {
   }
 
   function isEnabled() {
-    return observer !== undefined;
+    return observerId !== undefined;
   }
 
+  // entry point to the module:
+  //  state: true/false if module is enabled
   function perform(state) {
     log("perform " + state);
 
@@ -28,27 +30,13 @@ function Module_ShowFilteredComments() {
     }
 
     if (!state) {
-      if (enabled) {
         // disconnect observer
-        log("disconnect observer");
-        observer.disconnect();
-        observer = undefined;
-      }
+        log("disconnect observer " + observerId);
+        modules.commentObserver.detach(observerId);
     } else {
-      log("create observer");
-      // create observer
-      observer = new MutationObserver(processMutations);
-      // start the observer on the comment stream
-      var root = $('.fyre-comment-stream');
-      observer.observe(root[0], {
-        attributes: true,
-        childList: true,
-        subtree: true,
-        attributeOldValue: true,
-        // don't need character data notifications
-        characterDataOldValue: false,
-        characterData: false,
-      });
+      // connect to observer
+      observerId = modules.commentObserver.attach(false, processMutations);
+      log("added observer" + observerId);
     }
 
     function processMutations(mutations) {
@@ -56,7 +44,7 @@ function Module_ShowFilteredComments() {
       // this may or may not be needed depending on how the mutations are grouped
       // i.e., it guarenteed that all mutations for deleting a comment are bunched into
       // one larger mutation?
-      mutations.forEach(function(mutation) {
+      mutations.forEach(function (mutation) {
 
         // this would restore the liker images but must then restore the 
         // comment footer too. But filtered comments usually have no likes.
@@ -83,13 +71,13 @@ function Module_ShowFilteredComments() {
         }
 
         // restore various nodes
-        mutation.removedNodes.forEach(function(entry) {
+        mutation.removedNodes.forEach(function (entry) {
           if ($(entry).hasClass('fyre-comment-user')) {
             //console.log("restore fyre-comment-user");
             $(mutation.target).append(entry);
           }
           if ($(entry).hasClass('fyre-comment-head')) {
-            console.log("restore fyre-comment-head");            
+            //console.log("restore fyre-comment-head");
             $(mutation.target).append(entry);
           }
           if ($(entry).hasClass('fyre-comment-body')) {

@@ -22,13 +22,13 @@ The most critical part for this, a page extension, is
     /* details about the extension */
 	"name":"Fox Forum Helper",
 	"description":"Adds functionality (and fun) to the Fox Forum.",
-	"version":"0.2.0",
+	"version":"0.2.1",
 
     /* specifies the type of extension and for a page extension
 	   which files to load when it is clicked to show it's U/I */
 	"page_action": {
 		"default_icon":"smiley-icon-16.png",
-		"default_title":"Fox Formum Helper",
+		"default_title":"Fox Forum Helper",
 		"default_popup":"popup.html"
 	},
 
@@ -46,12 +46,13 @@ The most critical part for this, a page extension, is
 			"matches":["http://www.foxnews.com/*"],
 			"js":[
 				"listener.js",
-				"jquery-1.12.3.slim.min.js", 
+				"jquery-1.12.3.slim.min.js",
 				"Module_CleanPage.js",
 				"Module_DisableScrolling.js",
 				"Module_FilterUsers.js",
 				"Module_ShowFilteredComments.js",
-				"Module_ShowLikerAvatars.js"
+				"Module_ShowLikerAvatars.js",
+				"Module_CommentObserver.js"
 				]
 		}
 	],

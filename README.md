@@ -6,3 +6,4 @@ This Chrome Extension allows loading the content scripts described at http://hol
 No license whatsoever is placed on this code. Do what you will with it.
 
 (11/29/2016) Version 0.2.0 - Added filtering of users.
+(11/30/2016) Version 0.2.1 - Use shared observer

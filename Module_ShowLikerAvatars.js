@@ -14,6 +14,8 @@ function Module_ShowLikerAvatars() {
     return $('div.fyre span.fyre-comment-like-imgs').first().css('display') !== "none";
   }
 
+  // entry point to the module:
+  //  state: true/false if module is enabled
   function perform(state) {
     log("perform " + state);
 
@@ -22,11 +24,14 @@ function Module_ShowLikerAvatars() {
       return;
     }
 
+    // this will keep appending new style elements to the <head> element
+    // as the extension is enabled and disabled.
+    // TODO: a better approach would be to add an id tag to the style and 
+    // delete it on disable. Question being would this then be noticed by
+    // present elements?
     if (state) {
-      log("enable");
       $('head').append('<style> div.fyre span.fyre-comment-like-imgs { display: inline; } </style>');
     } else {
-      log("disable");
       $('head').append('<style> div.fyre span.fyre-comment-like-imgs { display: none; } </style>');
     }
   }

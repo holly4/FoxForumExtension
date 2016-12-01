@@ -21,6 +21,8 @@ function Module_DisableScrolling() {
     perform
   };
 
+  // entry point to the module:
+  //  state: true/false if module is enabled
   function perform(state) {
 
     log("perform " + state);
