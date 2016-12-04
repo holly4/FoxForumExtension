@@ -1,16 +1,21 @@
 function Module_CleanPage() {
 
-function log(line) {
-    console.log("CleanPage: " + line);
-  }
+  var loggingEnabled = false;
 
   return {
     perform
   };
 
+  function log(line) {
+    if (loggingEnabled) {
+      console.log("CleanPage: " + line);
+    }
+  }  
+
   // entry point to the module:
   //  state: true/false if module is enabled
-  function perform(state) {
+  function perform(state, _loggingEnabled) {
+    loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
     // this cannot be undone so is done anytime is requested
@@ -39,8 +44,14 @@ function log(line) {
       $('.freeform').remove();
 
       // enable the hidden comment count
-      // TODO: change to display: inline
-      $('.fyre-stream-stats').attr('class', 'fyre-stream-stats1');
+      $('.fyre-stream-stats').css('display', 'inline');
+
+      // remove extra padding at the top
+      $('#commenting').css('padding', '0px');
+
+      // fix issue where the main editor and the user avatar overlap making
+      // it imposible to select with the mouse the first dozen or so letters in a comment
+      $('.fyre-editor').first().css('padding-top', 16);
     }
   }
 }

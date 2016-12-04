@@ -2,12 +2,8 @@
 
 function Module_FilterUsers() {
 
+  var loggingEnabled = false;
   var observerId = undefined;
-
-  function log(line) {
-    console.log("FilterUsers: " + line);
-  }
-
   var users = [];
   var filteredByUser = [];
   var totalFilteredPosts = 0;
@@ -16,12 +12,18 @@ function Module_FilterUsers() {
     perform
   };
 
-  // module is enabled if the observer has been created
-  function isEnabled() {
+  function log(line) {
+    if (loggingEnabled) {
+      console.log("FilterUsers: " + line);
+    }
+  }
+
+  // is the module installed on the page?
+  function isInstalled() {
     return observerId !== undefined;
   }
 
-  // return the id from a user
+  // return the id for a user
   function idFromUser(user) {
     return "user_" + user + "_count";
   }
@@ -32,7 +34,7 @@ function Module_FilterUsers() {
       $('.fyre-stream-header').append(
         "<table id='filteredByUser'><thead></thead><tbody></tbody</table>");
       var tr = "<tr><td>Total Filtered Posts</td><td id='totalFilteredPosts'>0</td></lr>";
-      $('#filteredByUser tbody').append(tr);        
+      $('#filteredByUser tbody').append(tr);
     }
 
     // remove users no longer filtered
@@ -82,8 +84,8 @@ function Module_FilterUsers() {
   // entry point to the module:
   //  state: true/false if module is enabled
   //  _users: string array of users to filter
-  function perform(state, _users) {
-
+  function perform(state, _loggingEnabled, _users) {
+    loggingEnabled = _loggingEnabled;
     log("perform " + state + ", " + _users);
 
     // always copy users if active as user list can be updated by user
@@ -91,24 +93,22 @@ function Module_FilterUsers() {
       updateUsers(_users);
     }
 
-    var enabled = isEnabled();
-
-    if (state === enabled) {
+    if (state === isInstalled()) {
       // same state as before. nothing to do
       return;
     }
 
     if (!state) {
       // disconnect observer
-      log("disconnect observer " + observerId);
+      log("disconnect observer: " + observerId);
       modules.commentObserver.detach(observerId);
       observerId = undefined;
       // remove filtered users table
-      $('.filteredByUserTable').remove();
+      $('#filteredByUser').remove();
     } else {
       // connect to observer
       observerId = modules.commentObserver.attach(false, processMutations);
-      log("added observer" + observerId);
+      log("attached to observer: " + observerId);
     }
   }
 

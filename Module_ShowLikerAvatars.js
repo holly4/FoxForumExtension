@@ -2,24 +2,28 @@
 
 function Module_ShowLikerAvatars() {
 
-  function log(line) {
-    console.log("ShowLikerAvatars: " + line);
-  }
-
   return {
     perform
-  };
+  }
 
-  function isEnabled() {
+  function log(line) {
+    if (loggingEnabled) {
+      console.log("ShowLikerAvatars: " + line);
+    }
+  }
+
+  // is the module installed on the page?
+  function isInstalled() {
     return $('div.fyre span.fyre-comment-like-imgs').first().css('display') !== "none";
   }
 
   // entry point to the module:
   //  state: true/false if module is enabled
-  function perform(state) {
+  function perform(state, _loggingEnabled) {
+    loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
-    if (state === isEnabled()) {
+    if (state === isInstalled()) {
       // same state as before. nothing to do
       return;
     }

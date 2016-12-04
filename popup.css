@@ -5,11 +5,8 @@ body {
     margin: 5px;
     max-height: 600px;
     width: 300px;
-}
-
-body {
-        font-family: 'Roboto', serif;
-        font-size: 12px;
+    font-family: 'Roboto', serif;
+    font-size: 12px;
 }
 
 header {
@@ -23,14 +20,14 @@ header {
 }
 
 .buttons {
-    margin-top: 10px;
+    margin-top: 5px;
     position: relative;
     text-align: center;
 }
 
-button {
-    margin: 0px 10px;
-    font-size: 10px;
+button, a {
+    margin: 0px 5px;
+    font-size: 11px;
 }
 
 .deleteBtn {
@@ -38,12 +35,16 @@ button {
     font-size: 10px;  
 }
 
-.usertable {
+.aboveTable {
     margin-bottom: 5px;
 }
 
-/* remove underline on links, the delete buttons */
-.usertable a {
+.belowTable {
+    margin-top: 5px;
+}
+
+/* remove underline on links */
+a {
     text-decoration: none;
 }
 
@@ -54,6 +55,17 @@ fieldset {
     border-radius: 4px;
 }
 
-legend {
-    padding: 2px;    
+input[type="checkbox"], a, td, label, img { 
+    vertical-align: middle; 
+}
+
+input[type="text"] { 
+    width: 75%;
+    display: block;
+    overflow: hidden;
+    padding-right:10px;
+}
+
+#btnAddUser {
+    float: right;
 }

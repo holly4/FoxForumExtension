@@ -3,40 +3,44 @@
 
 function Module_ShowFilteredComments() {
 
+  var loggingEnabled = false;
   var observerId = undefined;
-
-  function log(line) {
-    console.log("ShowFilteredComments: " + line);
-  }
 
   return {
     perform
   }
 
-  function isEnabled() {
+  function log(line) {
+    if (loggingEnabled) {
+      console.log("ShowFilteredComments: " + line);
+    }
+  }
+
+  // is the module installed on the page?
+  function isInstalled() {
     return observerId !== undefined;
   }
 
   // entry point to the module:
   //  state: true/false if module is enabled
-  function perform(state) {
+  function perform(state, _loggingEnabled) {
+    loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
-    var enabled = isEnabled();
-
-    if (state === enabled) {
+    if (state === isInstalled()) {
       // same state as before. nothing to do
       return;
     }
 
     if (!state) {
-        // disconnect observer
-        log("disconnect observer " + observerId);
-        modules.commentObserver.detach(observerId);
+      // disconnect observer
+      log("disconnect observer: " + observerId);
+      modules.commentObserver.detach(observerId);
+      observerId = undefined;
     } else {
       // connect to observer
       observerId = modules.commentObserver.attach(false, processMutations);
-      log("added observer" + observerId);
+      log("attached to observer: " + observerId);
     }
 
     function processMutations(mutations) {
@@ -57,7 +61,6 @@ function Module_ShowFilteredComments() {
         // show the comment 
         if (mutation.type == "attributes") {
           if ($(mutation.target).hasClass('fyre-comment-wrapper')) {
-            //console.log("show comment");
             $(mutation.target).show();
           }
         }
@@ -65,7 +68,6 @@ function Module_ShowFilteredComments() {
         // remove .fyre-comment-hidden
         if (mutation.type == "attributes") {
           if ($(mutation.target).hasClass('fyre-comment-hidden')) {
-            //console.log("remove class fyre-comment-hidden");
             $(mutation.target).removeClass('fyre-comment-hidden');
           }
         }
@@ -73,15 +75,12 @@ function Module_ShowFilteredComments() {
         // restore various nodes
         mutation.removedNodes.forEach(function (entry) {
           if ($(entry).hasClass('fyre-comment-user')) {
-            //console.log("restore fyre-comment-user");
             $(mutation.target).append(entry);
           }
           if ($(entry).hasClass('fyre-comment-head')) {
-            //console.log("restore fyre-comment-head");
             $(mutation.target).append(entry);
           }
           if ($(entry).hasClass('fyre-comment-body')) {
-            //console.log("restore fyre-comment-body");   
             var target = $(mutation.target);
             target.append(entry);
             target.find('section.fyre-comment-deleted').remove();

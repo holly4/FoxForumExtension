@@ -2,13 +2,7 @@
 
 function Module_DisableScrolling() {
 
-  function log(line) {
-    console.log("DisableScrolling: " + line);
-  }
-
-  function isEnabled() {
-    return $('#enableScoll').length > 0;
-  }
+  var loggingEnabled = false;
 
   // handlers to store original methods
   var scrollToProper = window.scrollTo;
@@ -20,20 +14,30 @@ function Module_DisableScrolling() {
   return {
     perform
   };
+  
+  function log(line) {
+    if (loggingEnabled) {
+      console.log("DisableScrolling: " + line);
+    }
+  }
+
+  // is the module installed on the page
+  function isInstalled() {
+    return $('#enableScoll').length > 0;
+  }
 
   // entry point to the module:
   //  state: true/false if module is enabled
-  function perform(state) {
-
+  function perform(state, _loggingEnabled) {
+    loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
-    if (state === isEnabled()) {
+    if (state === isInstalled()) {
       // same state as before. nothing to do
       return;
     }
 
-    if (!state)
-    {
+    if (!state) {
       log("removing");
       //  restore the scollTo and scrollBy functions
       window.scrollTo = scrollToProper;
@@ -41,17 +45,15 @@ function Module_DisableScrolling() {
 
       // remove the button
       $('#enableScoll').remove();
-    }
-    else
-    {
+    } else {
       log("installing");
 
       // override the scollTo and scrollBy functions
-      window.scrollTo = function(x, y) {
+      window.scrollTo = function (x, y) {
         if (scrollEnabled)
           scrollToProper(x, y);
       }
-      window.scrollByProper = function(x, y) {
+      window.scrollByProper = function (x, y) {
         if (scrollEnabled)
           scrollByProper(x, y);
       }
@@ -65,7 +67,7 @@ function Module_DisableScrolling() {
       elem.css('padding', '2');
 
       // set handler for the button click
-      elem.click(function() {
+      elem.click(function () {
         scrollEnabled = !scrollEnabled;
         if (scrollEnabled) {
           $(this).css('background', '#00FFFF');

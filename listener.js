@@ -2,14 +2,32 @@
 // from the U/I to do something
 
 var modules = undefined;
+var lastOptions = undefined;
 
 chrome.runtime.onMessage.addListener(function (options, sender, sendResponse) {
 
+  var loggingEnabled = options.logging;
+
+  function log(line) {
+      if (loggingEnabled) {
+          console.log("Listener: " + line);
+      }
+  }
+
   // log the request 
-  console.log("Listener: " + options);
+  log("Listener: " + options);
+
+  if (options==="requestOptions") {
+    // a request for the last options
+    log("returning options: " + options);
+    sendResponse(lastOptions);
+    return;  
+  };
+
+  lastOptions = options;
 
   if (modules === undefined) {
-    console.log("create modules");
+    log("create modules");
     modules = {
       cleanPage: Module_CleanPage(),
       commentObserver : Module_CommentObserver(),     
@@ -27,11 +45,29 @@ chrome.runtime.onMessage.addListener(function (options, sender, sendResponse) {
       filteredUsers.push(item[1]);
   });
 
-  modules.cleanPage.perform(options.cleanPage);
-  modules.disableScrolling.perform(options.disableScrolling);
-  modules.filterUsers.perform(options.filterUsers, filteredUsers);
-  modules.showFilterComments.perform(options.showFilteredComments);
-  modules.showLikerAvatars.perform(options.showLikerAvatars);
+  modules.commentObserver.perform(
+    options.logging );
+
+  modules.cleanPage.perform(
+    options.cleanPage, 
+    options.logging );
+
+  modules.disableScrolling.perform(
+    options.disableScrolling,
+    options.logging );
+
+  modules.filterUsers.perform(
+    options.filterUsers, 
+    options.logging, 
+    filteredUsers );
+
+  modules.showFilterComments.perform(
+    options.showFilteredComments,
+    options.logging );
+
+  modules.showLikerAvatars.perform(
+    options.showLikerAvatars,
+    options.logging );
 });
 
 // tell chrome to show the extension avatar as active

@@ -2,13 +2,11 @@
 
 function Module_CommentObserver() {
 
-    function log(line) {
-        console.log("Observer: " + line);
-    }
-
+    var loggingEnabled = false;
     var observers = [];
     var theObserver = undefined;
     var activeObservers = 0;
+
     var observerOptions = {
         attributes: true,
         childList: true,
@@ -20,9 +18,22 @@ function Module_CommentObserver() {
     };
 
     return {
+        perform: perform,
         attach: attachObserver,
         detach: detachObserver,
     };
+
+    function log(line) {
+        if (loggingEnabled) {
+            console.log("CommentObserver: " + line);
+        }
+    }
+
+    // entry point to the module:
+    function perform(_loggingEnabled) {
+        loggingEnabled = _loggingEnabled;
+        log("perform");
+    }
 
     // start the MutationObserver
     function startObserver() {
@@ -32,10 +43,10 @@ function Module_CommentObserver() {
 
         var elementToObserve = $('.fyre-comment-stream');
         if (elementToObserve.length === 0) {
-            alert('startObserver: cannot find .fyre-comment-stream');
+            alert('startObserver: cannot find .fyre-comment-stream. If the page is loading wait and try again.');
         } else {
             theObserver.observe(elementToObserve[0], observerOptions);
-       }
+        }
     }
 
     // stop the MutationObserver
@@ -62,7 +73,7 @@ function Module_CommentObserver() {
             callback: callback
         }
 
-        console.log("addObserver: added observer: " + item.id);
+        log("attachObserver: added observer: " + item.id);
 
         if (priority)
             observers.unshift(item);
@@ -72,7 +83,7 @@ function Module_CommentObserver() {
         activeObservers++;
 
         if (theObserver === undefined) {
-            console.log("addObserver: start observer");
+            log("attachObserver: start observer");
             startObserver();
         }
 
@@ -86,13 +97,13 @@ function Module_CommentObserver() {
             if (observers[i].id == id) {
                 observers[i].callback = null;
                 activeObservers--;
-                console.log("removeObserver: removed observer: " + id);
+                log("detachObserver: removed observer: " + id);
                 break;
             }
         }
 
         if (activeObservers == 0) {
-            console.log("removeObserver: no more observers");
+            log("detachObserver: no more observers");
             stopObserver();
             theObserver = undefined;
         }

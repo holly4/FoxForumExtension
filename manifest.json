@@ -18,16 +18,17 @@ The most critical part for this, a page extension, is
 
 {
 	"manifest_version":2,
+	"minimum_chrome_version" : "22.0.0.0",
 
     /* details about the extension */
 	"name":"Fox Forum Helper",
 	"description":"Adds functionality (and fun) to the Fox Forum.",
-	"version":"0.2.1",
+	"version":"1.0.0",
 
     /* specifies the type of extension and for a page extension
 	   which files to load when it is clicked to show it's U/I */
 	"page_action": {
-		"default_icon":"smiley-icon-16.png",
+		"default_icon":"images/icon.png",
 		"default_title":"Fox Forum Helper",
 		"default_popup":"popup.html"
 	},
@@ -59,7 +60,7 @@ The most critical part for this, a page extension, is
 
     /* the permissions this extension is requesting */
 	"permissions":[
-		"tabs",
+		"activeTab",
 		"storage",
 		"http://foxnews.com/*"
 	]	
