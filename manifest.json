@@ -1,47 +1,21 @@
-/* 
-The manifest file desribes to Chrome the details about the extension.
-
-The most critical part for this, a page extension, is
-
-1: The pages it runs on, that's where it indicates it only
-   runs on pages on foxnews.com.
-2: persistent: false, which says it is only loaded on those pages
-3: permissions
-	- tabs: since the Fox News page is on a tab in the browser it 
-	        needs permissions for the active tab
-	- storage: this is where the state of the checkboxes are
-	           stored. The storage for an extension is sand-boxed
-			   it only can access it's own data
-    foxnews.com: Seems redundant as it's aleady indicated to only
-	           be loaded on those pages.
-*/			   
-
 {
 	"manifest_version":2,
 	"minimum_chrome_version" : "22.0.0.0",
-
-    /* details about the extension */
 	"name":"Fox Forum Helper",
 	"description":"Add function (and Fun!) to the Fox News Forum.",
 	"version":"1.0.0",
 
-    /* specifies the type of extension and for a page extension
-	   which files to load when it is clicked to show it's U/I */
 	"page_action": {
 		"default_icon":"images/icon.png",
 		"default_title":"Fox Forum Helper",
 		"default_popup":"popup.html"
 	},
 
-	/* no persistence so it only runs when needed.
-	   in that case load and run the file eventPage.js
-	 */ 
 	"background":{
 		"scripts":["eventPage.js"],
 		"persistent":false
 	},
 
-	/* load these files on pages which are on foxnews.com */
 	"content_scripts":[
 		{
 			"matches":["http://www.foxnews.com/*"],
@@ -58,7 +32,6 @@ The most critical part for this, a page extension, is
 		}
 	],
 
-    /* the permissions this extension is requesting */
 	"permissions":[
 		"activeTab",
 		"storage",
