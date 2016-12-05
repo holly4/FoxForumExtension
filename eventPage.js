@@ -11,3 +11,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
   }
 });
+
+// chrome.runtime.onInstalled should be available but sanity check it
+if (chrome.runtime.onInstalled) {
+  // show the welcome page on first time install
+  chrome.runtime.onInstalled.addListener(function (details) {
+      if (details.reason == "install") {
+        chrome.tabs.create({url: "http://hollies.pw/static/ffh/v100/welcome/"}, function (tab) {});
+      }
+  });
+}
