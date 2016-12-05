@@ -22,7 +22,7 @@ The most critical part for this, a page extension, is
 
     /* details about the extension */
 	"name":"Fox Forum Helper",
-	"description":"Adds functionality (and fun) to the Fox Forum.",
+	"description":"Add function (and Fun!) to the Fox News Forum.",
 	"version":"1.0.0",
 
     /* specifies the type of extension and for a page extension
