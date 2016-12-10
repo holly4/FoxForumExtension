@@ -71,6 +71,18 @@ chrome.runtime.onMessage.addListener(function (options, sender, sendResponse) {
 });
 
 // tell chrome to show the extension avatar as active
-chrome.runtime.sendMessage({
-  action: "show"
-});
+// once the page is loaded
+
+var chkReadyState = setInterval(function() {
+    // TODO: Change this to enable the "Apply" button and 
+    // show a message in the popup page that the target
+    // page is loading
+    if (document.readyState == "complete") {
+        clearInterval(chkReadyState);
+        chrome.runtime.sendMessage({
+          action: "show"
+        });
+    } else {
+      console.log("Listener: " + "waiting for load complete");
+    }
+}, 100);

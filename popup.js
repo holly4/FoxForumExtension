@@ -17,7 +17,11 @@ const defaultSettings = {
     [true, "BillsCigar"],
     [true, "HillbillyRodhamClinton"],
     [true, "FoodStampDemocrat"],
-    [true, "InnocentLittleGirl"]
+    [true, "InnocentLittleGirl"],
+    [true, "LiberalMoron"],
+    [true, "MoronLiberal"],
+    [true, "USSRbot2016"],    
+    [true, "USSRbot1984"],    
   ],
   version : currentVersion,
   logging : false,

@@ -10,7 +10,47 @@ function Module_CleanPage() {
     if (loggingEnabled) {
       console.log("CleanPage: " + line);
     }
-  }  
+  }
+
+  // is the module installed on the page
+  function isInstalled() {
+    var len = $('#btnToggleArticle').length;
+    var result = len > 0;
+    log("isInstalled: " + result + "(" + len + ")");
+    return result;
+  }
+
+  function install() {
+    $('#wrapper').siblings().remove();
+    $('#doc').siblings().remove();
+    $('#content .main').siblings().remove();
+    $('#commenting').siblings().each(function (i, val) {
+      if (val.nodeName.toLowerCase() != 'article') {
+        $(val).remove();
+      }
+    });
+    // enable the hidden comment count
+    $('.fyre-stream-stats').css('display', 'inline');
+    // remove extra padding at the top
+    $('#commenting').css('padding', '0px');
+
+    // fix issue where the main editor and the user avatar overlap making
+    // it imposible to select with the mouse the first dozen or so letters in a comment
+    $('.fyre-editor').first().css('padding-top', 16);
+    $('article').first().hide();
+    $('#content .main').first().prepend("<button id='btnToggleArticle'>Show Article</button><br>");
+    //$('#btnToggleArticle').css('margin-top', '20px');
+    //$('#btnToggleArticle').css('margin-left', '20px');
+    $('#btnToggleArticle').click(function () {
+      if ($(this).text() == 'Show Article') {
+        $('article').first().show();
+        $(this).text('Hide Article');
+      } else {
+        $('article').first().hide();
+        $(this).text('Show Article');
+      }
+    });
+  }
 
   // entry point to the module:
   //  state: true/false if module is enabled
@@ -18,40 +58,23 @@ function Module_CleanPage() {
     loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
-    // this cannot be undone so is done anytime is requested
-    // it is not an expensive operation
-
-    if (state) {
-      // remove non-comment material
-      $('.masthead').remove();
-      $('.alert').remove();
-      $('#sub').remove();
-      $('.article-info').remove();
-      $('.social-count').remove();
-      $('[data-widget-id]').remove();
-      $('#rail').remove();
-      $('.ad-container').remove();
-      $('#powered_by_livefyre_new').remove();
-      $('[itemprop|=articleBody]').remove();
-      $('.ob_strip_container').remove();
-      $('#network').remove();
-      $('#top').remove();
-      $('.video-ct').remove();
-      $('.mod-14').remove();
-      $('[itemprop|=headline]').remove();
-      $('#bottom').remove();
-      $('.fyre-stream-sort').remove();
-      $('.freeform').remove();
-
-      // enable the hidden comment count
-      $('.fyre-stream-stats').css('display', 'inline');
-
-      // remove extra padding at the top
-      $('#commenting').css('padding', '0px');
-
-      // fix issue where the main editor and the user avatar overlap making
-      // it imposible to select with the mouse the first dozen or so letters in a comment
-      $('.fyre-editor').first().css('padding-top', 16);
+    if (!state) {
+      // this cannot be undone
+    } else {
+      if (!isInstalled()) {
+        log("installing");
+        var chkReadyState = setInterval(function() {
+            if (document.readyState == "complete") {
+                clearInterval(chkReadyState);
+                install();
+            } else {
+              // TODO: capture log function?
+              console.log("CleanPage: " + "waiting for load complete");
+            }
+        }, 100);
+      } else {
+        log("already installed");
+      }
     }
   }
 }
