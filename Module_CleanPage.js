@@ -20,15 +20,35 @@ function Module_CleanPage() {
     return result;
   }
 
+  //  removeSiblings - remove siblings of selector
+  //    filter: selector of siblings not to remove
+  //    exclude: exclude siblings with this text in tag, id, or class
+  function removeSiblings(selector, filter, exclude) {
+      var toRemove = filter ?
+        $(selector).siblings().not(filter) : $(selector).siblings();
+
+      toRemove.each(function (i, val) {
+        var _this = $(val);
+        var tag = val.nodeName.toLowerCase();
+        var _id = $(val).attr('id');
+        var _class = $(val).attr('class');
+        var tag_id_class = tag + " id='" + _id + "' class='" + _class + "'";
+        if (!exclude || !tag_id_class.includes(exclude)) {
+          _this.remove();
+        }
+      });
+    }
+
+  // install - install the feature
   function install() {
-    $('#wrapper').siblings().remove();
-    $('#doc').siblings().remove();
-    $('#content .main').siblings().remove();
-    $('#commenting').siblings().each(function (i, val) {
-      if (val.nodeName.toLowerCase() != 'article') {
-        $(val).remove();
-      }
-    });
+    removeSiblings('#wrapper', '#templateHolder', 'janrain');
+    removeSiblings('#doc');
+    removeSiblings('#content .main');
+    removeSiblings('#commenting', 'article');
+
+    // remove the sorting option. It does nothing as only "newest" is ever enabled.
+    $('fyre-stream-sort').remove();
+
     // enable the hidden comment count
     $('.fyre-stream-stats').css('display', 'inline');
     // remove extra padding at the top
@@ -38,16 +58,20 @@ function Module_CleanPage() {
     // it imposible to select with the mouse the first dozen or so letters in a comment
     $('.fyre-editor').first().css('padding-top', 16);
     $('article').first().hide();
-    $('#content .main').first().prepend("<button id='btnToggleArticle'>Show Article</button><br>");
-    //$('#btnToggleArticle').css('margin-top', '20px');
-    //$('#btnToggleArticle').css('margin-left', '20px');
-    $('#btnToggleArticle').click(function () {
+
+    // add button to toggle article display
+    // TODO: Add to commmon buttons div
+    $('#content .main').prepend("<button id='toggleArticle'>Show Article</button><br>");
+    $('#toggleArticle').css('margin', '20px 20px 0px 0px');
+    $('#toggleArticle').click(function () {
       if ($(this).text() == 'Show Article') {
         $('article').first().show();
         $(this).text('Hide Article');
+        $(this).css('margin-bottom', '20px');
       } else {
         $('article').first().hide();
         $(this).text('Show Article');
+        $(this).css('margin-bottom', '0px');
       }
     });
   }
@@ -62,18 +86,16 @@ function Module_CleanPage() {
       // this cannot be undone
     } else {
       if (!isInstalled()) {
-        log("installing");
-        var chkReadyState = setInterval(function() {
-            if (document.readyState == "complete") {
-                clearInterval(chkReadyState);
-                install();
-            } else {
-              // TODO: capture log function?
-              console.log("CleanPage: " + "waiting for load complete");
-            }
+        // set timer to wait until page load complete
+        var chkReadyState = setInterval(function () {
+          if (document.readyState == "complete") {
+            clearInterval(chkReadyState);
+            install();
+          } else {
+            // TODO: capture log function?
+            console.log("CleanPage: " + "waiting for load complete");
+          }
         }, 100);
-      } else {
-        log("already installed");
       }
     }
   }
