@@ -1,7 +1,7 @@
 {
 	"manifest_version":2,
 	"minimum_chrome_version" : "22.0.0.0",
-	"name":"Fox Forum Helper",
+	"name":"Fox Forum Helper Beta",
 	"description":"Add function (and Fun!) to the Fox News Forum.",
 	"version":"2.0.0",
 
