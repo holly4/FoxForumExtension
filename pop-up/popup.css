@@ -1,0 +1,86 @@
+/* style sheet for popup */
+
+body {
+    background-color: #f8f8f8;
+    margin: 5px;
+    max-height: 600px;
+    width: 300px;
+    font-family: 'Roboto', serif;
+    font-size: 13px;
+}
+
+header {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.settings {
+    padding: 5px;
+}
+
+.userTable {
+    font-family: 'Roboto Slab', serif;
+}
+
+.buttons {
+    margin-top: 5px;
+    position: relative;
+    text-align: center;
+}
+
+button, a {
+    margin: 0px 5px;
+    font-size: 11px;
+}
+
+.deleteBtn {
+    margin: 0px;
+    font-size: 10px;  
+}
+
+.aboveTable {
+    margin-bottom: 5px;
+}
+
+.belowTable {
+    margin-top: 5px;
+}
+
+/* remove underline on links */
+a {
+    text-decoration: none;
+}
+
+fieldset {
+    margin: 8px;
+    border: 1px solid silver;
+    padding: 8px;    
+    border-radius: 4px;
+}
+
+input[type="checkbox"], a, td, label, img { 
+    vertical-align: middle; 
+}
+
+input[type="text"] { 
+    width: 75%;
+    display: block;
+    overflow: hidden;
+    padding-right:10px;
+}
+
+#btnAddUser {
+    float: right;
+}
+
+.left {
+    float: left;
+    margin-left: 20px;
+}
+
+.right {
+    float: right;
+    margin-right: 20px;
+}
+

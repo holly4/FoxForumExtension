@@ -1,0 +1,57 @@
+    <!-- rename folder to popup or popup-page -->
+<!doctype html>
+<html>
+
+<head>
+    <meta charset=utf-8/>
+    <title>Fox Forum Helper</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+    <link rel="stylesheet" href="options.css" />
+</head>
+
+<body>
+    <div class="settings ">
+        <fieldset>
+            <legend><input type="checkbox" id="cbCleanComments">Clean Comments</legend>
+            <input type="checkbox" id="cbCleanCommentsHighlight">
+            <label>Highlight Color</label>
+            <input type="text" id="textcleanCommentsColor">
+            <span id="cleanCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>            
+        </fieldset>
+        <fieldset>
+            <legend><input type="checkbox" id="cbCleanPage">Clean Page</legend>
+            <input type="checkbox" id="cbRemoveVideo">Remove Video
+        </fieldset>
+        <div class="nofieldset">
+        <input type="checkbox" id="cbDisableScrolling">Control Scrolling<br>
+        </div>
+        <div class="nofieldset">
+        <input type="checkbox" id="cbFilterUsers">Filter Users<br>
+        </div>
+        <fieldset>
+            <legend><input type="checkbox" id="cbShowFilteredComments">Show Filtered Comments</legend>
+            <input type="checkbox" id="cbShowFilteredHighlight">
+            <label>Highlight Color</label>
+            <input type="text" id="textShowFilteredhighlight">
+            <span id="showFilteredCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>                   
+        </fieldset>
+        <div class="nofieldset">
+        <input type="checkbox" id="cbShowLikerAvatars">Show Liker Avatars<br>
+        </div>
+        <div class="nofieldset">        
+        <input type="checkbox" id="cbEnableLogging">Verbose Logging<br>
+        </div>
+    <div class="bottom">
+        <button id="btnRestoreDefaults">Restore Default Settings</button>        
+        <a href="#" id="btnHelp">
+            <img border="0" alt="Help Icon" src="../images/help-icon.png">
+            <label>Help</label>
+        </a>
+    </div>        
+    </div>
+    <script src="../shared/jquery-1.12.3.slim.min.js"></script>
+    <script src="../shared/globals.js"></script>
+    <script src="options.js"></script>
+</body>
+
+</html>

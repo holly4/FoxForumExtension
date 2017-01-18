@@ -1,3 +1,5 @@
+"use strict";
+
 // shared DOM Observer
 
 function Module_CommentObserver() {
@@ -59,7 +61,7 @@ function Module_CommentObserver() {
         // while modifying the DOM but is not working right
         observers.forEach(function (item) {
             if (item.callback !== null) {
-                item.callback(mutations);
+                item.callback.call(item.that, mutations);
             }
         });
         //startObserver();
@@ -67,10 +69,11 @@ function Module_CommentObserver() {
 
     // attach a new observer and return id
     // start the MutationObserver if this is the first client
-    function attachObserver(priority, callback) {
+    function attachObserver(that, callback, priority) {
         var item = {
             id: observers.length + 1,
-            callback: callback
+            that: that,
+            callback:callback,
         }
 
         log("attachObserver: added observer: " + item.id);
