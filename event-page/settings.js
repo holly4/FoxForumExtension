@@ -15,7 +15,7 @@ var SETTINGS = (function () {
     const defaultSettings = {
         cleanPage: true,
         cleanComments: true,
-        cleanCommentshighlight: true,
+        cleanCommentshighlight: false,
         cleanCommentsColor: "#ccffff",
         disableScrolling: true,
         filterUsers: false,
