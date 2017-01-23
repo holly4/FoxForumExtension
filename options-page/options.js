@@ -23,15 +23,17 @@ $(document).ready(function () {
   function getSettings() {
     settings.cleanComments = $('#cbCleanComments').is(':checked');
     settings.cleanCommentshighlight = $('#cbCleanCommentsHighlight').is(':checked');
-    settings.cleanCommentsColor = $('#textcleanCommentsColor').val();
+    settings.cleanCommentsColor = $('#textCleanCommentsColor').val().trim();
     settings.cleanPage = $('#cbCleanPage').is(':checked');
     settings.disableScrolling = $('#cbDisableScrolling').is(':checked');
     settings.filterUsers = $('#cbFilterUsers').is(':checked');
     settings.logging = $('#cbEnableLogging').is(':checked');
+    settings.markMyFilteredComments = $('#cbMarkMyFilteredComments').is(':checked');
+    settings.markMyFilteredCommentsColor = $('#textMarkMyFilteredCommentsColor').val().trim();
     settings.removeVideo = $('#cbRemoveVideo').is(':checked');
     settings.showFilteredComments = $('#cbShowFilteredComments').is(':checked');
     settings.showFilteredCommentsHighlight = $('#cbShowFilteredHighlight').is(':checked');
-    settings.showFilteredCommentsColor = $('#textShowFilteredhighlight').val();
+    settings.showFilteredCommentsColor = $('#textShowFilteredHighlight').val().trim();
     settings.showLikerAvatars = $('#cbShowLikerAvatars').is(':checked');
 
     if (settings.cleanCommentsColor) {
@@ -39,7 +41,10 @@ $(document).ready(function () {
     }
     if (settings.showFilteredCommentsColor) {
       $('#showFilteredCommentsColorTest').css('background-color', settings.showFilteredCommentsColor);
-    }   
+    }  
+    if (settings.markMyFilteredCommentsColor) {
+      $('#markMyFilteredCommentsColorTest').css('background-color', settings.markMyFilteredCommentsColor);
+    }      
 
     log("getSettings: " + JSON.stringify(settings));
   }
@@ -49,7 +54,7 @@ $(document).ready(function () {
     log("setSettings: " + JSON.stringify(settings));
     $('#cbCleanComments').prop('checked', settings.cleanComments);
     $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentshighlight);
-    $('#textcleanCommentsColor').val(settings.cleanCommentsColor);
+    $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);
     $('#cbDisableScrolling').prop('checked', settings.disableScrolling);
     $('#cbFilterUsers').prop('checked', settings.filterUsers);
@@ -57,7 +62,9 @@ $(document).ready(function () {
     $('#cbRemoveVideo').prop('checked', settings.removeVideo);
     $('#cbShowFilteredComments').prop('checked', settings.showFilteredComments);
     $('#cbShowFilteredHighlight').prop('checked', settings.showFilteredCommentsHighlight);
-    $('#textShowFilteredhighlight').val(settings.showFilteredCommentsColor);
+    $('#textShowFilteredHighlight').val(settings.showFilteredCommentsColor);
+    $('#cbMarkMyFilteredComments').prop('checked', settings.markMyFilteredComments);
+    $('#textMarkMyFilteredCommentsColor').val(settings.markMyFilteredCommentsColor);
     $('#cbShowLikerAvatars').prop('checked', settings.showLikerAvatars);
 
     if (settings.cleanCommentsColor) {
@@ -65,7 +72,10 @@ $(document).ready(function () {
     }
     if (settings.showFilteredCommentsColor) {
       $('#showFilteredCommentsColorTest').css('background-color', settings.showFilteredCommentsColor);
-    }   
+    }  
+    if (settings.markMyFilteredCommentsColor) {
+      $('#markMyFilteredCommentsColorTest').css('background-color', settings.markMyFilteredCommentsColor);
+    }    
   }
 
   // load settings from local storage

@@ -16,7 +16,7 @@ $(document).ready(function () {
     }
   }
 
-  logAll("listener loaded");
+  log("listener loaded");
 
   const _browser = window.browser ? window.browser : window.chrome;
 
@@ -34,6 +34,7 @@ $(document).ready(function () {
         filterUsers: Module_FilterUsers(),
         showFilterComments: Module_ShowFilteredComments(),
         showLikerAvatars: Module_ShowLikerAvatars(),
+        xhrInterceptor: Module_XhrInterceptor(),        
       }
     };
 
@@ -77,6 +78,11 @@ $(document).ready(function () {
       settings.cleanCommentsColor,      
       settings.logging);
 
+    modules.xhrInterceptor.perform(
+      settings.markMyFilteredComments,
+      settings.markMyFilteredCommentsColor,
+      settings.logging);      
+
     //modules.borderizer.perform(
     //  settings.cleanComments,
     //  settings.logging);      
@@ -85,7 +91,7 @@ $(document).ready(function () {
   _browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     // log the request 
-    logAll("onMessage: " + JSON.stringify(request));
+    log("onMessage: " + JSON.stringify(request));
 
     if (request.action === APPLY_SETTINGS_MESSAGE.action) {
       applySettings(request.settings);
@@ -104,14 +110,14 @@ $(document).ready(function () {
       if (arguments.length < 1) {
         logAll("loadSettings: ERROR, " + JSON.stringify(chrome.runtime.lastError));
       } else {
-        logging = true;
+        logging = _settings.logging;
         log("loadSettings: " + JSON.stringify(_settings));
 
         // show the extension avatar as active once the page is loaded
         // and apply settings if selected
 
         var chkState = setInterval(function () {
-          logAll("Listener: " + state + " ||| " + document.readyState);
+          log("Listener: " + state + " ||| " + document.readyState);
           if (state==STATE_WAITING_FOR_ARTICLE) {
             if ($("article".length)) {
               state = STATE_WAITING_FOR_COMMENT_STREAM;

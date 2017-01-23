@@ -41,6 +41,8 @@ var SETTINGS = (function () {
             [true, "USSRbot2016"],
         ],
         logging: false,
+        markMyFilteredComments: false,
+        markMyFilteredCommentsColor: "#ffffaa", 
         removeVideo: true,
         showFilteredComments: true,
         showFilteredCommentsHighlight: true,

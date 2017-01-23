@@ -132,7 +132,7 @@ $(document).ready(function () {
         var msg = APPLY_SETTINGS_MESSAGE;
         msg.settings = settings;
         chrome.tabs.sendMessage(tabs[0].id, msg);
-        logAll("APPLY_SETTINGS_MESSAGE" + JSON.stringify(settings));
+        log("APPLY_SETTINGS_MESSAGE" + JSON.stringify(settings));
       });
     });
   }
