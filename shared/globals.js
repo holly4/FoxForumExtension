@@ -21,12 +21,21 @@ const SHOW_MESSAGE = {
 }
 
 const APPLY_SETTINGS_MESSAGE = {
-    action: "apply-settings", 
-    settings: {}    
+    action: "apply-settings",
+    settings: {}
 }
 
 const STATE_WAITING_FOR_ARTICLE = "waiting for article";
 const STATE_WAITING_FOR_COMMENT_STREAM = "waiting for comment stream";
 
 // a setInterval() that takes the interval as the first argument
-function ffhSetInterval(a, b) { return setInterval(b, a); }
+function ffhSetInterval(a, b) {
+    return setInterval(b, a);
+}
+
+// TODO: make globals a module
+function getUserName() {
+    var stream = $("#livefyre_comment_stream");
+    var userName = stream.find(".fyre-user-loggedin").text().trim();
+    return userName;
+}

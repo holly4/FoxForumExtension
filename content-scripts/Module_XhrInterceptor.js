@@ -22,9 +22,8 @@ function Module_XhrInterceptor() {
     if (state.vis == 2) {
       // retrieve logged in user name if unknown
       if (!userName) {
-        var fyreUserDrop = $(".fyre-user-drop");
-        if (fyreUserDrop.length) {
-          userName = fyreUserDrop.text();
+        userName = getUserName();
+        if (userName != "") {
           log("set userName to " + userName);
         }
       }

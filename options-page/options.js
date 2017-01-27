@@ -22,7 +22,9 @@ $(document).ready(function () {
   // get the state of the settings from the U/I and return them
   function getSettings() {
     settings.cleanComments = $('#cbCleanComments').is(':checked');
-    settings.cleanCommentshighlight = $('#cbCleanCommentsHighlight').is(':checked');
+    settings.cleanBlankLines = $('#cbCleanBlankLines').is(':checked');
+    settings.cleanBoldComments = $('#cbCleanUnboldComments').is(':checked');
+    settings.cleanCommentsHighlight = $('#cbCleanCommentsHighlight').is(':checked');
     settings.cleanCommentsColor = $('#textCleanCommentsColor').val().trim();
     settings.cleanPage = $('#cbCleanPage').is(':checked');
     settings.disableScrolling = $('#cbDisableScrolling').is(':checked');
@@ -53,7 +55,9 @@ $(document).ready(function () {
   function setSettings() {
     log("setSettings: " + JSON.stringify(settings));
     $('#cbCleanComments').prop('checked', settings.cleanComments);
-    $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentshighlight);
+    $('#cbCleanBlankLines').prop('checked', settings.cleanBlankLines);
+    $('#cbCleanUnboldComments').prop('checked', settings.cleanBoldComments);
+    $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentsHighlight);
     $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);
     $('#cbDisableScrolling').prop('checked', settings.disableScrolling);

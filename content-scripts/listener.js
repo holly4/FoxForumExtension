@@ -74,7 +74,9 @@ $(document).ready(function () {
 
     modules.cleanComments.perform(
       settings.cleanComments,
-      settings.cleanCommentshighlight,
+      settings.cleanBlankLines,
+      settings.cleanBoldComments,
+      settings.cleanCommentsHighlight,
       settings.cleanCommentsColor,      
       settings.logging);
 

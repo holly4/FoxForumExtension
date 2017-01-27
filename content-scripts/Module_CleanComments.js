@@ -9,6 +9,8 @@ function Module_CleanComments() {
   };
 
   var loggingEnabled = true;
+  var cleanBlankLines = false;
+  var unboldPosts = false;
   var observerId = undefined;
   var userName = undefined;
   var highlight = false;
@@ -31,8 +33,10 @@ function Module_CleanComments() {
 
   // entry point to the module:
   //  enabled: true/false if module is enabled
-  function perform(enabled, _highlight, _highlightColor, _loggingEnabled) {
+  function perform(enabled, _cleanBlankLines, _unboldPosts, _highlight, _highlightColor, _loggingEnabled) {
     loggingEnabled = _loggingEnabled;
+    cleanBlankLines = _cleanBlankLines;
+    unboldPosts = _unboldPosts;
     log("perform " + enabled);
 
     if (enabled === isInstalled()) {
@@ -79,13 +83,30 @@ function Module_CleanComments() {
     return true;
   }
 
+  // function to remove bold from posts more than 10% bold
+  function removeBold(comment) {
+    var text = comment.text();
+    var textLen = text.length;
+    var bold = comment.find("strong").text();
+    var boldLen = bold.length;
+    var pct = (boldLen / textLen);
+    if (pct > 0.10) {
+      var html = comment.html();
+      html = html.replaceAll("<strong>", "");
+      html = html.replaceAll("</strong>", "");
+      comment.html(html);
+      return true;
+    }
+
+    return false;
+  }
+
   // function to clean a single comment
   function cleanComment(_elem) {
     // get the logged in user name if don't know
     if (!userName) {
-      var fyreUserDrop = $(".fyre-user-drop");
-      if (fyreUserDrop.length) {
-        userName = fyreUserDrop.text();
+      userName = getUserName();
+      if (userName != "") {
         log("set userName to " + userName);
       }
     }
@@ -101,18 +122,24 @@ function Module_CleanComments() {
       }
     }
 
-    var html = elem.html();
-    html = html.replaceAll("<br>", "");
-    html = html.replaceAll("<p></p>", "");
-    html = html.replaceAll("<p>.</p>", "");
-    elem.html(html);
+    if (cleanBlankLines) {
+      var html = elem.html();
+      html = html.replaceAll("<br>", "");
+      html = html.replaceAll("<p></p>", "");
+      html = html.replaceAll("<p>.</p>", "");
+      elem.html(html);
 
-    elem.find("p").each(function (i, v) {
-      var node = $(v);
-      if (!processParagraph(node)) {
-        v.remove();
-      }
-    });
+      elem.find("p").each(function (i, v) {
+        var node = $(v);
+        if (!processParagraph(node)) {
+          v.remove();
+        }
+      });
+    }
+
+    if (unboldPosts) {
+      removeBold(elem);
+    }
   }
 
   function processComment(_comment) {
@@ -127,7 +154,7 @@ function Module_CleanComments() {
     //var text1 = comment.text();
     //var height1 = comment.height();    
 
-    if (html0 != html1 /*|| height0 != height1 || text0 != text1 */) {
+    if (html0 != html1 /*|| height0 != height1 || text0 != text1 */ ) {
       if (highlight && highlightColor != "") {
         comment.css("background-color", highlightColor);
         log(comment.html());
@@ -138,6 +165,7 @@ function Module_CleanComments() {
           .css("background-color", "#ccccff");*/
       }
 
+      /*
       if (loggingEnabled) {
         var byHeight = "h";
         var byText = "t";
@@ -146,10 +174,11 @@ function Module_CleanComments() {
         }
         if (text0 != text1) {
           byText = "T";
-        }        
+        }
         console.log("fyreComment " + byHeight + byText + " (before): " + html0);
         console.log("fyreComment " + byHeight + byText + " (after): " + html1);
       }
+      */
     }
   }
 
@@ -158,7 +187,7 @@ function Module_CleanComments() {
       mutation.addedNodes.forEach(function (_node) {
         var node = $(_node);
         var fyreComments = node.find(".fyre-comment");
-        for (var i=0; i<fyreComments.length; i++) {
+        for (var i = 0; i < fyreComments.length; i++) {
           processComment(fyreComments[i]);
         }
       }, this);

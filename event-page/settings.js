@@ -15,8 +15,10 @@ var SETTINGS = (function () {
     const defaultSettings = {
         cleanPage: true,
         cleanComments: true,
-        cleanCommentshighlight: false,
+        cleanCommentsHighlight: false,
         cleanCommentsColor: "#ccffff",
+        cleanBlankLines: true,
+        cleanBoldComments: false,
         disableScrolling: true,
         filterUsers: false,
         filteredUsers: [
@@ -41,7 +43,7 @@ var SETTINGS = (function () {
             [true, "USSRbot2016"],
         ],
         logging: false,
-        markMyFilteredComments: false,
+        markMyFilteredComments: true,
         markMyFilteredCommentsColor: "#ffffaa", 
         removeVideo: true,
         showFilteredComments: true,

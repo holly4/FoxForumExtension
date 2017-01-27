@@ -55,9 +55,8 @@ function Module_ShowFilteredComments() {
     function showPost(target) {
       // if don't know user then determine it
       if (!userName) {
-        var fyreUserDrop = $(".fyre-user-drop");
-        if (fyreUserDrop.length) {
-          userName = fyreUserDrop.text();
+        userName = getUserName();
+        if (userName != "") {
           log("set userName to " + userName);
         }
       }
