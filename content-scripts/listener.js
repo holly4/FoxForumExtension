@@ -76,6 +76,7 @@ $(document).ready(function () {
       settings.cleanComments,
       settings.cleanBlankLines,
       settings.cleanBoldComments,
+      settings.cleanUpperComments,
       settings.cleanCommentsHighlight,
       settings.cleanCommentsColor,      
       settings.logging);
@@ -127,7 +128,7 @@ $(document).ready(function () {
           }
 
           else if (state == STATE_WAITING_FOR_COMMENT_STREAM) {
-            var stream = $('.fyre-comment-stream');
+            var stream = $("#livefyre_comment_stream .fyre-comment-stream");
             if (stream.length) {
               clearInterval(chkState);
               _browser.runtime.sendMessage(SHOW_MESSAGE);              

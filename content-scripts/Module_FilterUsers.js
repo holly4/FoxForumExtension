@@ -35,7 +35,7 @@ function Module_FilterUsers() {
   function updateUsers(_users) {
     // add filtered users table if not present on page
     if ($('#filteredByUser').length === 0) {
-      $('.fyre-stream-header').append(
+      $('#livefyre_comment_stream .fyre-stream-header').append(
         "<table id='filteredByUser'><thead></thead><tbody></tbody</table>");
       var tr = "<tr><td>Total Filtered Posts</td><td id='totalFilteredPosts'>0</td></lr>";
       $('#filteredByUser tbody').append(tr);

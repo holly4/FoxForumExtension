@@ -41,13 +41,6 @@ function Module_CleanPage() {
     });
   }
 
-  // add common div for tools if not present
-  function addToolsDiv() {
-    if (!$("#ffh-tools").length) {
-      $("<div id='ffh-tools' style='float:left;vertical-align:middle;margin-top:-5px' ></div>").insertBefore(".fyre-stream-header");
-    }
-  }
-
   // add a link to the Unicode Converter if not present
   function addUnicodeConverterLink() {
     addToolsDiv();
@@ -75,13 +68,13 @@ function Module_CleanPage() {
     }
 
     // enable the hidden comment count
-    $('.fyre-stream-stats').css('display', 'inline');
+    $('#livefyre_comment_stream .fyre-stream-stats').css('display', 'inline');
     // remove extra padding at the top
     $('#commenting').css('padding', '0px');
 
     // fix issue where the main editor and the user avatar overlap making
     // it imposible to select with the mouse the first dozen or so letters in a comment
-    $('.fyre-editor').first().css('padding-top', 16);
+    $('#livefyre_comment_stream .fyre-editor').first().css('padding-top', 16);
     $('article').first().hide();
 
     // add a link to the Unicode Converter

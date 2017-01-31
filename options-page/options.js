@@ -24,6 +24,7 @@ $(document).ready(function () {
     settings.cleanComments = $('#cbCleanComments').is(':checked');
     settings.cleanBlankLines = $('#cbCleanBlankLines').is(':checked');
     settings.cleanBoldComments = $('#cbCleanUnboldComments').is(':checked');
+    settings.cleanUpperComments = $('#cbCleanUpperComments').is(':checked');
     settings.cleanCommentsHighlight = $('#cbCleanCommentsHighlight').is(':checked');
     settings.cleanCommentsColor = $('#textCleanCommentsColor').val().trim();
     settings.cleanPage = $('#cbCleanPage').is(':checked');
@@ -57,6 +58,7 @@ $(document).ready(function () {
     $('#cbCleanComments').prop('checked', settings.cleanComments);
     $('#cbCleanBlankLines').prop('checked', settings.cleanBlankLines);
     $('#cbCleanUnboldComments').prop('checked', settings.cleanBoldComments);
+    $('#cbCleanUnupperComments').prop('checked', settings.cleanUpperComments);
     $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentsHighlight);
     $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);

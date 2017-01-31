@@ -34,8 +34,8 @@ function Module_XhrInterceptor() {
           var wrapper = article.find(".fyre-comment-wrapper");
           if (wrapper.length) {
             var user = wrapper.find(".fyre-comment-user").attr("data-from");
-            log("deleted comment  " + id + " from " + user);
             if (user == userName) {
+              log("deleted comment  " + id + " from " + user);
               wrapper.css("background-color", highlightColor);
             }
           }

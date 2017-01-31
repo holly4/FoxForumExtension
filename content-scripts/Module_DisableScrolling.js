@@ -15,13 +15,6 @@ function Module_DisableScrolling() {
     perform: perform,
   };
 
-  // add common div for tools if not present
-  function addToolsDiv() {
-    if (!$("#ffh-tools").length) {
-      $("<div id='ffh-tools' style='float:left;vertical-align:middle;margin-top:-5px' ></div>").insertBefore(".fyre-stream-header");
-    }
-  }
-
   // entry point to the module:
   //  state: true/false if module is enabled
   function perform(state, _loggingEnabled) {

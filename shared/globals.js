@@ -39,3 +39,11 @@ function getUserName() {
     var userName = stream.find(".fyre-user-loggedin").text().trim();
     return userName;
 }
+
+  // add common div for tools if not present
+  function addToolsDiv() {
+    if (!$("#ffh-tools").length) {
+      $("<div id='ffh-tools' style='float:left;vertical-align:middle;margin-top:-5px' ></div>")
+        .insertBefore("#livefyre_comment_stream .fyre-stream-header");
+    }
+  }

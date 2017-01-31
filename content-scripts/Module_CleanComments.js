@@ -11,6 +11,7 @@ function Module_CleanComments() {
   var loggingEnabled = true;
   var cleanBlankLines = false;
   var unboldPosts = false;
+  var unupperPosts = false;
   var observerId = undefined;
   var userName = undefined;
   var highlight = false;
@@ -33,10 +34,11 @@ function Module_CleanComments() {
 
   // entry point to the module:
   //  enabled: true/false if module is enabled
-  function perform(enabled, _cleanBlankLines, _unboldPosts, _highlight, _highlightColor, _loggingEnabled) {
+  function perform(enabled, _cleanBlankLines, _unboldPosts, _unupperPosts, _highlight, _highlightColor, _loggingEnabled) {
     loggingEnabled = _loggingEnabled;
     cleanBlankLines = _cleanBlankLines;
     unboldPosts = _unboldPosts;
+    unupperPosts = _unupperPosts;
     log("perform " + enabled);
 
     if (enabled === isInstalled()) {
@@ -101,6 +103,52 @@ function Module_CleanComments() {
     return false;
   }
 
+  function countLower(str) {
+    var count = 0,
+      len = str.length;
+    for (var i = 0; i < len; i++) {
+      if (/[a-z]/.test(str.charAt(i))) count++;
+    }
+    return count;
+  }
+
+  function countUpper(str) {
+    var count = 0,
+      len = str.length;
+    for (var i = 0; i < len; i++) {
+      if (/[A-Z]/.test(str.charAt(i))) count++;
+    }
+    return count;
+  }
+
+  function getTextNodesIn(el) {
+    return $(el).find(":not(iframe)").addBack().contents().filter(function () {
+      return this.nodeType == 3;
+    });
+  };
+
+  // function to remove bold from posts more than 20% uppercase
+  function removeUpper(comment) {
+    var text = comment.text();
+    var upr = countUpper(text);
+    if (upr) {
+      var lwr = countLower(text);
+      var pct = (upr / (upr + lwr));
+      if (pct > 0.20) {
+        log("upr: " + upr +
+            " lwr: " + lwr +
+            " pct" + pct + " " + 
+            text);
+        var nodes = getTextNodesIn(comment);
+        nodes.each(function () {
+          this.textContent = this.textContent.toLowerCase();
+        });
+        return true;
+      }
+    }
+    return false;
+  }
+
   // function to clean a single comment
   function cleanComment(_elem) {
     // get the logged in user name if don't know
@@ -139,6 +187,7 @@ function Module_CleanComments() {
 
     if (unboldPosts) {
       removeBold(elem);
+      removeUpper(elem);
     }
   }
 

@@ -19,6 +19,7 @@ var SETTINGS = (function () {
         cleanCommentsColor: "#ccffff",
         cleanBlankLines: true,
         cleanBoldComments: false,
+        cleanUpperComments: false,
         disableScrolling: true,
         filterUsers: false,
         filteredUsers: [

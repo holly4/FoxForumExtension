@@ -42,8 +42,7 @@ function Module_CommentObserver() {
         if (theObserver === undefined) {
             theObserver = new MutationObserver(onMutations);
         }
-
-        var elementToObserve = $('.fyre-comment-stream');
+        var elementToObserve = $('#livefyre_comment_stream .fyre-comment-stream');
         if (elementToObserve.length === 0) {
             alert('startObserver: cannot find .fyre-comment-stream. If the page is loading wait and try again.');
         } else {
