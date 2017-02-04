@@ -91,6 +91,7 @@ function Module_FilterUsers() {
   function perform(state, _loggingEnabled, _users) {
     loggingEnabled = _loggingEnabled;
     log("perform " + state + ", " + _users);
+    var showDiagnostics = false;
 
     // always copy users if active as user list can be updated by user
     if (state) {
@@ -114,6 +115,20 @@ function Module_FilterUsers() {
       observerId = modules.commentObserver.attach(this, processMutations, false);
       log("attached to observer: " + observerId);
     }
+
+    if (showDiagnostics) {
+      // add the tools div if not present
+      addToolsDiv();
+
+      // create a new button to test the filter
+      if (!$("#ffh-validate-filter").length) {
+        $("<button id='ffh-validate-filter' style='margin-right: 20px;'>Validate Filter</button>")
+          .appendTo("#ffh-tools")
+          .click(function () {
+            onValidateFilter(users);
+          });
+      }
+    }
   }
 
   function processMutations(mutations) {
@@ -129,6 +144,34 @@ function Module_FilterUsers() {
           }
         }
       });
+    });
+  }
+
+  function countCommentsFromUser(user) {
+    var articles = $("#livefyre_comment_stream article");
+    var count = 0;
+    articles.each(function () {
+      var thisUser = $(this).find(".fyre-comment-user").attr("data-from");
+      if (thisUser == user) {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  function onValidateFilter(users) {
+    // remove and add the table
+    $('#validate-filter').remove();
+    var table =
+      "<table id='validate-filter'><thead></thead><tbody>" +
+      "<tr><td>Filter Validation Table</td><td></td></tr>" +
+      "</tbody</table>";
+    $('#livefyre_comment_stream .fyre-stream-header').append(table);
+    //users = ["HappyDaysAreHereAgain", "Muddytrails"]
+    users.forEach(function (user) {
+      var tr = "<tr><td>" + user + "</td><td>" +
+        countCommentsFromUser(user) + "</td></tr>";
+      $('#validate-filter tbody').append(tr);
     });
   }
 }
