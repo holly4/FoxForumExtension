@@ -23,7 +23,7 @@ header {
     font-family: 'Roboto Slab', serif;
 }
 
-.buttons {
+.footer {
     margin-top: 5px;
     position: relative;
     text-align: center;
@@ -72,15 +72,5 @@ input[type="text"] {
 
 #btnAddUser {
     float: right;
-}
-
-.left {
-    float: left;
-    margin-left: 20px;
-}
-
-.right {
-    float: right;
-    margin-right: 20px;
 }
 

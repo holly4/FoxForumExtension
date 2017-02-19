@@ -10,8 +10,6 @@ $(document).ready(function () {
   var currentVersion;
   const _browser = window.browser ? window.browser : window.chrome;
   var logging = true; // log until settings read
-  var settings;
-
 
   function logAll(line) {
     console.log("popup.js: " + line);
@@ -83,8 +81,7 @@ $(document).ready(function () {
         _filteredUsers.push(data);
       }
     });
-
-    settings.logging = $('#cbEnableLogging').is(':checked');
+    var settings = {};
     settings.filterUsers = $('#cbFilterUsers').is(':checked');
     settings.filteredUsers = _filteredUsers;
 
@@ -95,7 +92,6 @@ $(document).ready(function () {
 
   // set the settings in the user interface
   function setSettings(settings) {
-    $('#cbEnableLogging').attr('checked', settings.logging);
     $('#cbFilterUsers').attr('checked', settings.filterUsers);
 
     // add users to table
@@ -106,33 +102,30 @@ $(document).ready(function () {
   // load settings from local storage
   function loadSettings() {
     _browser.runtime.sendMessage(GET_SETTINGS_MESSAGE,
-      function (_settings) {
+      function (settings) {
         if (arguments.length < 1) {
           logAll("loadSettings: on response... no arguments: " + JSON.stringify(chrome.runtime.lastError));
         } else {
-          settings = _settings;
-          logging = settings.logging;
+          logging = settings.logging;          
           setSettings(settings);
         }
       });
   }
 
   // save settings to local storage
-  function saveSettings() {
-    var msg = SET_SETTINGS_MESSAGE;
-    var _settings = getSettings();
-    settings.filterUsers = _settings.filterUsers;
-    settings.filteredUsers = _settings.filteredUsers;
-    msg.settings = settings;
+  function saveFilterSettings() {
+    var settings = getSettings();
+    var msg = SET_FILTEREES_MESSAGE;
+    msg.enabled = settings.filterUsers;
+    msg.filteredUsers = settings.filteredUsers;
     _browser.runtime.sendMessage(msg, function () {
       chrome.tabs.query({
         active: true,
         currentWindow: true
       }, function (tabs) {
-        var msg = APPLY_SETTINGS_MESSAGE;
-        msg.settings = settings;
         chrome.tabs.sendMessage(tabs[0].id, msg);
-        log("APPLY_SETTINGS_MESSAGE" + JSON.stringify(settings));
+        log("SET_FILTEREES_MESSAGE: " +
+          msg.enabled + " " + JSON.stringify(msg.filteredUsers));
       });
     });
   }
@@ -140,21 +133,29 @@ $(document).ready(function () {
   // handle delete button in user table
   $('#userTable').on("click", ".deleteBtn", function () {
     userTable.row($(this).parents('tr')).remove().draw(false);
+    saveFilterSettings();
   });
 
   // handle add button user table
   $('#btnAddUser').click(function () {
     log('btnAddUser clicked');
-    var user = $('#nameToAdd').val();
+    var user = $('#nameToAdd').val().trim();
     if (user != "") {
-      log("adding user: " + user)
-      userTable.row.add([true, user]).draw();
-      $('#nameToAdd').val("");
+      var settings = getSettings();
+      var exists = !settings.filteredUsers.every(function (el) {
+        return el[1] != user;
+      });
+      if (!exists) {
+        // not in table. add it
+        log("adding user: " + user)
+        userTable.row.add([true, user]).draw();
+        $('#nameToAdd').val("");
+      }
     }
+    saveFilterSettings();
   });
 
   $('#btnHelp').click(function () {
-    // TODO: make version dependent
     _browser.tabs.create({
       url: "http://hollies.pw/static/ffh/" + currentVersion + "/help/"
     });
@@ -162,15 +163,14 @@ $(document).ready(function () {
 
   // load settings on startup
   loadSettings();
-
+  
   // save settings on any change
-  var controls = $(".settings").add("#cbEnableLogging");
+  var controls = $("#userTable_wrapper").add("#cbFilterUsers");
   controls.click(function (event) {
     switch (event.target.tagName.toLowerCase()) {
       case "input":
-      case "button":
       case "a":
-        saveSettings();
+        saveFilterSettings();
         break;
     }
   });

@@ -9,7 +9,6 @@ function Module_FilterUsers() {
   var observerId = undefined;
   var users = [];
   var filteredByUser = [];
-  var totalFilteredPosts = 0;
 
   return {
     perform: perform,
@@ -59,6 +58,9 @@ function Module_FilterUsers() {
         removePostsBy(user);
       }
     });
+    
+    // update table count
+    updateTableCount();
   }
 
   // remove all present posts by user
@@ -78,17 +80,27 @@ function Module_FilterUsers() {
     var userTotal = (filteredByUser[user] += delta);
 
     if ($('#' + idFromUser(user)).length === 0) {
-      var tr = "<tr><td>" + user + "</td><td id=" + idFromUser(user) + ">0</td></lr>";
+      var tr = "<tr><td>" + user + "</td>" + 
+        "<td id=" + idFromUser(user) + " class='filter_count'>0</td></tr>";
       $('#filteredByUser tbody').append(tr);
     }
     $('#' + idFromUser(user)).text(userTotal);
-    $('#totalFilteredPosts').text(totalFilteredPosts += delta);
+  }
+
+  // update the filter table count from the row counts
+  function updateTableCount() {
+    var total = 0;
+    $("#filteredByUser .filter_count").each(function(){
+      total += parseInt($(this).text());
+    });
+
+    $('#totalFilteredPosts').text(total);    
   }
 
   // entry point to the module:
   //  state: true/false if module is enabled
   //  _users: string array of users to filter
-  function perform(state, _loggingEnabled, _users) {
+  function perform(state, _users, _loggingEnabled) {
     loggingEnabled = _loggingEnabled;
     log("perform " + state + ", " + _users);
     var showDiagnostics = false;
@@ -141,6 +153,7 @@ function Module_FilterUsers() {
           if (users.includes(author)) {
             wrapper.remove();
             updateUserCount(author, 1);
+            updateTableCount();
           }
         }
       });

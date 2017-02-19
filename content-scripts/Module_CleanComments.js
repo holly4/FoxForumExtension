@@ -136,9 +136,9 @@ function Module_CleanComments() {
       var pct = (upr / (upr + lwr));
       if (pct > 0.20) {
         log("upr: " + upr +
-            " lwr: " + lwr +
-            " pct" + pct + " " + 
-            text);
+          " lwr: " + lwr +
+          " pct" + pct + " " +
+          text);
         var nodes = getTextNodesIn(comment);
         nodes.each(function () {
           this.textContent = this.textContent.toLowerCase();
@@ -151,31 +151,16 @@ function Module_CleanComments() {
 
   // function to clean a single comment
   function cleanComment(_elem) {
-    // get the logged in user name if don't know
-    if (!userName) {
-      userName = getUserName();
-      if (userName != "") {
-        log("set userName to " + userName);
-      }
-    }
-
     var elem = $(_elem);
+    var html0 = elem.html();
 
-    // don't process comments from the logged in user
-    if (userName) {
-      var commentUser = elem.closest(".fyre-comment-wrapper").find(".fyre-comment-user").attr("data-from");
-      if (userName == commentUser) {
-        log("skip comment from current user");
-        return;
+    if (cleanBlankLines) {     
+      var html1 = html0.replaceAll("<br>", "");
+      html1 = html1.replaceAll("<p></p>", "");
+      html1 = html1.replaceAll("<p>.</p>", "");
+      if (html0 != html1) {
+        elem.html(html1);
       }
-    }
-
-    if (cleanBlankLines) {
-      var html = elem.html();
-      html = html.replaceAll("<br>", "");
-      html = html.replaceAll("<p></p>", "");
-      html = html.replaceAll("<p>.</p>", "");
-      elem.html(html);
 
       elem.find("p").each(function (i, v) {
         var node = $(v);
@@ -189,46 +174,38 @@ function Module_CleanComments() {
       removeBold(elem);
       removeUpper(elem);
     }
+
+    var html2 = elem.html()
+    return html0 != html2;
   }
 
   function processComment(_comment) {
     var comment = $(_comment);
-    var html0 = comment.html();
-    //var text0 = comment.text();
-    //var height0 = comment.height();
+    var commentUser = comment.closest(".fyre-comment-wrapper").find(".fyre-comment-user").attr("data-from");
 
-    cleanComment(comment);
+    // get the logged in user name if don't know
+    if (!userName) {
+      userName = getUserName();
+      if (userName != "") {
+        log("set userName to " + userName);
+      }
+    }
 
-    var html1 = comment.html();
-    //var text1 = comment.text();
-    //var height1 = comment.height();    
+    // don't process comments from the logged in user
+    if (userName && commentUser==userName) {
+        log("skip comment from current user");
+        return false;
+    }
 
-    if (html0 != html1 /*|| height0 != height1 || text0 != text1 */ ) {
+    var result = cleanComment(comment);
+
+    if (result) {
       if (highlight && highlightColor != "") {
         comment.css("background-color", highlightColor);
-        log(comment.html());
-        /*comment.empty();
-        $("<div>" + html0 + "</div>").appendTo(comment)
-          .css("background-color", "#ccffcc");
-        $("<div>" + html1 + "</div>").appendTo(comment)
-          .css("background-color", "#ccccff");*/
       }
-
-      /*
-      if (loggingEnabled) {
-        var byHeight = "h";
-        var byText = "t";
-        if (height0 != height1) {
-          byHeight = "H";
-        }
-        if (text0 != text1) {
-          byText = "T";
-        }
-        console.log("fyreComment " + byHeight + byText + " (before): " + html0);
-        console.log("fyreComment " + byHeight + byText + " (after): " + html1);
-      }
-      */
     }
+
+    return result;
   }
 
   function processMutations(mutations) {
@@ -236,6 +213,16 @@ function Module_CleanComments() {
       mutation.addedNodes.forEach(function (_node) {
         var node = $(_node);
         var fyreComments = node.find(".fyre-comment");
+        if (!fyreComments.length) {
+          var temp = node.closest(".fyre-comment");
+          if (temp.length == 1) {
+            // note this will trigger a change when
+            // the "edit in n minutes" text changes
+            // a fix would be to check for that text
+            fyreComments = temp;
+          }
+        }
+
         for (var i = 0; i < fyreComments.length; i++) {
           processComment(fyreComments[i]);
         }

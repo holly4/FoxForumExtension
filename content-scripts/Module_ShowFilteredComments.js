@@ -85,17 +85,10 @@ function Module_ShowFilteredComments() {
 
         var target = $(mutation.target);
 
-        //console.log(mutation.target.tagName + ": mutation.type: " + mutation.type);
-
         // handle attribute mutation
         if (mutation.type == "attributes") {
-          //console.log("attributeName: " + mutation.attributeName +
-          //  " = " + target.attr(mutation.attributeName));
-
-          // remove fyre-comment-hidden
           if (target.hasClass('fyre-comment-hidden')) {
             target.removeClass('fyre-comment-hidden');
-            //log("remove fyre-comment-hidden");
           }
         }
 

@@ -3,7 +3,7 @@
 	"minimum_chrome_version" : "22.0.0.0",
 	"name":"Fox Forum Helper Beta",
 	"description":"Add function (and Fun!) to the Fox News Forum.",
-	"version":"2.2.0",
+	"version":"2.2.1",
 
 	"page_action": {
 		"default_icon":"images/icon.png",

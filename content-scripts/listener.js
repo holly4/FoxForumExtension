@@ -34,7 +34,7 @@ $(document).ready(function () {
         filterUsers: Module_FilterUsers(),
         showFilterComments: Module_ShowFilteredComments(),
         showLikerAvatars: Module_ShowLikerAvatars(),
-        xhrInterceptor: Module_XhrInterceptor(),        
+        xhrInterceptor: Module_XhrInterceptor(),
       }
     };
 
@@ -59,13 +59,13 @@ $(document).ready(function () {
 
     modules.filterUsers.perform(
       settings.filterUsers,
-      settings.logging,
-      filteredUsers);
+      filteredUsers,
+      settings.logging,);
 
     modules.showFilterComments.perform(
       settings.showFilteredComments,
       settings.showFilteredCommentsHighlight,
-      settings.showFilteredCommentsColor,        
+      settings.showFilteredCommentsColor,
       settings.logging);
 
     modules.showLikerAvatars.perform(
@@ -78,13 +78,13 @@ $(document).ready(function () {
       settings.cleanBoldComments,
       settings.cleanUpperComments,
       settings.cleanCommentsHighlight,
-      settings.cleanCommentsColor,      
+      settings.cleanCommentsColor,
       settings.logging);
 
     modules.xhrInterceptor.perform(
       settings.markMyFilteredComments,
       settings.markMyFilteredCommentsColor,
-      settings.logging);      
+      settings.logging);
 
     //modules.borderizer.perform(
     //  settings.cleanComments,
@@ -98,6 +98,18 @@ $(document).ready(function () {
 
     if (request.action === APPLY_SETTINGS_MESSAGE.action) {
       applySettings(request.settings);
+    }
+    if (request.action === SET_FILTEREES_MESSAGE.action) {
+      // copy only users enabled for filtering to send onward
+      filteredUsers = [];
+      request.filteredUsers.forEach(function (item) {
+        if (item[0])
+          filteredUsers.push(item[1]);
+      });
+      modules.filterUsers.perform(
+        request.enabled,
+        filteredUsers, 
+        logging);      
     }
   });
 
@@ -121,24 +133,22 @@ $(document).ready(function () {
 
         var chkState = setInterval(function () {
           log("Listener: " + state + " ||| " + document.readyState);
-          if (state==STATE_WAITING_FOR_ARTICLE) {
+          if (state == STATE_WAITING_FOR_ARTICLE) {
             if ($("article".length)) {
               state = STATE_WAITING_FOR_COMMENT_STREAM;
             }
-          }
-
-          else if (state == STATE_WAITING_FOR_COMMENT_STREAM) {
+          } else if (state == STATE_WAITING_FOR_COMMENT_STREAM) {
             var stream = $("#livefyre_comment_stream .fyre-comment-stream");
             if (stream.length) {
               clearInterval(chkState);
-              _browser.runtime.sendMessage(SHOW_MESSAGE);              
+              _browser.runtime.sendMessage(SHOW_MESSAGE);
               window.setTimeout(function () {
-                  applySettings(_settings);
-                  window.ffhModules = modules;
-                  console.log("settings applied");
-                }, 1000);
+                applySettings(_settings);
+                window.ffhModules = modules;
+                console.log("settings applied");
+              }, 1000);
             }
-          } 
+          }
         }, 250);
       }
     });

@@ -12,6 +12,13 @@ const SET_SETTINGS_MESSAGE = {
 }
 
 // TODO: make functions so settings can be set here
+const SET_FILTEREES_MESSAGE = {
+    action: "set-fiterees",
+    enabled: false,
+    filteredUsers: []
+}
+
+// TODO: make functions so settings can be set here
 const RESTORE_SETTINGS_MESSAGE = {
     action: "restore-settings",
 }

@@ -70,6 +70,24 @@
           break;
         }
 
+      case SET_FILTEREES_MESSAGE.action:
+        {
+          // load settings
+          SETTINGS.load(function (data) {
+            logging = data.logging;
+            log("loaded settings" + JSON.stringify(data));
+            data.filterUsers = request.enabled;
+            data.filteredUsers = request.filteredUsers
+            var saveRequest = SET_SETTINGS_MESSAGE;
+            saveRequest.settings = data;
+            SETTINGS.save(saveRequest.settings, function (state) {
+              sendResponse && sendResponse(state);
+            });            
+          });
+
+          break;
+        }        
+
       case RESTORE_SETTINGS_MESSAGE.action:
         {
           logAll("restore settings...");

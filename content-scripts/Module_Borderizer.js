@@ -100,8 +100,8 @@ function Module_Borderizer() {
       var after = elem.html();
       if (before != after) {
         if (loggingEnabled) {
-          console.log("fyreComment (before): " + before);
-          console.log("fyreComment  (after): " + after);
+          log("fyreComment (before): " + before);
+          log("fyreComment  (after): " + after);
         }
       }
     }

@@ -107,16 +107,7 @@ function Module_CleanPage() {
       // this cannot be undone
     } else {
       if (!isInstalled()) {
-        // set timer to wait until page load complete
-        //var chkReadyState = setInterval(function () {
-        //  if (document.readyState == "complete") {
-        //    clearInterval(chkReadyState);
             install(removeVideo);
-        //  } else {
-        //    // TODO: capture log function?
-        //    console.log("CleanPage: " + "waiting for load complete");
-        //  }
-        //}, 250);
       }
     }
   }
