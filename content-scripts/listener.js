@@ -60,7 +60,7 @@ $(document).ready(function () {
     modules.filterUsers.perform(
       settings.filterUsers,
       filteredUsers,
-      settings.logging,);
+      settings.logging);
 
     modules.showFilterComments.perform(
       settings.showFilteredComments,
