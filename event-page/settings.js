@@ -1,5 +1,6 @@
 "use strict";
 
+/* exported SETTINGS */
 var SETTINGS = (function () {
     var module = {};
 
@@ -18,9 +19,10 @@ var SETTINGS = (function () {
         cleanCommentsHighlight: false,
         cleanCommentsColor: "#ccffff",
         cleanBlankLines: true,
-        cleanBoldComments: false,
-        cleanUpperComments: false,
-        disableScrolling: true,
+        cleanBoldComments: true,
+        cleanBoldCommentsPct: "10",
+        cleanUpperComments: true,
+        cleanUpperCommentsPct: "20",
         filterUsers: false,
         filteredUsers: [
             [true, "aBeautifuIMind"],
@@ -46,13 +48,18 @@ var SETTINGS = (function () {
         logging: false,
         markMyFilteredComments: true,
         markMyFilteredCommentsColor: "#ffffaa", 
-        removeVideo: true,
-        showFilteredComments: true,
+        removeVideo: false,
+        showFilteredComments: false,
         showFilteredCommentsHighlight: true,
         showFilteredCommentsColor: "#ffcccc",        
         showLikerAvatars: true,
         version: _browser.runtime.getManifest().version,
     };
+
+    function isVersion1(version) {
+        var parts = version.split('.');
+        return parts.length>0 && parts[0]==="1";
+    }
 
     function getStorage() {
         if (_browser && _browser.storage) {
@@ -74,9 +81,19 @@ var SETTINGS = (function () {
     function upgradeSettings(settings, onUpgrade) {
         var isUpgrade = false;
 
-        if (settings.version === undefined) {
-            logAll("settings.version does not exist. setting to: " + defaultSettings.version);
-            settings.version = defaultSettings.version;
+        if (!settings.version || isVersion1(settings.version)) {
+            var newSettings = defaultSettings;
+            if (settings.cleanPage != undefined)
+                newSettings.cleanPage = settings.cleanPage;
+            if (settings.filterUsers != undefined)
+                newSettings.filterUsers = settings.filterUsers;
+            if (settings.filteredUsers != undefined)
+                newSettings.filteredUsers = settings.filteredUsers;            
+            if (settings.showFilteredComments != undefined)
+                newSettings.showFilteredComments = settings.showFilteredComments;
+            if (settings.logging != undefined)
+                newSettings.logging = settings.logging;
+            settings = newSettings;       
             isUpgrade = true;
         } else {
             isUpgrade = settings.version !== defaultSettings.version;

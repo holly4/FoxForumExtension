@@ -1,5 +1,6 @@
 "use strict";
 
+/* exported Module_CleanPage */
 function Module_CleanPage() {
 
   var loggingEnabled = false;
@@ -69,8 +70,19 @@ function Module_CleanPage() {
 
     // enable the hidden comment count
     $('#livefyre_comment_stream .fyre-stream-stats').css('display', 'inline');
+
     // remove extra padding at the top
-    $('#commenting').css('padding', '0px');
+    $("#doc").each(function () {
+      this.style.setProperty( 'padding', '0px', 'important' );
+    });
+
+    $(".main").each(function () {
+      this.style.setProperty( 'padding-top', '0px', 'important' );
+    });
+
+    $("#commenting").each(function () {
+      this.style.setProperty( 'padding', '0px', 'important' );
+    });
 
     // fix issue where the main editor and the user avatar overlap making
     // it imposible to select with the mouse the first dozen or so letters in a comment

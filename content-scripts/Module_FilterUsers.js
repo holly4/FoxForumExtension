@@ -3,6 +3,7 @@
 // the code to filter users comments
 // (ಠ_ಠ)┌∩┐
 
+/* exported Module_FilterUsers */
 function Module_FilterUsers() {
 
   var loggingEnabled = false;
@@ -43,7 +44,7 @@ function Module_FilterUsers() {
     // remove users no longer filtered
     users.forEach(function (user) {
       if (!_users.includes(user)) {
-        var node = $('#' + idFromUser(user)).parent().remove();
+        $('#' + idFromUser(user)).parent().remove();
       }
     });
     users = users.filter(function (i) {

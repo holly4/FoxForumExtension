@@ -1,4 +1,5 @@
 // listener.js - runs in the context of the web page 
+"use strict";
 
 var modules = undefined;
 
@@ -36,10 +37,10 @@ $(document).ready(function () {
         showLikerAvatars: Module_ShowLikerAvatars(),
         xhrInterceptor: Module_XhrInterceptor(),
       }
-    };
+    }
 
     // copy only users enabled for filtering to send onward
-    filteredUsers = [];
+    var filteredUsers = [];
     settings.filteredUsers.forEach(function (item) {
       if (item[0])
         filteredUsers.push(item[1]);
@@ -54,7 +55,7 @@ $(document).ready(function () {
       settings.logging);
 
     modules.disableScrolling.perform(
-      settings.disableScrolling,
+      true,
       settings.logging);
 
     modules.filterUsers.perform(
@@ -76,7 +77,9 @@ $(document).ready(function () {
       settings.cleanComments,
       settings.cleanBlankLines,
       settings.cleanBoldComments,
+      settings.cleanBoldCommentsPct,
       settings.cleanUpperComments,
+      settings.cleanUpperCommentsPct,
       settings.cleanCommentsHighlight,
       settings.cleanCommentsColor,
       settings.logging);
@@ -91,7 +94,7 @@ $(document).ready(function () {
     //  settings.logging);      
   }
 
-  _browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  _browser.runtime.onMessage.addListener(function (request) {
 
     // log the request 
     log("onMessage: " + JSON.stringify(request));
@@ -101,7 +104,7 @@ $(document).ready(function () {
     }
     if (request.action === SET_FILTEREES_MESSAGE.action) {
       // copy only users enabled for filtering to send onward
-      filteredUsers = [];
+      var filteredUsers = [];
       request.filteredUsers.forEach(function (item) {
         if (item[0])
           filteredUsers.push(item[1]);

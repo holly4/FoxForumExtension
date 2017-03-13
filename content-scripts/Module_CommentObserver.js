@@ -2,6 +2,7 @@
 
 // shared DOM Observer
 
+/* exported Module_CommentObserver */
 function Module_CommentObserver() {
 
     var loggingEnabled = false;

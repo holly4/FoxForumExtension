@@ -4,6 +4,7 @@
 
 //window.XHRs = [];
 
+/* exported Module_XhrInterceptor */
 function Module_XhrInterceptor() {
   var loggingEnabled;
   var highlightColor;

@@ -2,6 +2,7 @@
 
 // module to enable the display of liker avatars
 
+/* exported Module_ShowLikerAvatars */
 function Module_ShowLikerAvatars() {
 
   var loggingEnabled = true;

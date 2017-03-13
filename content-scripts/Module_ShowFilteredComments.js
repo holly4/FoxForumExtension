@@ -3,6 +3,7 @@
 // module to restore filterred comments
 // TODO: When cancel delete all displayed filtered comments
 
+/* exported Module_ShowFilteredComments */
 function Module_ShowFilteredComments() {
 
   var loggingEnabled = false;

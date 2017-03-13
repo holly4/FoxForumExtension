@@ -6,7 +6,6 @@ console.log("popup.js loaded");
 
 $(document).ready(function () {
 
-  var userTable;
   var currentVersion;
   const _browser = window.browser ? window.browser : window.chrome;
   var logging = true; // log until settings read
@@ -45,7 +44,7 @@ $(document).ready(function () {
       orderable: false,
       sorting: false,
       "targets": 0,
-      "render": function (data, type, full, meta) {
+      "render": function (data) {
         return data ? '<input type="checkbox" checked/>' : '<input type="checkbox"/>'
       }
     }],

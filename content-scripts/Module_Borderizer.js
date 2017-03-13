@@ -1,6 +1,7 @@
 // module to add borders around comments
 "use strict";
 
+/* exported Module_Borderizer */
 function Module_Borderizer() {
 
   var loggingEnabled = true;

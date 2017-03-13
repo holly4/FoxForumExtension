@@ -19,16 +19,15 @@ fieldset {
     padding: 5px;
 }
 
-button {
-    float: left;
+#btnRestoreDefaults {
     margin: 0px 5px;
-    font-size: 11px;
+    border-radius: 5px;
+    margin-left: 40px;
 }
 
 a {
     float: right;
     margin: 0px 5px;
-    font-size: 11px;
 }
 
 /* remove underline on links */
@@ -41,18 +40,21 @@ input[type="checkbox"], a, label, img {
 }
 
 input[type="checkbox"] { 
-    margin-right: 0.5em; 
-}
-
-input[type="checkbox"] { 
-    margin-right: 0.5em; 
+    margin-right: 0.25em; 
 }
 
 input[type="text"] {
-    margin-left: 0.5em;
-    width: 150px;
+    margin-left: 0.25em;
     min-height: 1.5em;
     line-height: 1em;
+}
+
+#textCleanBoldCommentsPct, #textCleanUpperCommentsPct {
+    width: 40px;
+}
+
+#textCleanCommentsColor, #textShowFilteredHighlight, #textMarkMyFilteredCommentsColor {
+    width: 150px;
 }
 
 .nofieldset {

@@ -13,9 +13,16 @@
     <div class="settings ">
         <fieldset>
             <legend><input type="checkbox" id="cbCleanComments">Clean Comments</legend>
-            <input type="checkbox" id="cbCleanBlankLines">Remove Blank Lines<br>
-            <input type="checkbox" id="cbCleanBoldComments">Unbold Comments<br>
-            <input type="checkbox" id="cbCleanUpperComments">Unupper Comments<br>
+            <input type="checkbox" id="cbCleanBlankLines">
+            <label>Remove Blank Lines</label><br>
+            <input type="checkbox" id="cbCleanBoldComments">
+            <label>Unbold Comments&nbsp;&gt;</label>
+            <input type="text" id="textCleanBoldCommentsPct">
+            <label>% bold</label><br>
+            <input type="checkbox" id="cbCleanUpperComments">
+            <label>Unupper Comments&nbsp;&gt;</label>
+            <input type="text" id="textCleanUpperCommentsPct">
+            <label>% uppercase</label> <br>           
             <input type="checkbox" id="cbCleanCommentsHighlight">
             <label>Highlight Color</label>
             <input type="text" id="textCleanCommentsColor">
@@ -23,14 +30,9 @@
         </fieldset>
         <fieldset>
             <legend><input type="checkbox" id="cbCleanPage">Clean Page</legend>
-            <input type="checkbox" id="cbRemoveVideo">Remove Video
+            <input type="checkbox" id="cbRemoveVideo">
+            <label>Remove Video</label>
         </fieldset>
-        <div class="nofieldset">
-        <input type="checkbox" id="cbDisableScrolling">Control Scrolling<br>
-        </div>
-        <div class="nofieldset">
-        <input type="checkbox" id="cbFilterUsers">Filter Users<br>
-        </div>
         <fieldset>
             <legend><input type="checkbox" id="cbShowFilteredComments">Show Filtered Comments</legend>
             <input type="checkbox" id="cbShowFilteredHighlight">
@@ -47,11 +49,10 @@
             <input type="text" id="textMarkMyFilteredCommentsColor">
             <span id="markMyFilteredCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>                   
         </fieldset>        
-        <div class="nofieldset">        
-        <input type="checkbox" id="cbEnableLogging">Verbose Logging<br>
-        </div>
     <div class="bottom">
-        <button id="btnRestoreDefaults">Restore Default Settings</button>        
+        <input type="checkbox" id="cbEnableLogging">
+        <label>Logging</label>
+        <button id="btnRestoreDefaults">Restore Defaults</button>        
         <a href="#" id="btnHelp">
             <img border="0" alt="Help Icon" src="../images/help-icon.png">
             <label>Help</label>

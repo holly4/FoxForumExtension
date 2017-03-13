@@ -2,6 +2,7 @@
 
 // the module to enable and disable scrolling
 
+/* exported Module_DisableScrolling */
 function Module_DisableScrolling() {
   var loggingEnabled;
 

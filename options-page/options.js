@@ -24,12 +24,12 @@ $(document).ready(function () {
     settings.cleanComments = $('#cbCleanComments').is(':checked');
     settings.cleanBlankLines = $('#cbCleanBlankLines').is(':checked');
     settings.cleanBoldComments = $('#cbCleanBoldComments').is(':checked');
+    settings.cleanBoldCommentsPct = $('#textCleanBoldCommentsPct').val().trim();
     settings.cleanUpperComments = $('#cbCleanUpperComments').is(':checked');
+    settings.cleanUpperCommentsPct = $('#textCleanUpperCommentsPct').val().trim();
     settings.cleanCommentsHighlight = $('#cbCleanCommentsHighlight').is(':checked');
     settings.cleanCommentsColor = $('#textCleanCommentsColor').val().trim();
     settings.cleanPage = $('#cbCleanPage').is(':checked');
-    settings.disableScrolling = $('#cbDisableScrolling').is(':checked');
-    settings.filterUsers = $('#cbFilterUsers').is(':checked');
     settings.logging = $('#cbEnableLogging').is(':checked');
     settings.markMyFilteredComments = $('#cbMarkMyFilteredComments').is(':checked');
     settings.markMyFilteredCommentsColor = $('#textMarkMyFilteredCommentsColor').val().trim();
@@ -58,12 +58,12 @@ $(document).ready(function () {
     $('#cbCleanComments').prop('checked', settings.cleanComments);
     $('#cbCleanBlankLines').prop('checked', settings.cleanBlankLines);
     $('#cbCleanBoldComments').prop('checked', settings.cleanBoldComments);
+    $('#textCleanBoldCommentsPct').val(settings.cleanBoldCommentsPct);   
     $('#cbCleanUpperComments').prop('checked', settings.cleanUpperComments);
+    $('#textCleanUpperCommentsPct').val(settings.cleanUpperCommentsPct);   
     $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentsHighlight);
     $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);
-    $('#cbDisableScrolling').prop('checked', settings.disableScrolling);
-    $('#cbFilterUsers').prop('checked', settings.filterUsers);
     $('#cbEnableLogging').prop('checked', settings.logging);
     $('#cbRemoveVideo').prop('checked', settings.removeVideo);
     $('#cbShowFilteredComments').prop('checked', settings.showFilteredComments);
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
   $('#btnRestoreDefaults').click(function () {
     var msg = RESTORE_SETTINGS_MESSAGE;
-    _browser.runtime.sendMessage(msg, function (state) {
+    _browser.runtime.sendMessage(msg, function () {
         loadSettings();
     });
   });
@@ -130,6 +130,9 @@ $(document).ready(function () {
       url: "http://hollies.pw/static/ffh/" + manifest.version + "/help/"
     });
   });
+
+  var manifest = _browser.runtime.getManifest();
+  document.title = manifest.name + " " + manifest.version;
 
   // load settings on startup
   loadSettings();

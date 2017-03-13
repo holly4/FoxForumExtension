@@ -25,7 +25,7 @@
       var url = "http://hollies.pw/static/ffh/" + data.version + "/welcome/";
       _browser.tabs.create({
         url: url
-      }, function (tab) {});
+      }, function () {});
     }
   });
 
@@ -41,7 +41,13 @@
             active: true,
             currentWindow: true
           }, function (tabs) {
-            _browser.pageAction.show(tabs[0].id);
+            if (tabs && tabs.length > 0) {
+              _browser.pageAction.show(tabs[0].id);
+            }
+            else {
+              console.log("ERROR: cannot get tabs on message: ", request.action);
+            }
+
           });
           break;
         }
@@ -54,7 +60,6 @@
             sendResponse && sendResponse(settings);
           });
           return true; // indicate will send response asynchronously  
-          break;
         }
 
       case SET_SETTINGS_MESSAGE.action:
@@ -82,11 +87,11 @@
             saveRequest.settings = data;
             SETTINGS.save(saveRequest.settings, function (state) {
               sendResponse && sendResponse(state);
-            });            
+            });
           });
 
           break;
-        }        
+        }
 
       case RESTORE_SETTINGS_MESSAGE.action:
         {
@@ -96,7 +101,7 @@
             sendResponse && sendResponse(state);
           });
           break;
-        }        
+        }
 
       default:
         logAll("unrecognized command: " + request.action);

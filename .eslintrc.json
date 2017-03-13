@@ -1,0 +1,42 @@
+{   
+   "extends": "eslint:recommended",
+   "env": {
+       "browser": true,
+       "es6": true,
+       "jquery": true,
+       "webextensions": true
+   },
+   "rules":{
+        "no-console":0
+   },
+   "globals": {
+        "modules": true,
+
+        "Module_Borderizer": false,
+        "Module_CleanComments": false,
+        "Module_CleanPage": false,
+        "Module_CommentObserver": false,
+        "Module_DisableScrolling": false,
+        "Module_FilterUsers": false,
+        "Module_ShowFilteredComments": false,
+        "Module_ShowLikerAvatars": false,
+        "Module_XhrInterceptor": false,
+        "Module_GetMoreComments": false,
+        "SETTINGS": false,
+
+        "addToolsDiv": false,
+        "getUserName": false,
+
+        "APPLY_SETTINGS_MESSAGE": false,
+        "GET_SETTINGS_MESSAGE": false,
+        "SET_SETTINGS_MESSAGE": false,
+        "SET_FILTEREES_MESSAGE": false,
+        "RESTORE_SETTINGS_MESSAGE": false,
+        "SHOW_MESSAGE": false,
+
+        "STATE_WAITING_FOR_ARTICLE": false,
+        "STATE_WAITING_FOR_COMMENT_STREAM": false,
+
+        "dummy": false
+   }
+}

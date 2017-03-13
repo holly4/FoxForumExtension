@@ -2,6 +2,7 @@
 // - remove extra blank lines from comments
 "use strict";
 
+/* exported Module_CleanComments */
 function Module_CleanComments() {
 
   String.prototype.replaceAll = function (target, replacement) {
@@ -11,7 +12,9 @@ function Module_CleanComments() {
   var loggingEnabled = true;
   var cleanBlankLines = false;
   var unboldPosts = false;
+  var unboldPostsPct;
   var unupperPosts = false;
+  var unupperPostsPct;
   var observerId = undefined;
   var userName = undefined;
   var highlight = false;
@@ -34,11 +37,18 @@ function Module_CleanComments() {
 
   // entry point to the module:
   //  enabled: true/false if module is enabled
-  function perform(enabled, _cleanBlankLines, _unboldPosts, _unupperPosts, _highlight, _highlightColor, _loggingEnabled) {
+  function perform(enabled, _cleanBlankLines, 
+                  _unboldPosts, _unboldPostsPct, 
+                  _unupperPosts, _unupperPostsPct, 
+                  _highlight, _highlightColor, _loggingEnabled) {
     loggingEnabled = _loggingEnabled;
     cleanBlankLines = _cleanBlankLines;
     unboldPosts = _unboldPosts;
+    unboldPostsPct = isNaN(parseInt(_unboldPostsPct, 10)) ? 
+      10 : parseInt(_unboldPostsPct, 10);
     unupperPosts = _unupperPosts;
+    unupperPostsPct = isNaN(parseInt(_unupperPostsPct, 10)) ? 
+      20 : parseInt(_unupperPostsPct, 10);    
     log("perform " + enabled);
 
     if (enabled === isInstalled()) {
@@ -91,8 +101,8 @@ function Module_CleanComments() {
     var textLen = text.length;
     var bold = comment.find("strong").text();
     var boldLen = bold.length;
-    var pct = (boldLen / textLen);
-    if (pct > 0.10) {
+    var pct = (boldLen / textLen) * 100;
+    if (pct > unboldPostsPct) {
       var html = comment.html();
       html = html.replaceAll("<strong>", "");
       html = html.replaceAll("</strong>", "");
@@ -125,7 +135,7 @@ function Module_CleanComments() {
     return $(el).find(":not(iframe)").addBack().contents().filter(function () {
       return this.nodeType == 3;
     });
-  };
+  }
 
   // function to remove bold from posts more than 20% uppercase
   function removeUpper(comment) {
@@ -133,8 +143,8 @@ function Module_CleanComments() {
     var upr = countUpper(text);
     if (upr) {
       var lwr = countLower(text);
-      var pct = (upr / (upr + lwr));
-      if (pct > 0.20) {
+      var pct = (upr / (upr + lwr)) * 100;
+      if (pct > unupperPostsPct) {
         log("upr: " + upr +
           " lwr: " + lwr +
           " pct" + pct + " " +
@@ -172,6 +182,9 @@ function Module_CleanComments() {
 
     if (unboldPosts) {
       removeBold(elem);
+    }
+
+    if (unupperPosts) {
       removeUpper(elem);
     }
 
