@@ -43,6 +43,7 @@ function Module_CleanPage() {
   }
 
   // add a link to the Unicode Converter if not present
+  /*
   function addUnicodeConverterLink() {
     addToolsDiv();
     
@@ -55,6 +56,7 @@ function Module_CleanPage() {
       link.appendTo("#ffh-tools");
     }
   }
+  */
 
   // install - install the feature
   function install(removeVideo) {
@@ -90,7 +92,8 @@ function Module_CleanPage() {
     $('article').first().hide();
 
     // add a link to the Unicode Converter
-    addUnicodeConverterLink();
+    // TODO: Make configurable
+    //addUnicodeConverterLink();
 
     // add button to toggle article display
     // TODO: Add to commmon buttons div
