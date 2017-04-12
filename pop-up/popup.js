@@ -105,7 +105,7 @@ $(document).ready(function () {
         if (arguments.length < 1) {
           logAll("loadSettings: on response... no arguments: " + JSON.stringify(chrome.runtime.lastError));
         } else {
-          logging = settings.logging;          
+          logging = settings.logging;
           setSettings(settings);
         }
       });
@@ -154,15 +154,22 @@ $(document).ready(function () {
     saveFilterSettings();
   });
 
+  // handle help button
   $('#btnHelp').click(function () {
     _browser.tabs.create({
       url: "http://hollies.pw/static/ffh/" + currentVersion + "/help/"
     });
   });
 
+  // handle options button
+  $('#btnOptions').click(function () {
+    var msg = SHOW_OPTIONS_MESSAGE;
+    _browser.runtime.sendMessage(msg);    
+  });
+
   // load settings on startup
   loadSettings();
-  
+
   // save settings on any change
   var controls = $("#userTable_wrapper").add("#cbFilterUsers");
   controls.click(function (event) {

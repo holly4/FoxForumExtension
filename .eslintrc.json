@@ -32,6 +32,7 @@
         "SET_SETTINGS_MESSAGE": false,
         "SET_FILTEREES_MESSAGE": false,
         "RESTORE_SETTINGS_MESSAGE": false,
+        "SHOW_OPTIONS_MESSAGE": false,
         "SHOW_MESSAGE": false,
 
         "STATE_WAITING_FOR_ARTICLE": false,

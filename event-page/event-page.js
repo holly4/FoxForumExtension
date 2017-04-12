@@ -103,6 +103,13 @@
           break;
         }
 
+      case SHOW_OPTIONS_MESSAGE.action:
+        {
+          logAll("open options page...");
+          _browser.runtime.openOptionsPage();
+          break;
+        }        
+
       default:
         logAll("unrecognized command: " + request.action);
         break;

@@ -35,6 +35,11 @@ const APPLY_SETTINGS_MESSAGE = {
     settings: {}
 }
 
+/* exported SHOW_OPTIONS_MESSAGE */
+const SHOW_OPTIONS_MESSAGE = {
+    action: "show-options"
+}
+
 /* exported STATE_WAITING_FOR_ARTICLE */
 const STATE_WAITING_FOR_ARTICLE = "waiting for article";
 

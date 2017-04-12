@@ -29,14 +29,15 @@ header {
     text-align: center;
 }
 
-button, a {
+button,
+a {
     margin: 0px 5px;
     font-size: 11px;
 }
 
 .deleteBtn {
     margin: 0px;
-    font-size: 10px;  
+    font-size: 10px;
 }
 
 .aboveTable {
@@ -47,7 +48,9 @@ button, a {
     margin-top: 5px;
 }
 
+
 /* remove underline on links */
+
 a {
     text-decoration: none;
 }
@@ -55,22 +58,35 @@ a {
 fieldset {
     margin: 8px;
     border: 1px solid silver;
-    padding: 8px;    
+    padding: 8px;
     border-radius: 4px;
 }
 
-input[type="checkbox"], a, td, label, img { 
-    vertical-align: middle; 
+input[type="checkbox"],
+a,
+td,
+label,
+img {
+    vertical-align: middle;
 }
 
-input[type="text"] { 
+input[type="text"] {
     width: 75%;
     display: block;
     overflow: hidden;
-    padding-right:10px;
+    padding-right: 10px;
 }
 
 #btnAddUser {
     float: right;
 }
 
+.right {
+    margin-right: 3em;    
+    float: right;
+}
+
+.left {
+    margin-left: 3em;    
+    float: left;
+}
