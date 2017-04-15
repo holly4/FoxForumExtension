@@ -96,7 +96,7 @@ function Module_CleanPage() {
 
     // add a link to the Unicode Converter
     // TODO: Make configurable
-    addUnicodeConverterLink();
+    //addUnicodeConverterLink();
 
     // add button to toggle article display
     // TODO: Add to commmon buttons div
