@@ -43,7 +43,7 @@ function Module_CleanPage() {
   }
 
   // add a link to the Unicode Converter if not present
-  /*
+    /*
   function addUnicodeConverterLink() {
     addToolsDiv();
     
@@ -57,7 +57,7 @@ function Module_CleanPage() {
     }
   }
   */
-
+  
   // install - install the feature
   function install(removeVideo) {
     removeSiblings('#wrapper', '#templateHolder', 'janrain');
@@ -72,6 +72,9 @@ function Module_CleanPage() {
 
     // enable the hidden comment count
     $('#livefyre_comment_stream .fyre-stream-stats').css('display', 'inline');
+
+    // change font on main username display to distinguish I's from l's
+    $(".fyre-user-profile-link span").css("font-family", '"Tahoma"');
 
     // remove extra padding at the top
     $("#doc").each(function () {
@@ -93,7 +96,7 @@ function Module_CleanPage() {
 
     // add a link to the Unicode Converter
     // TODO: Make configurable
-    //addUnicodeConverterLink();
+    addUnicodeConverterLink();
 
     // add button to toggle article display
     // TODO: Add to commmon buttons div
