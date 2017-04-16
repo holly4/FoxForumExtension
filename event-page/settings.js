@@ -20,9 +20,9 @@ var SETTINGS = (function () {
         cleanCommentsColor: "#ccffff",
         cleanBlankLines: true,
         cleanBoldComments: true,
-        cleanBoldCommentsPct: "10",
+        cleanBoldCommentsPct: "20",
         cleanUpperComments: true,
-        cleanUpperCommentsPct: "20",
+        cleanUpperCommentsPct: "40",
         filterUsers: false,
         filteredUsers: [
             [true, "aBeautifuIMind"],

@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
   const _browser = window.browser ? window.browser : window.chrome;
-  
+
   var settings = {
     logging: true
   };
@@ -46,10 +46,10 @@ $(document).ready(function () {
     }
     if (settings.showFilteredCommentsColor) {
       $('#showFilteredCommentsColorTest').css('background-color', settings.showFilteredCommentsColor);
-    }  
+    }
     if (settings.markMyFilteredCommentsColor) {
       $('#markMyFilteredCommentsColorTest').css('background-color', settings.markMyFilteredCommentsColor);
-    }      
+    }
 
     log("getSettings: " + JSON.stringify(settings));
   }
@@ -60,9 +60,9 @@ $(document).ready(function () {
     $('#cbCleanComments').prop('checked', settings.cleanComments);
     $('#cbCleanBlankLines').prop('checked', settings.cleanBlankLines);
     $('#cbCleanBoldComments').prop('checked', settings.cleanBoldComments);
-    $('#textCleanBoldCommentsPct').val(settings.cleanBoldCommentsPct);   
+    $('#textCleanBoldCommentsPct').val(settings.cleanBoldCommentsPct);
     $('#cbCleanUpperComments').prop('checked', settings.cleanUpperComments);
-    $('#textCleanUpperCommentsPct').val(settings.cleanUpperCommentsPct);   
+    $('#textCleanUpperCommentsPct').val(settings.cleanUpperCommentsPct);
     $('#cbCleanCommentsHighlight').prop('checked', settings.cleanCommentsHighlight);
     $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);
@@ -75,18 +75,24 @@ $(document).ready(function () {
     $('#textMarkMyFilteredCommentsColor').val(settings.markMyFilteredCommentsColor);
     $('#cbShowLikerAvatars').prop('checked', settings.showLikerAvatars);
     $('#cbShowCustomLink').prop('checked', settings.showCustomLink);
-    $('#textCustomLinkTitle').val(settings.customLinkTitle);   
-    $('#textCustomLinkUrl').val(settings.customLinkUrl);       
+    $('#textCustomLinkTitle').val(settings.customLinkTitle);
+    $('#textCustomLinkUrl').val(settings.customLinkUrl);
 
     if (settings.cleanCommentsColor) {
       $('#cleanCommentsColorTest').css('background-color', settings.cleanCommentsColor);
     }
     if (settings.showFilteredCommentsColor) {
       $('#showFilteredCommentsColorTest').css('background-color', settings.showFilteredCommentsColor);
-    }  
+    }
     if (settings.markMyFilteredCommentsColor) {
       $('#markMyFilteredCommentsColorTest').css('background-color', settings.markMyFilteredCommentsColor);
-    }    
+    }
+    if (settings.customLinkTitle) {
+      $("#testLink").text($("#textCustomLinkTitle").val().trim());
+    }
+    if (settings.customLinkUrl) {
+      $("#testLink").attr("href", $("#textCustomLinkUrl").val().trim());
+    }
   }
 
   // load settings from local storage
@@ -113,7 +119,7 @@ $(document).ready(function () {
       log("saveSettings: " + JSON.stringify(settings));
       var msg = SET_SETTINGS_MESSAGE;
       msg.settings = settings;
-      _browser.runtime.sendMessage(msg, function(state){
+      _browser.runtime.sendMessage(msg, function (state) {
         if (!state)
           logAll("Failed to save settings.");
         else
@@ -125,7 +131,7 @@ $(document).ready(function () {
   $('#btnRestoreDefaults').click(function () {
     var msg = RESTORE_SETTINGS_MESSAGE;
     _browser.runtime.sendMessage(msg, function () {
-        loadSettings();
+      loadSettings();
     });
   });
 
@@ -133,14 +139,14 @@ $(document).ready(function () {
     $('.advanced').toggle()
   });
 
-  $("#textCustomLinkTitle").change(function(){
-    $("#testLink").text( $("#textCustomLinkTitle").val().trim());  
-  });  
+  $("#textCustomLinkTitle").change(function () {
+    $("#testLink").text($("#textCustomLinkTitle").val().trim());
+  });
 
-  $("#textCustomLinkUrl").change(function(){
-    $("#testLink").attr("href", $("#textCustomLinkUrl").val().trim());  
-  });  
-  
+  $("#textCustomLinkUrl").change(function () {
+    $("#testLink").attr("href", $("#textCustomLinkUrl").val().trim());
+  });
+
 
   $('#btnHelp').click(function () {
     var manifest = _browser.runtime.getManifest();
