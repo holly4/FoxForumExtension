@@ -25,13 +25,10 @@ fieldset {
     margin-left: 40px;
 }
 
-a {
+/* remove underline on help link */
+.bottom a {
     float: right;
     margin: 0px 5px;
-}
-
-/* remove underline on links */
-a {
     text-decoration: none;
 }
 
@@ -53,6 +50,10 @@ input[type="text"] {
     width: 40px;
 }
 
+#textCustomLinkTitle, #textCustomLinkUrl {
+    width: 280px;
+}
+
 #textCleanCommentsColor, #textShowFilteredHighlight, #textMarkMyFilteredCommentsColor {
     width: 150px;
 }
@@ -63,5 +64,9 @@ input[type="text"] {
 
 .bottom {
     margin-top: 1em;
+}
+
+.advanced {
+   display : none; 
 }
 

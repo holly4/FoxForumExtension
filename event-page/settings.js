@@ -53,6 +53,9 @@ var SETTINGS = (function () {
         showFilteredCommentsHighlight: true,
         showFilteredCommentsColor: "#ffcccc",        
         showLikerAvatars: true,
+        showCustomLink: false,
+        customLinkTitle: "",
+        customLinkUrl: "",
         version: _browser.runtime.getManifest().version,
     };
 
@@ -91,8 +94,12 @@ var SETTINGS = (function () {
                 newSettings.filteredUsers = settings.filteredUsers;            
             if (settings.showFilteredComments != undefined)
                 newSettings.showFilteredComments = settings.showFilteredComments;
-            if (settings.logging != undefined)
-                newSettings.logging = settings.logging;
+            if (settings.showCustomLink != undefined)
+                newSettings.showCustomLink = settings.showCustomLink;
+            if (settings.customLinkTitle != undefined)
+                newSettings.customLinkTitle = settings.customLinkTitle;                
+            if (settings.customLinkUrl != undefined)
+                newSettings.customLinkUrl = settings.customLinkUrl;
             settings = newSettings;       
             isUpgrade = true;
         } else {

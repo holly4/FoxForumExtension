@@ -10,7 +10,10 @@
 </head>
 
 <body>
-    <div class="settings ">
+    <div>
+        <input type="checkbox" id="cbShowAdvancedSettings">Show Advanced Settings        
+    </div>        
+    <div class="settings">
         <fieldset>
             <legend><input type="checkbox" id="cbCleanComments">Clean Comments</legend>
             <input type="checkbox" id="cbCleanBlankLines">
@@ -23,10 +26,12 @@
             <label>Unupper Comments&nbsp;&gt;</label>
             <input type="text" id="textCleanUpperCommentsPct">
             <label>% uppercase</label> <br>           
-            <input type="checkbox" id="cbCleanCommentsHighlight">
-            <label>Highlight Color</label>
-            <input type="text" id="textCleanCommentsColor">
-            <span id="cleanCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>            
+            <div class="advanced">
+                <input type="checkbox" id="cbCleanCommentsHighlight">
+                <label>Highlight Color</label>
+                <input type="text" id="textCleanCommentsColor">
+                <span id="cleanCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>            
+            </div>
         </fieldset>
         <fieldset>
             <legend><input type="checkbox" id="cbCleanPage">Clean Page</legend>
@@ -48,7 +53,16 @@
             <label>Highlight Color</label>
             <input type="text" id="textMarkMyFilteredCommentsColor">
             <span id="markMyFilteredCommentsColorTest">&nbsp;&nbsp;&nbsp;&nbsp;</span>                   
-        </fieldset>        
+        </fieldset>    
+        <fieldset class="advanced">
+            <legend><input type="checkbox" id="cbShowCustomLink">Show Custom Link</legend>
+            <label>Title</label>
+            <input type="text" id="textCustomLinkTitle"><br>
+            <label>URL</label>
+            <input type="text" id="textCustomLinkUrl"><br>
+            <label>Test:</label>
+            <a id="testLink" href="url" target="_blank">link text</a>
+        </fieldset>              
     <div class="bottom">
         <input type="checkbox" id="cbEnableLogging">
         <label>Logging</label>

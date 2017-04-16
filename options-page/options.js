@@ -37,7 +37,9 @@ $(document).ready(function () {
     settings.showFilteredComments = $('#cbShowFilteredComments').is(':checked');
     settings.showFilteredCommentsHighlight = $('#cbShowFilteredHighlight').is(':checked');
     settings.showFilteredCommentsColor = $('#textShowFilteredHighlight').val().trim();
-    settings.showLikerAvatars = $('#cbShowLikerAvatars').is(':checked');
+    settings.showCustomLink = $('#cbShowCustomLink').is(':checked');
+    settings.customLinkTitle = $('#textCustomLinkTitle').val().trim();
+    settings.customLinkUrl = $('#textCustomLinkUrl').val().trim();
 
     if (settings.cleanCommentsColor) {
       $('#cleanCommentsColorTest').css('background-color', settings.cleanCommentsColor);
@@ -72,6 +74,9 @@ $(document).ready(function () {
     $('#cbMarkMyFilteredComments').prop('checked', settings.markMyFilteredComments);
     $('#textMarkMyFilteredCommentsColor').val(settings.markMyFilteredCommentsColor);
     $('#cbShowLikerAvatars').prop('checked', settings.showLikerAvatars);
+    $('#cbShowCustomLink').prop('checked', settings.showCustomLink);
+    $('#textCustomLinkTitle').val(settings.customLinkTitle);   
+    $('#textCustomLinkUrl').val(settings.customLinkUrl);       
 
     if (settings.cleanCommentsColor) {
       $('#cleanCommentsColorTest').css('background-color', settings.cleanCommentsColor);
@@ -124,6 +129,19 @@ $(document).ready(function () {
     });
   });
 
+  $('#cbShowAdvancedSettings').click(function () {
+    $('.advanced').toggle()
+  });
+
+  $("#textCustomLinkTitle").change(function(){
+    $("#testLink").text( $("#textCustomLinkTitle").val().trim());  
+  });  
+
+  $("#textCustomLinkUrl").change(function(){
+    $("#testLink").attr("href", $("#textCustomLinkUrl").val().trim());  
+  });  
+  
+
   $('#btnHelp').click(function () {
     var manifest = _browser.runtime.getManifest();
     _browser.tabs.create({
@@ -138,7 +156,7 @@ $(document).ready(function () {
   loadSettings();
 
   // save settings any time a checkbox is changed
-  $('input').click(function () {
+  $('.settings input').change(function () {
     saveSettings();
   });
 });

@@ -43,23 +43,21 @@ function Module_CleanPage() {
   }
 
   // add a link to the Unicode Converter if not present
-    /*
-  function addUnicodeConverterLink() {
+  function addCustomLink(text, url) {
     addToolsDiv();
-    
-    if (!$("#unicodeConverter").length) {
+
+    if (!$("#customLink").length) {
       var link = $(" \
-            <a id='unicodeConverter' style='margin-right: 20px;color: #0000FF;font-size: 12px;' \
-                href='http://holly4.github.io/UnicodeConverter' \
-                            target='_blank'>Unicode Converter \
-            </a>");
+            <a id='customLink' style='margin-right: 20px;color: \
+            #0000FF;font-size: 12px;' target='_blank'></a>");
       link.appendTo("#ffh-tools");
+      link.text(text);
+      link.attr("href", url);
     }
   }
-  */
-  
+
   // install - install the feature
-  function install(removeVideo) {
+  function install(removeVideo, customLinkTitle, customLinkUrl) {
     removeSiblings('#wrapper', '#templateHolder', 'janrain');
     removeSiblings('#doc');
     removeSiblings('#content .main');
@@ -78,15 +76,15 @@ function Module_CleanPage() {
 
     // remove extra padding at the top
     $("#doc").each(function () {
-      this.style.setProperty( 'padding', '0px', 'important' );
+      this.style.setProperty('padding', '0px', 'important');
     });
 
     $(".main").each(function () {
-      this.style.setProperty( 'padding-top', '0px', 'important' );
+      this.style.setProperty('padding-top', '0px', 'important');
     });
 
     $("#commenting").each(function () {
-      this.style.setProperty( 'padding', '0px', 'important' );
+      this.style.setProperty('padding', '0px', 'important');
     });
 
     // fix issue where the main editor and the user avatar overlap making
@@ -94,9 +92,11 @@ function Module_CleanPage() {
     $('#livefyre_comment_stream .fyre-editor').first().css('padding-top', 16);
     $('article').first().hide();
 
-    // add a link to the Unicode Converter
-    // TODO: Make configurable
-    //addUnicodeConverterLink();
+    // add custom link
+    if (customLinkTitle && customLinkTitle != "" &&
+      customLinkUrl && customLinkUrl != "") {
+      addCustomLink(customLinkTitle, customLinkUrl);
+    }
 
     // add button to toggle article display
     // TODO: Add to commmon buttons div
@@ -117,7 +117,9 @@ function Module_CleanPage() {
 
   // entry point to the module:
   //  state: true/false if module is enabled
-  function perform(state, removeVideo, _loggingEnabled) {
+  function perform(
+    state, removeVideo, _loggingEnabled,
+    customLinkTitle, customLinkUrl) {
     loggingEnabled = _loggingEnabled;
     log("perform " + state);
 
@@ -125,7 +127,7 @@ function Module_CleanPage() {
       // this cannot be undone
     } else {
       if (!isInstalled()) {
-            install(removeVideo);
+        install(removeVideo, customLinkTitle, customLinkUrl);
       }
     }
   }

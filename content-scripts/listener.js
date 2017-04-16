@@ -52,7 +52,9 @@ $(document).ready(function () {
     modules.cleanPage.perform(
       settings.cleanPage,
       settings.removeVideo,
-      settings.logging);
+      settings.logging, 
+      settings.showCustomLink ? settings.customLinkTitle : undefined,
+      settings.showCustomLink ? settings.customLinkUrl : undefined);
 
     modules.disableScrolling.perform(
       true,
