@@ -51,6 +51,7 @@ $(document).ready(function () {
 
     modules.cleanPage.perform(
       settings.cleanPage,
+      settings.removeMasthead,
       settings.removeVideo,
       settings.logging, 
       settings.showCustomLink ? settings.customLinkTitle : undefined,

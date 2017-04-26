@@ -57,9 +57,16 @@ function Module_CleanPage() {
   }
 
   // install - install the feature
-  function install(removeVideo, customLinkTitle, customLinkUrl) {
+  function install(removeMasthead, removeVideo, customLinkTitle, customLinkUrl) {
+
     removeSiblings('#wrapper', '#templateHolder', 'janrain');
-    removeSiblings('#doc');
+
+    if (removeMasthead) {
+      removeSiblings('#doc');
+    } else {
+      removeSiblings('#doc', "notdef", 'masthead ');
+    }
+
     removeSiblings('#content .main');
     removeSiblings('#commenting', 'article');
     $(".freeform").remove();
@@ -87,7 +94,7 @@ function Module_CleanPage() {
       this.style.setProperty('padding', '0px', 'important');
     });
 
-    // fix issue where the main editor and the user avatar overlap making
+    // fix issue in Fox News CSS where the main editor and the user avatar overlap making
     // it imposible to select with the mouse the first dozen or so letters in a comment
     $('#livefyre_comment_stream .fyre-editor').first().css('padding-top', 16);
     $('article').first().hide();
@@ -98,9 +105,11 @@ function Module_CleanPage() {
       addCustomLink(customLinkTitle, customLinkUrl);
     }
 
+    // add buttons div
+    $('#content .main').prepend("<div id='ffhButtons'>");
+
     // add button to toggle article display
-    // TODO: Add to commmon buttons div
-    $('#content .main').prepend("<button id='toggleArticle'>Show Article</button><br>");
+    $('#ffhButtons').append("<button id='toggleArticle'>Show Article</button>");
     $('#toggleArticle').css('margin', '20px 20px 0px 0px');
     $('#toggleArticle').click(function () {
       if ($(this).text() == 'Show Article') {
@@ -118,7 +127,7 @@ function Module_CleanPage() {
   // entry point to the module:
   //  state: true/false if module is enabled
   function perform(
-    state, removeVideo, _loggingEnabled,
+    state, removeMasthead, removeVideo, _loggingEnabled,
     customLinkTitle, customLinkUrl) {
     loggingEnabled = _loggingEnabled;
     log("perform " + state);
@@ -127,7 +136,7 @@ function Module_CleanPage() {
       // this cannot be undone
     } else {
       if (!isInstalled()) {
-        install(removeVideo, customLinkTitle, customLinkUrl);
+        install(removeMasthead, removeVideo, customLinkTitle, customLinkUrl);
       }
     }
   }

@@ -33,6 +33,7 @@ $(document).ready(function () {
     settings.logging = $('#cbEnableLogging').is(':checked');
     settings.markMyFilteredComments = $('#cbMarkMyFilteredComments').is(':checked');
     settings.markMyFilteredCommentsColor = $('#textMarkMyFilteredCommentsColor').val().trim();
+    settings.removeMasthead = $('#cbRemoveMasthead').is(':checked');
     settings.removeVideo = $('#cbRemoveVideo').is(':checked');
     settings.showFilteredComments = $('#cbShowFilteredComments').is(':checked');
     settings.showFilteredCommentsHighlight = $('#cbShowFilteredHighlight').is(':checked');
@@ -67,6 +68,7 @@ $(document).ready(function () {
     $('#textCleanCommentsColor').val(settings.cleanCommentsColor);
     $('#cbCleanPage').prop('checked', settings.cleanPage);
     $('#cbEnableLogging').prop('checked', settings.logging);
+    $('#cbRemoveMasthead').prop('checked', settings.removeMasthead);
     $('#cbRemoveVideo').prop('checked', settings.removeVideo);
     $('#cbShowFilteredComments').prop('checked', settings.showFilteredComments);
     $('#cbShowFilteredHighlight').prop('checked', settings.showFilteredCommentsHighlight);

@@ -48,6 +48,7 @@ var SETTINGS = (function () {
         logging: false,
         markMyFilteredComments: true,
         markMyFilteredCommentsColor: "#ffffaa", 
+        removeMasthead: false,
         removeVideo: false,
         showFilteredComments: false,
         showFilteredCommentsHighlight: true,
@@ -115,6 +116,12 @@ var SETTINGS = (function () {
             settings.cleanComments = defaultSettings.cleanComments;
             isUpgrade = true;
         }
+
+        if (settings.removeMasthead === undefined) {
+            logAll("settings.removeMasthead does not exist. setting to: " + defaultSettings.removeMasthead);
+            settings.removeMasthead = defaultSettings.removeMasthead;
+            isUpgrade = true;
+        }        
 
         if (settings.removeVideo === undefined) {
             logAll("settings.removeVideo does not exist. setting to: " + defaultSettings.removeVideo);
