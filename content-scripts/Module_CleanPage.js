@@ -78,9 +78,6 @@ function Module_CleanPage() {
     // enable the hidden comment count
     $('#livefyre_comment_stream .fyre-stream-stats').css('display', 'inline');
 
-    // change font on main username display to distinguish I's from l's
-    $(".fyre-user-profile-link span").css("font-family", '"Tahoma"');
-
     // remove extra padding at the top
     $("#doc").each(function () {
       this.style.setProperty('padding', '0px', 'important');

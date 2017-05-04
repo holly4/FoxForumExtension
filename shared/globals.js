@@ -49,9 +49,14 @@ const STATE_WAITING_FOR_COMMENT_STREAM = "waiting for comment stream";
 /* exported getUserName */
 // TODO: make globals a module
 function getUserName() {
+    //  TODO: 
+    //  1. use a mutation watcher on the user name element to catch log-out/login
+    //  2. change font-family upon changes as login switches it back to Helvetica
     var stream = $("#livefyre_comment_stream");
-    var userName = stream.find(".fyre-user-loggedin").text().trim();
-    return userName;
+    var userNameElement = stream.find(".fyre-user-loggedin span");
+    if (userNameElement.length)
+        userNameElement.css("font-family", "tahoma");
+    return userNameElement.text().trim();
 }
 
 /* exported addToolsDiv */
