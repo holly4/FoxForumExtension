@@ -15,6 +15,7 @@
         "Module_Borderizer": false,
         "Module_CleanComments": false,
         "Module_CleanPage": false,
+        "Module_CustomizePage": false,
         "Module_CommentObserver": false,
         "Module_DisableScrolling": false,
         "Module_FilterUsers": false,

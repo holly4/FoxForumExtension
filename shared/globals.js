@@ -40,12 +40,6 @@ const SHOW_OPTIONS_MESSAGE = {
     action: "show-options"
 }
 
-/* exported STATE_WAITING_FOR_ARTICLE */
-const STATE_WAITING_FOR_ARTICLE = "waiting for article";
-
-/* exported STATE_WAITING_FOR_COMMENT_STREAM */
-const STATE_WAITING_FOR_COMMENT_STREAM = "waiting for comment stream";
-
 /* exported getUserName */
 // TODO: make globals a module
 function getUserName() {
@@ -63,7 +57,12 @@ function getUserName() {
 // add common div for tools if not present
 function addToolsDiv() {
     if (!$("#ffh-tools").length) {
-        $("<div id='ffh-tools' style='float:left;vertical-align:middle;margin-top:-5px' ></div>")
-            .insertBefore("#livefyre_comment_stream .fyre-stream-header");
+        let target = $("#livefyre_comment_stream .fyre-stream-header");
+        if (!target.size()) {
+            console.log("addToolsDiv: Cannot find target!");
+        } else {
+            $("<div id='ffh-tools' style='float:left;vertical-align:middle;margin-top:-5px' ></div>")
+                .insertBefore(target);
+        }
     }
 }
