@@ -40,6 +40,12 @@ const SHOW_OPTIONS_MESSAGE = {
     action: "show-options"
 }
 
+/* exported FILTER_USER_MESSAGE */
+const FILTER_USER_MESSAGE = {
+    msg : "FILTER_USER_MESSAGE",
+    userName: ""
+}
+
 /* exported getUserName */
 // TODO: make globals a module
 function getUserName() {
@@ -66,3 +72,16 @@ function addToolsDiv() {
         }
     }
 }
+
+/* exported deleteIcon */
+const deleteIcon = chrome.extension.getURL('content-scripts2/icons/cancel-button.svg');
+/* exported checkBox */
+const checkBox = chrome.extension.getURL('content-scripts2/icons/blank-check-box.svg');
+/* exported checkedBox */
+const checkedBox = chrome.extension.getURL('content-scripts2/icons/check-box.svg');
+/* exported closeIcon */
+const closeIcon = chrome.extension.getURL('content-scripts2/icons/close-arrow.svg');
+/* exported openIcon */
+const openIcon = chrome.extension.getURL('content-scripts2/icons/open-arrow.svg');
+/* exported iconSize */
+const iconSize = '1em';

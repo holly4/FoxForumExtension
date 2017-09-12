@@ -11,7 +11,8 @@
    },
    "globals": {
         "modules": true,
-
+        "_" : true,
+        "Module_AvatarSwapper": false,
         "Module_Borderizer": false,
         "Module_CleanComments": false,
         "Module_CleanPage": false,
@@ -22,6 +23,7 @@
         "Module_ShowFilteredComments": false,
         "Module_ShowLikerAvatars": false,
         "Module_XhrInterceptor": false,
+        "Module_XhrInterceptor2": false,
         "Module_GetMoreComments": false,
         "SETTINGS": false,
 
@@ -35,10 +37,20 @@
         "RESTORE_SETTINGS_MESSAGE": false,
         "SHOW_OPTIONS_MESSAGE": false,
         "SHOW_MESSAGE": false,
+        "FILTER_USER_MESSAGE": false,
 
         "STATE_WAITING_FOR_ARTICLE": false,
         "STATE_WAITING_FOR_COMMENT_STREAM": false,
 
+        "deleteIcon": false,
+        "checkBox": false,
+        "checkedBox": false,
+        "closeIcon": false,
+        "openIcon": false,
+        "iconSize": false,        
+
         "dummy": false
    }
 }
+
+

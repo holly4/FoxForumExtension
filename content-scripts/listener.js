@@ -52,6 +52,10 @@ $(document).ready(function () {
       settings.removeMasthead,
       settings.removeVideo,
       settings.logging);
+      modules.xhrInterceptor.perform(
+        settings.markMyFilteredComments,
+        settings.markMyFilteredCommentsColor,
+        true || settings.logging);      
   }
 
   function applySettings(settings) {
@@ -103,11 +107,6 @@ $(document).ready(function () {
       settings.cleanUpperCommentsPct,
       settings.cleanCommentsHighlight,
       settings.cleanCommentsColor,
-      settings.logging);
-
-    modules.xhrInterceptor.perform(
-      settings.markMyFilteredComments,
-      settings.markMyFilteredCommentsColor,
       settings.logging);
 
     //modules.borderizer.perform(
