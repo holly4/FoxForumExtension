@@ -67,9 +67,9 @@ var SETTINGS = (function () {
 
     function getStorage() {
         if (_browser && _browser.storage) {
-            if (_browser.storage.sync) {
-                logAll("getStorage -> storage.sync");
-                return _browser.storage.sync;
+            if (_browser.storage.local) {
+                logAll("getStorage -> storage.local");
+                return _browser.storage.local;
             }
             if (_browser.storage.local) {
                 logAll("getStorage -> storage.local");

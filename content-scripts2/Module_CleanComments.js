@@ -86,22 +86,23 @@ function Module_CleanComments() {
     mutations.forEach(function (mutation) {
       if (mutation.hasOwnProperty("userName")) {
         processComment(mutation);
-      } /*else {
-        let $element = $(mutation.element);
-        let $msg = $element.find('.sppre_conversation-typing');
-        if ($msg.length) {
-          let $top = $element.find('.sppre_top-activity-bar');
-          if ($top.length) {
-            if (!showTopActivityBar) {
-              $top.hide();
-            }
-          } else {
-            if (!showReplyActivityBar) {
-              $msg.hide();
-            }
-          }
-        
-      }}*/
+      }
+      /*else {
+             let $element = $(mutation.element);
+             let $msg = $element.find('.sppre_conversation-typing');
+             if ($msg.length) {
+               let $top = $element.find('.sppre_top-activity-bar');
+               if ($top.length) {
+                 if (!showTopActivityBar) {
+                   $top.hide();
+                 }
+               } else {
+                 if (!showReplyActivityBar) {
+                   $msg.hide();
+                 }
+               }
+             
+           }}*/
     });
   }
 }

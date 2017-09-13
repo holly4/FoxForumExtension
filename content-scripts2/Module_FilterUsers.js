@@ -10,12 +10,11 @@ function Module_FilterUsers() {
     let observerId = undefined;
     let filteredUsers = [];
     let filtering = false;
-    const iconSize = '1em';
+    let settings = {};
 
     return {
         perform: perform,
     };
-
 
     function log(line) {
         if (loggingEnabled) {
@@ -23,35 +22,20 @@ function Module_FilterUsers() {
         }
     }
 
-    function perform(settings) {
-        loggingEnabled = settings.loggingEnabled;
-        log('installed');
+    function perform(parm) {
+        settings = Module_Settings(parm);
+        loggingEnabled = settings.get(loggingEnabled);
 
-        if (settings.filteredUsers) {
-            filteredUsers = settings.filteredUsers;
-            console.log('filteredUsers: ', filteredUsers);
-        }
-        else
-        {
-            filteredUsers = [];
+        console.log('FilterUsers',
+            settings.get('filtering'),
+            settings.get('filteredUsers'));
 
-            chrome.storage.sync.set({userNameToAvatar: filteredUsers}, function() {
-                //console.log('wrote: ', filteredUsers);    
-            });               
-        }
-
-        if (settings.filtering) {
-            filtering = settings.filtering;
-            console.log('filtering: ', filtering);
-        } else {
-            filtering = false;
-            chrome.storage.sync.set({filtering: filtering});     
-            //console.log('wrote: ', filtering);    
-        }
-
+        filteredUsers = settings.getOrSet( 'filteredUsers', ['Whereareanygoodones']);
+        filtering = settings.getOrSet('filtering', false);
+        
         addTable("Enable Filtering");
         _.each(filteredUsers, addUser);
-        showTable(false);     
+        showTable(false);
 
         // connect to observer
         observerId = modules.commentObserver.attach(this, processMutations);
@@ -69,7 +53,7 @@ function Module_FilterUsers() {
                 removePostsBy(event.data.userName);
             }
         });
-    }    
+    }
 
     // return the id for a user
     function idFromUser(user) {
@@ -100,8 +84,7 @@ function Module_FilterUsers() {
             .css('margin-right', '1em')
             .click(function () {
                 filtering = !filtering;
-                chrome.storage.sync.set({filtering: filtering});     
-                //console.log('wrote: ', filtering);                  
+                settings.set('filtering', filtering)
                 $(this).attr('src', filtering ? checkedBox : checkBox);
                 if (filtering) {
                     $('#filteredByUser').show();
@@ -176,16 +159,14 @@ function Module_FilterUsers() {
     function addUser(user) {
         if (!_.contains(filteredUsers, user)) {
             filteredUsers.push(user);
-            chrome.storage.sync.set({filteredUsers: filteredUsers});     
-            //console.log('wrote: ', filteredUsers);              
+            settings.set('filteredUsers', filteredUsers);
         }
         addRow(user, false);
     }
 
     function removeUser(user) {
         filteredUsers = _.without(filteredUsers, user);
-        chrome.storage.sync.set({filteredUsers: filteredUsers});     
-        //console.log('wrote: ', filteredUsers); 
+        settings.set('filteredUsers', filteredUsers);
         $('#filteredByUser .filter-user').each(function (index, value) {
             let $value = $(value);
             if ($value.text() == user) {
@@ -219,7 +200,6 @@ function Module_FilterUsers() {
 
     function processComment(comment) {
         if (_.contains(filteredUsers, comment.userName)) {
-            //log(JSON.stringify(comment));
             let $element = $(comment.element);
             $('<div>')
                 .css('height', '.5em')
@@ -239,13 +219,15 @@ function Module_FilterUsers() {
     }
 
     function processComments(comments) {
-        $.each(comments, function (index, comment) {
-            if (comment.hasOwnProperty("userName")) {
+        if (filtering) {
+            $.each(comments, function (index, comment) {
+                if (comment.hasOwnProperty("userName")) {
+                    processComment(comment);
+                }
                 processComment(comment);
-            }            
-            processComment(comment);
-        });
-        updateTableCount();
+            });
+            updateTableCount();
+        }
     }
 
     function processMutations(comments) {

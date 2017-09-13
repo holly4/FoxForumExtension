@@ -25,6 +25,7 @@
         "Module_XhrInterceptor": false,
         "Module_XhrInterceptor2": false,
         "Module_GetMoreComments": false,
+        "Module_Settings": false,
         "SETTINGS": false,
 
         "addToolsDiv": false,

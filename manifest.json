@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22.0.0.0",
 	"name": "Fox Forum Helper Beta",
 	"description": "Add function (and Fun!) to the Fox News Forum.",
-	"version": "2.4.1",
+	"version": "2.4.2",
 
 	"icons": {
 		"128": "images/icon.png"
@@ -47,9 +47,10 @@
 		{
 			"matches": ["*://spoxy-shard4.spot.im/*"],
 			"js": [
-				"content-scripts2/underscore-1.8.3.min.js",
-				"content-scripts2/jquery-3.2.1.slim.min.js",
+				"shared/underscore-1.8.3.min.js",
+				"shared/jquery-3.2.1.slim.min.js",
 				"shared/globals.js",
+				"content-scripts2/Module_Settings.js",
 				"content-scripts2/Module_CommentObserver.js",
 				"content-scripts2/Module_AvatarSwapper.js",
 				"content-scripts2/Module_CleanComments.js",

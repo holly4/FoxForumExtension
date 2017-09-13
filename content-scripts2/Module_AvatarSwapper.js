@@ -8,76 +8,63 @@ function Module_AvatarSwapper() {
     let loggingEnabled = false;
     let swapping = true;
     var observerId = undefined;
-    let userNameToAvatar = {};
+    let settings = {};
+    let userNameToAvatar = undefined;
+
+    let defuserNameToAvatar = [{
+            enabled: true,
+            name: "HappyDaysAreHereAgain",
+            url: "https://image.ibb.co/eTUUTa/crazy.jpg"
+        },
+        {
+            enabled: true,
+            name: "KCH1",
+            url: "https://image.ibb.co/kFsuuF/cutebunny.jpg"
+        },
+        {
+            enabled: true,
+            name: "DowntownDavis",
+            url: "https://image.ibb.co/h9z7EF/omniphobic.jpg"
+        },
+        {
+            enabled: true,
+            name: "The_Fifth_Dentist",
+            url: "https://image.ibb.co/k6gyMv/kraft.jpg"
+        },
+        {
+            enabled: true,
+            name: "CanadianCivilian",
+            url: "https://image.ibb.co/hHYTMv/scottthedick.jpg"
+        }
+        //"thinkinowtlowd": "https://image.ibb.co/hJLm8a/snowflake.jpg",                
+    ];
 
     return {
         perform: perform,
     };
 
-    function perform(settings) {
-        log('installed');
-        loggingEnabled = settings.loggingEnabled;
+    function perform(parm) {
+        if (_.keys(parm.userNameToAvatar)==0)
+            parm.userNameToAvatar=null;
 
-        if (settings.userNameToAvatar) {
-            userNameToAvatar = settings.userNameToAvatar;
-            console.log('userNameToAvatar: ', userNameToAvatar);
-        }
-        else
-        {
-            userNameToAvatar = [
-                {   
-                    enabled: true,
-                    name: "HappyDaysAreHereAgain",
-                    url: "https://image.ibb.co/eTUUTa/crazy.jpg"
-                },
-                {   
-                    enabled: true,
-                    name: "KCH1",
-                    url: "https://image.ibb.co/kFsuuF/cutebunny.jpg"
-                },
-                {   
-                    enabled: true,
-                    name: "DowntownDavis",
-                    url: "https://image.ibb.co/h9z7EF/omniphobic.jpg"
-                },
-                {   
-                    enabled: true,
-                    name: "The_Fifth_Dentist",
-                    url: "https://image.ibb.co/k6gyMv/kraft.jpg"
-                },
-                {   
-                    enabled: true,
-                    name: "CanadianCivilian",
-                    url: "https://image.ibb.co/hHYTMv/scottthedick.jpg"
-                }
-                //"thinkinowtlowd": "https://image.ibb.co/hJLm8a/snowflake.jpg",                
-            ];
-            chrome.storage.sync.set({userNameToAvatar: userNameToAvatar});
-            //console.log('wrote: ', userNameToAvatar);
-            chrome.storage.sync.set({userNameToAvatar: userNameToAvatar}, function() {
-                //console.log('wrote: ', userNameToAvatar);    
-            });               
-        }
+        settings = Module_Settings(parm);
+        loggingEnabled = settings.get(loggingEnabled);
 
-        if (settings.swapping) {
-            swapping = settings.swapping;
-            console.log('swapping: ', swapping);
-        } else {
-            swapping = false;
-            chrome.storage.sync.set({swapping: swapping});     
-            //console.log('wrote: ', swapping);    
-        }
+        console.log('AvatarSwapper',
+            settings.get('swapping'),
+            settings.get('userNameToAvatar'));        
+
+        userNameToAvatar = settings.getOrSet( 'userNameToAvatar', defuserNameToAvatar);
+        swapping = settings.getOrSet('swapping', false);
 
         addTable("Enable Avatar Swapping", function (state) {
             swapping = state;
-            chrome.storage.sync.set({swapping: swapping}, function() {
-                //console.log('wrote: ', swapping);    
-            });    
+            settings.set('swapping', swapping);
         });
 
         _.each(userNameToAvatar, (i) => addRow(i));
 
-        showTable(false);            
+        showTable(false);
 
         // connect to observer
         observerId = modules.commentObserver.attach(this, processMutations);
@@ -177,19 +164,19 @@ function Module_AvatarSwapper() {
         $('<img>')
             .appendTo($td)
             .addClass('icon')
-            .attr('src', state ?  checkedBox : checkBox)
+            .attr('src', state ? checkedBox : checkBox)
             .css('height', iconSize)
             .css('width', iconSize)
             .click(function () {
                 state = !state;
-                $(this).attr('src', state ?  checkedBox : checkBox)
-                let index = _.findIndex(userNameToAvatar, {name: row.name});
+                $(this).attr('src', state ? checkedBox : checkBox)
+                let index = _.findIndex(userNameToAvatar, {
+                    name: row.name
+                });
                 if (index >= 0) {
                     userNameToAvatar[index].enabled = state;
                 }
-                chrome.storage.sync.set({userNameToAvatar: userNameToAvatar}, function() {
-                    //console.log('wrote: ', userNameToAvatar);    
-                });                     
+                settings.set( 'userNameToAvatar', userNameToAvatar );
             });
         $('<td>')
             .appendTo($tr).append(
@@ -208,7 +195,9 @@ function Module_AvatarSwapper() {
     }
 
     function processComment(comment) {
-        let rec = _.findWhere(userNameToAvatar, {name: comment.userName});
+        let rec = _.findWhere(userNameToAvatar, {
+            name: comment.userName
+        });
         if (rec) {
             log("change avatar " + comment.userName + " " + rec.url);
             var $image = $(comment.element).find('.sppre_user-image');
