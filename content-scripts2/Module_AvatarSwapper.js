@@ -35,8 +35,12 @@ function Module_AvatarSwapper() {
             enabled: true,
             name: "CanadianCivilian",
             url: "https://image.ibb.co/hHYTMv/scottthedick.jpg"
+        },
+        {
+            enabled: true,
+            name: "Thinkinowtloud2",
+            url: "https://image.ibb.co/n2JrWv/cryingemogi.png"
         }
-        //"thinkinowtlowd": "https://image.ibb.co/hJLm8a/snowflake.jpg",                
     ];
 
     return {
@@ -44,17 +48,18 @@ function Module_AvatarSwapper() {
     };
 
     function perform(parm) {
-        if (_.keys(parm.userNameToAvatar)==0)
-            parm.userNameToAvatar=null;
+        if (_.keys(parm.userNameToAvatar) != _.keys(defuserNameToAvatar)) {
+            parm.userNameToAvatar = null;
+        }
 
         settings = Module_Settings(parm);
         loggingEnabled = settings.get(loggingEnabled);
 
         console.log('AvatarSwapper',
             settings.get('swapping'),
-            settings.get('userNameToAvatar'));        
+            settings.get('userNameToAvatar'));
 
-        userNameToAvatar = settings.getOrSet( 'userNameToAvatar', defuserNameToAvatar);
+        userNameToAvatar = settings.getOrSet('userNameToAvatar', defuserNameToAvatar);
         swapping = settings.getOrSet('swapping', false);
 
         addTable("Enable Avatar Swapping", function (state) {
@@ -176,7 +181,7 @@ function Module_AvatarSwapper() {
                 if (index >= 0) {
                     userNameToAvatar[index].enabled = state;
                 }
-                settings.set( 'userNameToAvatar', userNameToAvatar );
+                settings.set('userNameToAvatar', userNameToAvatar);
             });
         $('<td>')
             .appendTo($tr).append(

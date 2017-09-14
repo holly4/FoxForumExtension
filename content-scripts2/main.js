@@ -167,6 +167,8 @@ $(document).ready(function () {
     }
     */
 
+    // once forum is loaded change the post type and
+    // wait for awknowledgement 
     function onForumLoaded(settings) {
         log('Forum loaded');
 
@@ -178,14 +180,23 @@ $(document).ready(function () {
             //<div data-spmark="newest"><span>Newest</span></div>
             setTimeout(function () {
                 $('.sppre_sort-menu [data-spmark="newest"]').click();
+                var readyChecker = setTimeout(function(){
+                    if ($('.sppre_sort-by').text() === "Newest") {
+                        clearTimeout(readyChecker);
+                        onReady(settings);
+                    }
+                }, 500);
             }, 500);
         }
+    }
 
+    function onReady(settings) {
         modules = {
             avatarSwapper: new Module_AvatarSwapper(),
             commentCleaner: Module_CleanComments(),
             commentObserver: Module_CommentObserver(),
             filterUsers: new Module_FilterUsers(),
+            //liker: new Module_LikeComments(),
         }
 
         settings.loggingEnabled = true;
@@ -193,5 +204,8 @@ $(document).ready(function () {
         modules.commentCleaner.perform(settings);
         modules.avatarSwapper.perform(settings);
         modules.filterUsers.perform(settings);
+        //modules.liker.perform(settings);
+        
+        //window.parent.postMessage("ffhcomplete", "*");
     }
 });

@@ -55,6 +55,7 @@
 				"content-scripts2/Module_AvatarSwapper.js",
 				"content-scripts2/Module_CleanComments.js",
 				"content-scripts2/Module_FilterUsers.js",
+				"content-scripts2/Module_Liker.js",
 				"content-scripts2/main.js"
 			], 
 			"all_frames":true}

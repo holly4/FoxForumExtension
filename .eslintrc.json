@@ -39,6 +39,7 @@
         "SHOW_OPTIONS_MESSAGE": false,
         "SHOW_MESSAGE": false,
         "FILTER_USER_MESSAGE": false,
+        "Module_LikeComments": false,
 
         "STATE_WAITING_FOR_ARTICLE": false,
         "STATE_WAITING_FOR_COMMENT_STREAM": false,

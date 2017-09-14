@@ -52,10 +52,10 @@ $(document).ready(function () {
       settings.removeMasthead,
       settings.removeVideo,
       settings.logging);
-      modules.xhrInterceptor.perform(
-        settings.markMyFilteredComments,
-        settings.markMyFilteredCommentsColor,
-        true || settings.logging);      
+    modules.xhrInterceptor.perform(
+      settings.markMyFilteredComments,
+      settings.markMyFilteredCommentsColor,
+      true || settings.logging);
   }
 
   function applySettings(settings) {
@@ -70,9 +70,9 @@ $(document).ready(function () {
     });
 
     modules.customizePage.perform(
-      settings.logging, 
+      settings.logging,
       settings.showCustomLink ? settings.customLinkTitle : undefined,
-      settings.showCustomLink ? settings.customLinkUrl : undefined      
+      settings.showCustomLink ? settings.customLinkUrl : undefined
     );
 
     modules.commentObserver.perform(
@@ -194,4 +194,14 @@ $(document).ready(function () {
         }, 500);
       }
     });
+
+  // listen for the filter users
+  //window.addEventListener("message", function (event) {
+  //  console.log("MESSAGE", event.data);
+  //  if (event.data === "ffhcomplete") {
+  //    console.log("ffhcomplete");
+  //    $('body').prepend('<h1 id="ffhcomplete">ffhcomplete</h1>');
+  //  }
+  //});
+
 }());
