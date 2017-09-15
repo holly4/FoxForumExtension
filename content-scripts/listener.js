@@ -7,7 +7,6 @@ $(document).ready(function () {
 
   const STATE_WAITING_FOR_ARTICLE = "waiting for article";
   const STATE_WAITING_FOR_COMMENT_STREAM = "waiting for comment stream";
-  const STATE_WAITING_FOR_COMMENTS = "waiting for comments";
 
   var logging = true; // log until settings read
   var state = STATE_WAITING_FOR_ARTICLE;
@@ -30,15 +29,8 @@ $(document).ready(function () {
     if (modules === undefined) {
       log("create modules");
       modules = {
-        borderizer: new Module_Borderizer(),
-        cleanComments: new Module_CleanComments(),
         cleanPage: Module_CleanPage(),
-        customizePage: new Module_CustomizePage(),
-        commentObserver: Module_CommentObserver(),
-        disableScrolling: Module_DisableScrolling(),
-        filterUsers: Module_FilterUsers(),
-        showFilterComments: Module_ShowFilteredComments(),
-        showLikerAvatars: Module_ShowLikerAvatars(),
+        // customizePage: new Module_CustomizePage(),
         xhrInterceptor: Module_XhrInterceptor(),
       }
     }
@@ -58,82 +50,10 @@ $(document).ready(function () {
       true || settings.logging);
   }
 
-  function applySettings(settings) {
-    log("applySettings: " + JSON.stringify(settings));
-    createModules();
-
-    // copy only users enabled for filtering to send onward
-    var filteredUsers = [];
-    settings.filteredUsers.forEach(function (item) {
-      if (item[0])
-        filteredUsers.push(item[1]);
-    });
-
-    modules.customizePage.perform(
-      settings.logging,
-      settings.showCustomLink ? settings.customLinkTitle : undefined,
-      settings.showCustomLink ? settings.customLinkUrl : undefined
-    );
-
-    modules.commentObserver.perform(
-      settings.logging);
-
-
-    modules.disableScrolling.perform(
-      true,
-      settings.logging);
-
-    modules.filterUsers.perform(
-      settings.filterUsers,
-      filteredUsers,
-      settings.logging);
-
-    modules.showFilterComments.perform(
-      settings.showFilteredComments,
-      settings.showFilteredCommentsHighlight,
-      settings.showFilteredCommentsColor,
-      settings.logging);
-
-    modules.showLikerAvatars.perform(
-      settings.showLikerAvatars,
-      settings.logging);
-
-    modules.cleanComments.perform(
-      settings.cleanComments,
-      settings.cleanBlankLines,
-      settings.cleanBoldComments,
-      settings.cleanBoldCommentsPct,
-      settings.cleanUpperComments,
-      settings.cleanUpperCommentsPct,
-      settings.cleanCommentsHighlight,
-      settings.cleanCommentsColor,
-      settings.logging);
-
-    //modules.borderizer.perform(
-    //  settings.cleanComments,
-    //  settings.logging);      
-  }
-
   _browser.runtime.onMessage.addListener(function (request) {
 
     // log the request 
     log("onMessage: " + JSON.stringify(request));
-
-    if (request.action === APPLY_SETTINGS_MESSAGE.action) {
-      applySettings(request.settings);
-    }
-    if (request.action === SET_FILTEREES_MESSAGE.action) {
-      // copy only users enabled for filtering to send onward
-      var filteredUsers = [];
-      request.filteredUsers.forEach(function (item) {
-        if (item[0])
-          filteredUsers.push(item[1]);
-      });
-      modules.filterUsers.perform(
-        request.enabled,
-        filteredUsers,
-        logging);
-    }
   });
 
   // on startup:
@@ -169,24 +89,8 @@ $(document).ready(function () {
               {
                 var section = $("#commenting");
                 if (section.length) {
-                  cleanPage(_settings);
-                  state = STATE_WAITING_FOR_COMMENTS;
-                }
-                break;
-              }
-
-            case STATE_WAITING_FOR_COMMENTS:
-              {
-                var stream = $("#livefyre_comment_stream .fyre-comment-stream");
-                if (stream.length) {
                   clearInterval(chkState);
-                  _browser.runtime.sendMessage(SHOW_MESSAGE);
-                  window.setTimeout(function () {
-                    applySettings(_settings);
-                    window.ffhModules = modules;
-                    console.log("settings applied");
-                  }, 500);
-                  state = STATE_WAITING_FOR_COMMENT_STREAM;
+                  cleanPage(_settings);
                 }
                 break;
               }

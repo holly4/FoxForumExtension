@@ -32,15 +32,7 @@
 			"shared/jquery-1.12.3.slim.min.js",
 			"shared/globals.js",
 			"content-scripts/listener.js",
-			"content-scripts/Module_Borderizer.js",
-			"content-scripts/Module_CommentObserver.js",
-			"content-scripts/Module_CleanComments.js",
 			"content-scripts/Module_CleanPage.js",
-			"content-scripts/Module_CustomizePage.js",
-			"content-scripts/Module_DisableScrolling.js",
-			"content-scripts/Module_FilterUsers.js",
-			"content-scripts/Module_ShowFilteredComments.js",
-			"content-scripts/Module_ShowLikerAvatars.js",
 			"content-scripts/Module_XhrInterceptor.js"
 		]
 		},

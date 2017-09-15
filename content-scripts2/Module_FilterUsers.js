@@ -48,7 +48,7 @@ function Module_FilterUsers() {
         // listen for the filter users
         window.addEventListener("message", function (event) {
             //console.log("MESSAGE", event);
-            if (event.data.msg === FILTER_USER_MESSAGE.msg) {
+            if (event.data && event.data.msg === FILTER_USER_MESSAGE.msg) {
                 addUser(event.data.userName);
                 removePostsBy(event.data.userName);
             }

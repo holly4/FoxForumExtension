@@ -175,7 +175,7 @@ $(document).ready(function () {
         $("body").css('color', 'blue');
         $('<div id="ffh-div"></div>').insertAfter($('.sppre_conversation-header'));
 
-        if ($('.sppre_sort-by').text() === "Best") {
+        if ($('.sppre_sort-by').text() !== "Newest") {
             $('.sppre_sort-by').click();
             //<div data-spmark="newest"><span>Newest</span></div>
             setTimeout(function () {
@@ -187,6 +187,9 @@ $(document).ready(function () {
                     }
                 }, 500);
             }, 500);
+        } else {
+            // no need to change as already on newest
+            onReady(settings)
         }
     }
 
