@@ -102,6 +102,7 @@ function Module_AvatarSwapper() {
 
     function addHeader($container, text, state, set_state) {
         let $div = $('<div>')
+            .css('margin-top', '.5em;')
             .appendTo($container);
 
         $('<img>')
@@ -109,7 +110,6 @@ function Module_AvatarSwapper() {
             .attr('src', state ? checkedBox : checkBox)
             .css('height', iconSize)
             .css('width', iconSize)
-            .css('margin-right', '1em')
             .click(function () {
                 state = !state;
                 set_state(state);
@@ -123,6 +123,7 @@ function Module_AvatarSwapper() {
 
         $('<span>')
             .appendTo($div)
+            .css('margin-left', '.5em')
             .text(text);
     }
 
@@ -132,7 +133,7 @@ function Module_AvatarSwapper() {
         let $container = $('<div>')
             .appendTo($('#ffh-div'))
             .addClass('site')
-            .css('padding-bottom', '10px');
+            .css('margin-left', '1em')
 
         addHeader($container, title, swapping, set_state);
 
@@ -161,7 +162,8 @@ function Module_AvatarSwapper() {
     function addRow(row) {
         let state = row.enabled;
         let $tr = $("<tr>")
-            .appendTo($('#avatarSwaps'));
+            .appendTo($('#avatarSwaps')
+            .css('margin-left', '1em'));
 
         let $td = $('<td>')
             .appendTo($tr)

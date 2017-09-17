@@ -74,14 +74,14 @@ function Module_FilterUsers() {
 
     function addHeader($container, title) {
         let $div = $('<div>')
-            .appendTo($container);
+            .css('margin-top', '.5em;')
+            .appendTo($container)
 
         $('<img>')
             .appendTo($div)
             .attr('src', filtering ? checkedBox : checkBox)
             .css('height', iconSize)
             .css('width', iconSize)
-            .css('margin-right', '1em')
             .click(function () {
                 filtering = !filtering;
                 settings.set('filtering', filtering)
@@ -95,6 +95,7 @@ function Module_FilterUsers() {
 
         $('<span>')
             .appendTo($div)
+            .css('margin-left', '.5em')
             .text(title);
     }
 
@@ -104,14 +105,15 @@ function Module_FilterUsers() {
         let $container = $('<div>')
             .appendTo($('#ffh-div'))
             .addClass('site')
-            .css('padding-bottom', '10px');
+            .css('margin-left', '1em')
 
         addHeader($container, title);
 
         let $table = $('<table>')
             .appendTo($container)
             .attr('id', 'filteredByUser')
-            .css('font-size', 'smaller');
+            .css('font-size', 'smaller')
+            .css('margin-left', '1em');
 
         let $tr = $('<tr>');
         $tr.appendTo($table);
@@ -130,7 +132,8 @@ function Module_FilterUsers() {
 
     function addRow(user, visible) {
         let $tr = $("<tr>")
-            .appendTo($('#filteredByUser'));
+            .appendTo($('#filteredByUser'))
+            .css('margin-left', '1em');
         visible ? $tr.show() : $tr.hide;
 
         let $td = $('<td>')

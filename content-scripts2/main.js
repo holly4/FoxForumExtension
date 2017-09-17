@@ -12,6 +12,7 @@ $(document).ready(function () {
             console.log(settings);
             // wait for class sppre_messages-list
             var checker = setInterval(function () {
+                log("waiting for forum load");
                 let list = $(".sppre_messages-list");
                 if (list.length) {
                     clearInterval(checker);
@@ -21,179 +22,95 @@ $(document).ready(function () {
         }
     });
 
-/*
-    let logging = false;
-
-    function showTable(state) {
-        let $firstRow = $("#logging tr:first-child");
-        let $otherRows = $("#logging tr:not(:first-child)")
-
-        if (state) {
-            $firstRow.find('img').attr('src', closeIcon);
-            $otherRows.show();
-        } else {
-            $firstRow.find('img').attr('src', openIcon);
-            $otherRows.hide();
-        }
-    }
-
-    function addHeader($container, text, state, set_state) {
+    // once forum is loaded change the post type and
+    // wait for awknowledgement 
+    function onForumLoaded(settings) {
+        log('Forum loaded');
+        var manifest = chrome.runtime.getManifest();
+        let state = true;
+        $("body").css('color', 'blue');
+        let $main = $('<div id="ffh-div" style="border-style: solid;border-width:thin;padding:.5em;"></div>')
+            .insertAfter($('.sppre_conversation-header'));
         let $div = $('<div>')
-            .appendTo($container);
-
+            .appendTo($main);
         $('<img>')
             .appendTo($div)
-            .attr('src', state ? checkedBox : checkBox)
-            .css('height', iconSize)
-            .css('width', iconSize)
-            .css('margin-right', '1em')
-            .click(function () {
-                state = !state;
-                set_state(state);
-                $(this).attr('src', state ? checkedBox : checkBox);
-                if (state) {
-                    $container.find('table').show();
-                } else {
-                    $container.find('table').hide();
-                }
-            });
-
-        $('<span>')
-            .appendTo($div)
-            .text(text);
-    }
-
-    function addTable(title, set_state) {
-        let state = false;
-
-        let $container = $('<div>')
-            .appendTo($('#ffh-div'))
-            .addClass('site')
-            .css('padding-bottom', '10px');
-
-        addHeader($container, title, logging, set_state);
-
-        let $table = $('<table>')
-            .appendTo($container)
-            .attr('id', 'logging')
-            .css('font-size', 'smaller');
-
-        let $tr = $('<tr>')
-            .appendTo($table);
-
-        $('<img>')
             .attr('src', state ? closeIcon : openIcon)
             .css('height', iconSize)
             .css('width', iconSize)
             .css('margin-right', '1em')
             .click(function () {
                 state = !state;
-                showTable(state);
-            }).appendTo($tr);
-
-        $tr = $('<tr>')
-            .appendTo($table);
-    }
-
-    function addRow(key, state, setState) {
-        let $tr = $("<tr>")
-            .appendTo($('#logging'));
-
-        let $td = $('<td>')
-            .appendTo($tr)
-        $('<button>')
-        $('<img>')
-            .appendTo($td)
-            .addClass('icon')
-            .attr('src', state ? checkedBox : checkBox)
-            .css('height', iconSize)
-            .css('width', iconSize)
-            .click(function () {
-                state = !state;
-                $(this).attr('src', state ? checkedBox : checkBox)
-                setState(key, state);
+                $(this).attr('src', state ? closeIcon : openIcon);
+                if (state) {
+                    $main.children().not($div).show();
+                } else {
+                    $main.children().not($div).hide();
+                }
             });
-        $('<td>')
-            .appendTo($tr)
-            .text(key)
-    }
+        ($('<span>')
+            .appendTo($div)
+            .text(manifest.name + " " + manifest.version));
 
-    let loggingStates = {};
+        /*$('<a>').attr('href', 'http://foxforums.info')
+            .css('margin-left', '1em')
+            .appendTo($main)
+            .attr('target', '_blank')
+            .text('FoxForums.info');*/
 
-    function createTable() {
-        let loggers = ["AvatarSwapper", "CleanComments", "CommentObserver", "FilterUsers()"]
+        let $sortMenu = $('.sppre_sort-menu');
+        let checkState = 0;
+        let wait_until = 0;
+        let target = "Newest";
+        let attempts = 0;
+        let master = setInterval(function () {
+            if (attempts++ >= 40) {
+                clearInterval(master);
+                onReady(settings)
+            }
 
-        if (settings.loggingStates) {
-            loggingStates = settings.loggingStates;
-            console.log('logging: ', loggingStates);
-        } else {
-            logging = false;
-            loggingStates = {};
-            loggers.forEach((i) => loggingStates[i] = false);
-            chrome.storage.local.set({
-                loggingStates: loggingStates
-            });
-            console.log('wrote: ', loggingStates);
-        }
+            if (attempts >= wait_until) {
+                switch (checkState) {
+                    case 0:
+                        // check for newest
+                        if ($sortMenu.find('.sppre_sort-by').text() == target) {
+                            clearInterval(master);
+                            onReady(settings)
+                        } else {
+                            checkState = 1;
+                        }
+                        break;
 
-        addTable("Logging", function (state) {
-            chrome.storage.local.set({
-                logging: state
-            });
-        });
+                    case 1:
+                        // open menu
+                        $sortMenu.find('.sppre_sort-by').click();
+                        checkState = 2;
+                        break;
 
-        loggers.forEach(function (i) {
-            addRow(i, loggingStates[i], function (key, state) {
-                loggingStates[key] = state;
-                chrome.storage.local.set({
-                    loggingStates: loggingStates
-                });
-                console.log('wrote: ', loggingStates);
-            });
-        });
+                    case 2:
+                        // check for menu open
+                        if ($sortMenu.find('.sppre_droplist').length) {
+                            checkState = 3;
+                        }
+                        break;
 
-        showTable(false);
-    }
-
-    if (settings.logging) {
-        logging = settings.logging;
-        console.log('logging: ', logging);
-    } else {
-        logging = false;
-        chrome.storage.local.set({
-            logging: logging
-        });
-        console.log('wrote: ', logging);
-    }
-    */
-
-    // once forum is loaded change the post type and
-    // wait for awknowledgement 
-    function onForumLoaded(settings) {
-        log('Forum loaded');
-
-        $("body").css('color', 'blue');
-        $('<div id="ffh-div"></div>').insertAfter($('.sppre_conversation-header'));
-
-        if ($('.sppre_sort-by').text() !== "Newest") {
-            $('.sppre_sort-by').click();
-            //<div data-spmark="newest"><span>Newest</span></div>
-            setTimeout(function () {
-                $('.sppre_sort-menu [data-spmark="newest"]').click();
-                var readyChecker = setTimeout(function(){
-                    if ($('.sppre_sort-by').text() === "Newest") {
-                        clearTimeout(readyChecker);
-                        onReady(settings);
-                    }
-                }, 500);
-            }, 500);
-        } else {
-            // no need to change as already on newest
-            onReady(settings)
-        }
+                    case 3:
+                        // click button
+                        var button = $sortMenu.find('[data-spmark="newest"]');
+                        if (button.length) {
+                            button.click();
+                            wait_until = attempts + 3;
+                            checkState = 0;
+                        }
+                        break;
+                }
+            }
+        }, 250);
     }
 
     function onReady(settings) {
+        log("onReady");
+
         modules = {
             avatarSwapper: new Module_AvatarSwapper(),
             commentCleaner: Module_CleanComments(),
@@ -208,7 +125,6 @@ $(document).ready(function () {
         modules.avatarSwapper.perform(settings);
         modules.filterUsers.perform(settings);
         //modules.liker.perform(settings);
-        
         //window.parent.postMessage("ffhcomplete", "*");
     }
 });

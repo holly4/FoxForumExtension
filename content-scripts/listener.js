@@ -99,7 +99,7 @@ $(document).ready(function () {
       }
     });
 
-  // listen for the filter users
+  // listen for complete message
   //window.addEventListener("message", function (event) {
   //  console.log("MESSAGE", event.data);
   //  if (event.data === "ffhcomplete") {

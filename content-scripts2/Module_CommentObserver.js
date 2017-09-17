@@ -84,27 +84,29 @@ function Module_CommentObserver() {
         let res = [];
 
         mutations.forEach(function (mutation) {
+
             mutation.addedNodes.forEach(function (node) {
                 let $node = $(node);
                 let $msg = $node.find('.sppre_appearance-component');
                 if ($msg.length) {
                     let comment = parseComment($msg);
                     res.push(comment);
-                } else if ($node.hasClass('sppre_open')) {
-                    let userName = $node.parent().parent().find('.sppre_username[data-spot-im-class="message-username"]').text();
-                    let $li = $('<li class="sppre_item"><span></span></li>');
-                    let $filter = $('<span>Filter</span>');
-                    $filter.click(function () {
-                        var msg = FILTER_USER_MESSAGE;
-                        msg.userName = userName.replace(/ /g, '');
-                        window.postMessage(msg, window.location.href);
-                    });
-                    $filter.appendTo($li)
-                    $(".sppre_droplist").append($li);
                 } else {
-                    //res.push({
-                    //    element: node
-                    //});
+                    res.push({
+                        node: node
+                    });
+                    if ($node.hasClass('sppre_open')) {
+                        let userName = $node.parent().parent().find('.sppre_username[data-spot-im-class="message-username"]').text();
+                        let $li = $('<li class="sppre_item"><span></span></li>')
+                            .appendTo(".sppre_droplist");
+                        $('<span>Filter</span>')
+                            .appendTo($li)
+                            .click(function () {
+                                var msg = FILTER_USER_MESSAGE;
+                                msg.userName = userName.replace(/ /g, '');
+                                window.postMessage(msg, window.location.href);
+                            });
+                    }
                 }
             });
         });
