@@ -73,6 +73,11 @@ function addToolsDiv() {
     }
 }
 
+/* exported isExtension */
+function isExtension() {
+    return window.chrome && chrome.runtime && chrome.runtime.id;
+}
+
 /* exported deleteIcon */
 const deleteIcon = chrome.extension.getURL('content-scripts2/icons/cancel-button.svg');
 /* exported checkBox */

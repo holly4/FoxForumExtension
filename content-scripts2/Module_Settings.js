@@ -3,7 +3,6 @@
 /* exported Module_Settings */
 function Module_Settings(_settings) {
     var settings = _settings;
-    var storage = chrome.storage.local;
 
     return {
         get: get,
@@ -27,6 +26,12 @@ function Module_Settings(_settings) {
     function set(name, value) {
         var obj = {}
         obj[name] = value;
-        storage.set(obj);
+
+        if (isExtension) {
+            var storage = chrome.storage.local;            
+            storage.set(obj);
+        }
     }
+
+
 }

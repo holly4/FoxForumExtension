@@ -41,7 +41,9 @@
 			"js": [
 				"shared/underscore-1.8.3.min.js",
 				"shared/jquery-3.2.1.slim.min.js",
+				"shared/d3.v3.min.js",				
 				"shared/globals.js",
+				"content-scripts2/Module_ActivityGraph.js",
 				"content-scripts2/Module_Settings.js",
 				"content-scripts2/Module_CommentObserver.js",
 				"content-scripts2/Module_AvatarSwapper.js",

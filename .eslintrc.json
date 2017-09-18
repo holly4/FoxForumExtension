@@ -11,7 +11,9 @@
    },
    "globals": {
         "modules": true,
-        "_" : true,
+        "d3": false,
+        "_": false ,
+        "Module_ActivityGraph": false,
         "Module_AvatarSwapper": false,
         "Module_CleanComments": false,
         "Module_CleanPage": false,
@@ -22,6 +24,7 @@
         "Module_XhrInterceptor2": false,
         "Module_Settings": false,
         "SETTINGS": false,
+        "isExtension": false,
 
         "addToolsDiv": false,
         "getUserName": false,

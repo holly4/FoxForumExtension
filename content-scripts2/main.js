@@ -112,6 +112,7 @@ $(document).ready(function () {
         log("onReady");
 
         modules = {
+            activityGraph: Module_ActivityGraph(),
             avatarSwapper: new Module_AvatarSwapper(),
             commentCleaner: Module_CleanComments(),
             commentObserver: Module_CommentObserver(),
@@ -120,10 +121,12 @@ $(document).ready(function () {
         }
 
         settings.loggingEnabled = true;
-        modules.commentObserver.perform(settings);
-        modules.commentCleaner.perform(settings);
-        modules.avatarSwapper.perform(settings);
-        modules.filterUsers.perform(settings);
+        var parm = Module_Settings(settings);
+        modules.commentObserver.perform(parm);
+        modules.commentCleaner.perform(parm);
+        modules.activityGraph.perform(parm);
+        modules.avatarSwapper.perform(parm);
+        modules.filterUsers.perform(parm);
         //modules.liker.perform(settings);
         //window.parent.postMessage("ffhcomplete", "*");
     }
