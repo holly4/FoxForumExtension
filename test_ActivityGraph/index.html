@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Test Activity Graph</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .axis { font: 10px sans-serif; } .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+    </style>
+</head>
+
+<body>
+    <div if='#ffh-div'>
+    <div id='margin'></div>
+    <div class='row'><button id='marginLeftLess'>Decrease Left</button></div>
+    <div class='row'><button id='marginLeftMore'>Increase Left></buttin></div>
+    <div class='row'><button id='marginRightLess'>Decrease Right</button></div>
+    <div class='row'><button id='marginRightMore'>Increase Right></buttin></div>
+    <div class='row'><button id='marginTopLess'>Decrease Top</button></div>
+    <div class='row'><button id='marginTopMore'>Increase Top></buttin></div>    <div class='row'><button id='marginRightLess'>Decrease Right</button></div>
+    <div class='row'><button id='marginBottomLess'>Decrease Bottom></buttin></div>
+    <div class='row'><button id='marginBottomMore'>Increase Bottom></buttin></div>
+    </div>
+    <script src="..\shared\jquery-3.2.1.slim.min.js"></script>
+    <script src="..\shared\underscore-1.8.3.min.js"></script>
+    <script src="..\shared\d3.v3.min.js"></script>
+    <script src=".\mock_CommentObserver.js"></script>
+    <script src="..\content-scripts2\Module_ActivityGraph.js"></script>
+    <script src="..\content-scripts2\Module_Settings.js"></script>
+    <script src=".\app.js"></script>
+</body>
+
+</html>
