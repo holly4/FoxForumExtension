@@ -18,7 +18,7 @@ function Module_AvatarSwapper() {
         },
         {
             enabled: true,
-            name: "KCH1",
+            name: "KCH3",
             url: "https://image.ibb.co/kFsuuF/cutebunny.jpg"
         },
         {
@@ -52,14 +52,16 @@ function Module_AvatarSwapper() {
             parm.userNameToAvatar = null;
         }
 
-        settings = Module_Settings(parm);
+        settings = parm;
         loggingEnabled = settings.get(loggingEnabled);
 
         console.log('AvatarSwapper',
             settings.get('swapping'),
             settings.get('userNameToAvatar'));
 
-        userNameToAvatar = settings.getOrSet('userNameToAvatar', defuserNameToAvatar);
+        //userNameToAvatar = settings.getOrSet('userNameToAvatar', defuserNameToAvatar);
+        userNameToAvatar = defuserNameToAvatar;
+
         swapping = settings.getOrSet('swapping', false);
 
         addTable("Enable Avatar Swapping", function (state) {
@@ -163,7 +165,7 @@ function Module_AvatarSwapper() {
         let state = row.enabled;
         let $tr = $("<tr>")
             .appendTo($('#avatarSwaps')
-            .css('margin-left', '1em'));
+                .css('margin-left', '1em'));
 
         let $td = $('<td>')
             .appendTo($tr)
@@ -202,6 +204,7 @@ function Module_AvatarSwapper() {
     }
 
     function processComment(comment) {
+        log("processComment: " + comment.userName);
         let rec = _.findWhere(userNameToAvatar, {
             name: comment.userName
         });
