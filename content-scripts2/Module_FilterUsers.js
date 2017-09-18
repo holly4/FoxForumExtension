@@ -23,7 +23,7 @@ function Module_FilterUsers() {
     }
 
     function perform(parm) {
-        settings = Module_Settings(parm);
+        settings = parm;
         loggingEnabled = settings.get(loggingEnabled);
 
         console.log('FilterUsers',

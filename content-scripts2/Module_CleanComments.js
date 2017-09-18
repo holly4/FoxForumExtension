@@ -27,7 +27,7 @@ function Module_CleanComments() {
   // entry point to the module:
   //  enabled: true/false if module is enabled
   function perform(parm) {
-    settings = Module_Settings(parm);
+    settings = parm;
     loggingEnabled = settings.get(loggingEnabled);
 
     console.log('CleanComments',
@@ -97,7 +97,6 @@ function Module_CleanComments() {
       hideReplyActivityBar ? $node.parent().hide() : $node.parent().show();
     } else {
       let $bars = $('.sppre_conversation-typing');
-      console.log($bars.length, ' bars');
       $bars = $bars.filter(function (index) {
         let filter = index == 0 && $(this).closest('.sppre_top-activity-bar').length;
         return !filter;

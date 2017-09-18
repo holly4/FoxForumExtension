@@ -204,7 +204,6 @@ function Module_AvatarSwapper() {
     }
 
     function processComment(comment) {
-        log("processComment: " + comment.userName);
         let rec = _.findWhere(userNameToAvatar, {
             name: comment.userName
         });
