@@ -40,6 +40,11 @@ function Module_AvatarSwapper() {
             enabled: true,
             name: "Thinkinowtloud2",
             url: "https://image.ibb.co/n2JrWv/cryingemogi.png"
+        },
+        {
+            enabled: true,
+            name: "archersterling96",
+            url: "https://image.ibb.co/bZbfg5/pileofpoo.jpg"
         }
     ];
 
@@ -91,14 +96,13 @@ function Module_AvatarSwapper() {
     }
 
     function showTable(state) {
-        let $firstRow = $("#avatarSwaps tr:first-child");
-        let $otherRows = $("#avatarSwaps tr:not(:first-child)")
+        let $rows = $("#avatarSwaps tr");
         if (state) {
-            $firstRow.find('img').attr('src', closeIcon);
-            $otherRows.show();
+            $($rows[0]).find('img').attr('src', closeIcon);
+            _.each(_.rest($rows, 1), (i) => $(i).show());
         } else {
-            $firstRow.find('img').attr('src', openIcon);
-            $otherRows.hide();
+            $($rows[0]).find('img').attr('src', openIcon);
+            _.each(_.rest($rows, 1), (i) => $(i).hide());
         }
     }
 
@@ -135,14 +139,19 @@ function Module_AvatarSwapper() {
         let $container = $('<div>')
             .appendTo($('#ffh-div'))
             .addClass('site')
-            .css('margin-left', '1em')
-
+            .css('margin-left', '1em');
+            
         addHeader($container, title, swapping, set_state);
 
-        let $table = $('<table>')
+        let $table = $('<table>') //<col style="width:10%"><col style="width:30%"><col style="width:60%"</table>
             .appendTo($container)
             .attr('id', 'avatarSwaps')
             .css('font-size', 'smaller');
+
+        $('<col style="width:5%">').appendTo($table);
+        $('<col style="width:15%">').appendTo($table);           
+        $('<col style="width:30%">').appendTo($table);           
+        $('<col style="width:50%">').appendTo($table);
 
         let $tr = $('<tr>')
             .appendTo($table);
@@ -156,12 +165,10 @@ function Module_AvatarSwapper() {
                 state = !state;
                 showTable(state);
             }).appendTo($tr);
-
-        $tr = $('<tr>')
-            .appendTo($table);
     }
 
     function addRow(row) {
+        console.log(row.name);
         let state = row.enabled;
         let $tr = $("<tr>")
             .appendTo($('#avatarSwaps')
@@ -169,7 +176,6 @@ function Module_AvatarSwapper() {
 
         let $td = $('<td>')
             .appendTo($tr)
-        $('<button>')
         $('<img>')
             .appendTo($td)
             .addClass('icon')
