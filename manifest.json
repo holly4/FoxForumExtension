@@ -44,12 +44,13 @@
 				"shared/d3.v3.min.js",				
 				"shared/globals.js",
 				"content-scripts2/Module_ActivityGraph.js",
-				"content-scripts2/Module_Settings.js",
-				"content-scripts2/Module_CommentObserver.js",
 				"content-scripts2/Module_AvatarSwapper.js",
 				"content-scripts2/Module_CleanComments.js",
+				"content-scripts2/Module_CommentObserver.js",
+				"content-scripts2/Module_Editor.js",				
 				"content-scripts2/Module_FilterUsers.js",
 				"content-scripts2/Module_Liker.js",
+				"content-scripts2/Module_Settings.js",
 				"content-scripts2/main.js"
 			], 
 			"all_frames":true}

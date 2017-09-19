@@ -116,8 +116,8 @@ $(document).ready(function () {
             avatarSwapper: new Module_AvatarSwapper(),
             commentCleaner: Module_CleanComments(),
             commentObserver: Module_CommentObserver(),
+            editor: new Module_Editor(),
             filterUsers: new Module_FilterUsers(),
-            //liker: new Module_LikeComments(),
         }
 
         settings.loggingEnabled = true;
@@ -126,8 +126,7 @@ $(document).ready(function () {
         modules.commentCleaner.perform(parm);
         modules.activityGraph.perform(parm);
         modules.avatarSwapper.perform(parm);
+        modules.editor.perform(parm);
         modules.filterUsers.perform(parm);
-        //modules.liker.perform(settings);
-        //window.parent.postMessage("ffhcomplete", "*");
     }
 });

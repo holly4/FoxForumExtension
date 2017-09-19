@@ -19,6 +19,7 @@
         "Module_CleanPage": false,
         "Module_CustomizePage": false,
         "Module_CommentObserver": false,
+        "Module_Editor": false,
         "Module_FilterUsers": false,
         "Module_XhrInterceptor": false,
         "Module_XhrInterceptor2": false,
@@ -47,7 +48,7 @@
         "checkedBox": false,
         "closeIcon": false,
         "openIcon": false,
-        "iconSize": false,        
+        "iconSize": false,
 
         "dummy": false
    }
