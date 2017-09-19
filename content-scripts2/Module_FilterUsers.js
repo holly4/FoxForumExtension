@@ -205,8 +205,8 @@ function Module_FilterUsers() {
         if (_.contains(filteredUsers, comment.userName)) {
             let $element = $(comment.element);
             $('<div>')
-                .css('height', '.5em')
-                .css('background-color', 'powderblue')
+                .css('height', '.25em')
+                .css('background-color', 'lightgray')
                 .css('margin', 'auto')
                 .css('width', '70%')
                 .css('border-radius', '25px')
