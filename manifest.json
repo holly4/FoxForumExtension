@@ -17,7 +17,7 @@
 
 	"background": {
 		"scripts": [
-			"shared/jquery-1.12.3.slim.min.js",
+			"shared/jquery-3.2.1.slim.min.js",
 			"shared/globals.js",
 			"event-page/settings.js",
 			"event-page/event-page.js"
@@ -29,7 +29,7 @@
 		{
 		"matches": ["*://*.foxnews.com/*"],
 		"js": [
-			"shared/jquery-1.12.3.slim.min.js",
+			"shared/jquery-3.2.1.slim.min.js",
 			"shared/globals.js",
 			"content-scripts/listener.js",
 			"content-scripts/Module_CleanPage.js",
@@ -73,6 +73,7 @@
 		"content-scripts2/icons/cancel-button.svg",
 		"content-scripts2/icons/check-box.svg",
 		"content-scripts2/icons/close-arrow.svg",
-		"content-scripts2/icons/open-arrow.svg"
+		"content-scripts2/icons/open-arrow.svg",
+		"content-scripts2/icons/ok.svg"
 	]
 }
