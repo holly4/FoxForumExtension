@@ -20,8 +20,9 @@
 
 /* exported Module_ActivityGraph */
 
-function Module_ActivityGraph() {
-    let loggingEnabled = false;
+function Module_ActivityGraph(parm) {
+    settings = parm;
+    let loggingEnabled = true;
     let showActivityGraph = true;
     var observerId = undefined;
     let settings = {};
@@ -40,7 +41,7 @@ function Module_ActivityGraph() {
 
     function perform(parm) {
         settings = parm;
-        loggingEnabled = settings.get(loggingEnabled);
+        loggingEnabled = settings.get('loggingEnabled');
 
         console.log('DrawActivityGraph',
             settings.get('showActivityGraph'));

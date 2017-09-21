@@ -15,13 +15,15 @@ function Module_CleanPage() {
       console.log("CleanPage: " + line);
     }
   }
+  
+  // entry point to the module:
+  //  state: true/false if module is enabled
+  function perform(
+    state, removeMasthead, removeVideo, _loggingEnabled) {
+    loggingEnabled = _loggingEnabled;
+    log("perform " + state);
 
-  // is the module installed on the page
-  function isInstalled() {
-    var len = $('#btnToggleArticle').length;
-    var result = len > 0;
-    log("isInstalled: " + result + "(" + len + ")");
-    return result;
+    install(removeMasthead, removeVideo);
   }
 
   //  removeSiblings - remove siblings of selector
@@ -120,6 +122,8 @@ function Module_CleanPage() {
     $(".site-footer").remove();
     $(".pre-content").remove();
     $(".sidebar-columns").remove();
+    $(".vendor-unit").remove();
+    $("ob-widget-section").remove();
 
     if (removeVideo) {
       $(".video-container").remove();
@@ -153,21 +157,5 @@ function Module_CleanPage() {
         $(this).css('margin-bottom', '0px');
       }
     });
-  }
-
-  // entry point to the module:
-  //  state: true/false if module is enabled
-  function perform(
-    state, removeMasthead, removeVideo, _loggingEnabled) {
-    loggingEnabled = _loggingEnabled;
-    log("perform " + state);
-
-    if (!state) {
-      // this cannot be undone
-    } else {
-      if (!isInstalled()) {
-        install(removeMasthead, removeVideo);
-      }
-    }
   }
 }

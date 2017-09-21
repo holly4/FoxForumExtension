@@ -24,7 +24,7 @@ function Module_FilterUsers() {
 
     function perform(parm) {
         settings = parm;
-        loggingEnabled = settings.get(loggingEnabled);
+        loggingEnabled = settings.get('loggingEnabled');
 
         console.log('FilterUsers',
             settings.get('filtering'),
@@ -43,7 +43,7 @@ function Module_FilterUsers() {
 
         // handle existing comments
         let msgs = modules.commentObserver.scan();
-        processComments(msgs);
+        processMutations(msgs);
 
         // listen for the filter users
         window.addEventListener("message", function (event) {
@@ -202,10 +202,11 @@ function Module_FilterUsers() {
     //  _users: string array of users to filter
 
     function processComment(comment) {
+        //log('processComment: ' + comment.userName);
         if (_.contains(filteredUsers, comment.userName)) {
             let $element = $(comment.element);
             $('<div>')
-                .css('height', '.25em')
+                .css('height', '.125em')
                 .css('background-color', 'lightgray')
                 .css('margin', 'auto')
                 .css('width', '70%')
@@ -221,19 +222,11 @@ function Module_FilterUsers() {
         }
     }
 
-    function processComments(comments) {
+    function processMutations(mutations) {
         if (filtering) {
-            $.each(comments, function (index, comment) {
-                if (comment.hasOwnProperty("userName")) {
-                    processComment(comment);
-                }
-                processComment(comment);
-            });
+            let comments = mutations.filter((i) => _.has(i, 'userName'));
+            $.each(comments, (i, v) => processComment(v));
             updateTableCount();
         }
-    }
-
-    function processMutations(comments) {
-        processComments(comments);
     }
 }

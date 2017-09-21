@@ -22,7 +22,9 @@ $(document).ready(function () {
   }
 
   log("listener loaded");
-
+  //$(".ob-widget-section").remove();
+  //$(".ob_what").remove();
+  
   const _browser = window.browser ? window.browser : window.chrome;
 
   function createModules() {

@@ -28,7 +28,7 @@ $(document).ready(function () {
         log('Forum loaded');
         var manifest = chrome.runtime.getManifest();
         let state = true;
-        $("body").css('color', 'blue');
+        //$("body").css('color', 'blue');
         let $main = $('<div id="ffh-div" style="border-style: solid;border-width:thin;padding:.5em;"></div>')
             .insertAfter($('.sppre_conversation-header'));
         let $div = $('<div>')
@@ -112,8 +112,8 @@ $(document).ready(function () {
         log("onReady");
 
         modules = {
-            activityGraph: Module_ActivityGraph(),
-            avatarSwapper: new Module_AvatarSwapper(),
+            //activityGraph: Module_ActivityGraph(),
+            //avatarSwapper: new Module_AvatarSwapper(),
             commentCleaner: Module_CleanComments(),
             commentObserver: Module_CommentObserver(),
             editor: new Module_Editor(),
@@ -124,8 +124,8 @@ $(document).ready(function () {
         var parm = Module_Settings(settings);
         modules.commentObserver.perform(parm);
         modules.commentCleaner.perform(parm);
-        modules.activityGraph.perform(parm);
-        modules.avatarSwapper.perform(parm);
+        //modules.activityGraph.perform(parm);
+        //modules.avatarSwapper.perform(parm);
         modules.editor.perform(parm);
         modules.filterUsers.perform(parm);
     }

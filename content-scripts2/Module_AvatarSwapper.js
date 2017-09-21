@@ -4,8 +4,10 @@
 // (ಠ_ಠ)┌∩┐
 
 /* exported Module_AvatarSwapper */
-function Module_AvatarSwapper() {
-    let loggingEnabled = false;
+function Module_AvatarSwapper(parm) {
+    settings = parm;
+    let loggingEnabled = settings.get('loggingEnabled');
+
     let swapping = true;
     var observerId = undefined;
     let settings = {};

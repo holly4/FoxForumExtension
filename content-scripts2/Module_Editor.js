@@ -22,7 +22,7 @@ function Module_Editor() {
   //  enabled: true/false if module is enabled
   function perform(parm) {
     settings = parm;
-    loggingEnabled = settings.get(loggingEnabled);
+    loggingEnabled = settings.get('loggingEnabled');
 
     appendFunctions($('.sppre_buttons'));
 
@@ -32,26 +32,23 @@ function Module_Editor() {
   }
 
   function appendFunctions($element) {
-    $('<button class="sppre_bold-button brand-bg-color" style="width:2em;"><span>X</span></button>')
-      .click(function () {
-        document.execCommand('removeFormat', false, true);
-      })
-      .prependTo($element);
-    $('<button class="sppre_bold-button brand-bg-color" style="width:2em;"><span>U</span></button>')
-      .click(function () {
-        document.execCommand('underline', false, true);
-      })
-      .prependTo($element);
-    $('<button class="sppre_bold-button brand-bg-color" style="width:2em;"><span>I</span></button>')
-      .click(function () {
-        document.execCommand('italic', false, true);
-      })
-      .prependTo($element);
-    $('<button class="sppre_bold-button brand-bg-color" style="width:2em;"><span>B</span></button>')
-      .click(function () {
-        document.execCommand('bold', false, true);
-      })
-      .prependTo($element);
+    let buttons = [
+      ['X', 'removeFormat'],
+      ['U', 'underline'],
+      ['I', 'italic'],
+      ['B', 'bold']
+    ];
+      _.each(buttons, function(i) {
+        $('<button>')
+        .text(i[0])
+        .click(function() {
+          document.execCommand(i[1], false, true);
+          console.log(i);
+        })
+        .css('width', '2em')
+        .css('border-radius', '4px')
+        .prependTo($element);
+      });
   }
 
   function processMutations(mutations) {

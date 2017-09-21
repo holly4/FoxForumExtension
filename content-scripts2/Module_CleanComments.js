@@ -10,8 +10,8 @@ function Module_CleanComments() {
 
   var loggingEnabled = false;
   var observerId = undefined;
-  let hideTopActivityBar = false;
-  let hideReplyActivityBar = false;
+  //let hideTopActivityBar = false;
+  //let hideReplyActivityBar = false;
   let settings = {};
 
   return {
@@ -28,8 +28,9 @@ function Module_CleanComments() {
   //  enabled: true/false if module is enabled
   function perform(parm) {
     settings = parm;
-    loggingEnabled = settings.get(loggingEnabled);
+    loggingEnabled = settings.get('loggingEnabled');
 
+    /*
     console.log('CleanComments',
       ' hideTopActivityBar:', settings.get('hideTopActivityBar'),
       ' hideReplyActivityBar:', settings.get('hideReplyActivityBar'));
@@ -51,7 +52,7 @@ function Module_CleanComments() {
       showReplyActivityBar(!hideReplyActivityBar);
       settings.set('hideReplyActivityBar', hideReplyActivityBar);
     });
-
+    */
     // connect to observer
     observerId = modules.commentObserver.attach(this, processMutations);
     log("attached to observer: " + observerId);
@@ -61,50 +62,51 @@ function Module_CleanComments() {
     $.each(comments, function (index, value) {
       processComment(value);
     });
+
   }
+  /*
+    function addHeader($container, text, _state, set_state) {
+      let state = _state;
+      let $div = $('<div>')
+        .appendTo($container)
+        .css('margin-top', '.5em;')
+        .css('margin-left', '1em');
 
-  function addHeader($container, text, _state, set_state) {
-    let state = _state;
-    let $div = $('<div>')
-      .appendTo($container)
-      .css('margin-top', '.5em;')
-      .css('margin-left', '1em');
+      $('<img>')
+        .appendTo($div)
+        .attr('src', state ? checkedBox : checkBox)
+        .css('height', iconSize)
+        .css('width', iconSize)
+        .click(function () {
+          state = !state;
+          set_state(state);
+          $(this).attr('src', state ? checkedBox : checkBox);
+        });
 
-    $('<img>')
-      .appendTo($div)
-      .attr('src', state ? checkedBox : checkBox)
-      .css('height', iconSize)
-      .css('width', iconSize)
-      .click(function () {
-        state = !state;
-        set_state(state);
-        $(this).attr('src', state ? checkedBox : checkBox);
-      });
-
-    $('<span>')
-      .appendTo($div)
-      .css('margin-left', '.5em')
-      .text(text);
-  }
-
-  function showTopActivityBar(show) {
-    let elem = $('.sppre_top-activity-bar .sppre_message-section');
-    show ? elem.show() : elem.hide();
-  }
-
-  function showReplyActivityBar(show, $node) {
-    if ($node) {
-      hideReplyActivityBar ? $node.parent().hide() : $node.parent().show();
-    } else {
-      let $bars = $('.sppre_conversation-typing');
-      $bars = $bars.filter(function (index) {
-        let filter = index == 0 && $(this).closest('.sppre_top-activity-bar').length;
-        return !filter;
-      });
-      show ? $bars.show() : $bars.hide();
+      $('<span>')
+        .appendTo($div)
+        .css('margin-left', '.5em')
+        .text(text);
     }
-  }
 
+    function showTopActivityBar(show) {
+      let elem = $('.sppre_top-activity-bar .sppre_message-section');
+      show ? elem.show() : elem.hide();
+    }
+
+    function showReplyActivityBar(show, $node) {
+      if ($node) {
+        hideReplyActivityBar ? $node.parent().hide() : $node.parent().show();
+      } else {
+        let $bars = $('.sppre_conversation-typing');
+        $bars = $bars.filter(function (index) {
+          let filter = index == 0 && $(this).closest('.sppre_top-activity-bar').length;
+          return !filter;
+        });
+        show ? $bars.show() : $bars.hide();
+      }
+    }
+  */
   function processComment(comment) {
     let target = $(comment.element).find('.sppre_message-context-menu .sppre_icon');
     target.find('g').attr("fill", 'powderblue');
@@ -114,9 +116,10 @@ function Module_CleanComments() {
     mutations.forEach(function (mutation) {
       if (mutation.hasOwnProperty("userName")) {
         processComment(mutation);
-      } else if (mutation.hasOwnProperty("node")) {
+      }
+      /* else if (mutation.hasOwnProperty("node")) {
         let $node = $(mutation.node);
-
+ 
         let top = $node.hasClass('sppre_top-activity-bar');
         if (top) {
           showTopActivityBar(!hideTopActivityBar);
@@ -125,8 +128,8 @@ function Module_CleanComments() {
         let $inner = $node.find('.sppre_conversation-typing');
         if ($inner.length) {
           showReplyActivityBar(!hideTopActivityBar, $inner);
-        }
-      }
+        } }
+        */
     });
   }
 }
